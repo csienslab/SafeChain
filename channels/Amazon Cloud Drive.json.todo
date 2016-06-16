@@ -1,0 +1,21 @@
+{
+    "actions": {
+        "Add file from URL": [
+            {
+                "value": "*",
+                "variable": "Amazon_Cloud_Drive_Add_file_from_URL"
+            }
+        ]
+    },
+    "variables": {
+        "Amazon_Cloud_Drive_Add_file_from_URL": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

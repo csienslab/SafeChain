@@ -1,0 +1,66 @@
+{
+    "actions": {
+        "Ask a question": [
+            {
+                "value": "*",
+                "variable": "Instawell_Ask_a_question"
+            }
+        ],
+        "Send a message": [
+            {
+                "value": "*",
+                "variable": "Instawell_Send_a_message"
+            }
+        ]
+    },
+    "triggers": {
+        "New answer received": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Instawell_New_answer_received"
+        },
+        "New message received": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Instawell_New_message_received"
+        }
+    },
+    "variables": {
+        "Instawell_Ask_a_question": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Instawell_New_answer_received": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Instawell_New_message_received": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Instawell_Send_a_message": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

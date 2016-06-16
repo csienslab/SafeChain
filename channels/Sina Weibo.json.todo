@@ -1,0 +1,51 @@
+{
+    "actions": {
+        "Publish a new post": [
+            {
+                "value": "*",
+                "variable": "Sina_Weibo_Publish_a_new_post"
+            }
+        ]
+    },
+    "triggers": {
+        "New post by you": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Sina_Weibo_New_post_by_you"
+        },
+        "New post by you with hashtag": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Sina_Weibo_New_post_by_you_with_hashtag"
+        }
+    },
+    "variables": {
+        "Sina_Weibo_New_post_by_you": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Sina_Weibo_New_post_by_you_with_hashtag": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Sina_Weibo_Publish_a_new_post": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

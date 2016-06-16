@@ -1,0 +1,107 @@
+{
+    "actions": {
+        "Save item": [
+            {
+                "value": "*",
+                "variable": "Instapaper_Save_item"
+            }
+        ]
+    },
+    "triggers": {
+        "Item moved to folder": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Instapaper_Item_moved_to_folder"
+        },
+        "New archived item": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Instapaper_New_archived_item"
+        },
+        "New comment": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Instapaper_New_comment"
+        },
+        "New highlight": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Instapaper_New_highlight"
+        },
+        "New item saved": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Instapaper_New_item_saved"
+        },
+        "New liked item": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Instapaper_New_liked_item"
+        }
+    },
+    "variables": {
+        "Instapaper_Item_moved_to_folder": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Instapaper_New_archived_item": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Instapaper_New_comment": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Instapaper_New_highlight": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Instapaper_New_item_saved": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Instapaper_New_liked_item": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Instapaper_Save_item": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

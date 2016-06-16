@@ -1,0 +1,20 @@
+{
+    "triggers": {
+        "Ask Moni to perform an action": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Moni.ai_Ask_Moni_to_perform_an_action"
+        }
+    },
+    "variables": {
+        "Moni.ai_Ask_Moni_to_perform_an_action": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

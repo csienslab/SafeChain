@@ -1,0 +1,118 @@
+{
+    "triggers": {
+        "Activity summary": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Lifelog_Activity_summary"
+        },
+        "Any application used": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Lifelog_Any_application_used"
+        },
+        "Any physical activity": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Lifelog_Any_physical_activity"
+        },
+        "Daily calorie goal reached": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Lifelog_Daily_calorie_goal_reached"
+        },
+        "Daily steps above": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Lifelog_Daily_steps_above"
+        },
+        "Recorded sleep": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Lifelog_Recorded_sleep"
+        },
+        "Specific application used": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Lifelog_Specific_application_used"
+        },
+        "Step goal not reached": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Lifelog_Step_goal_not_reached"
+        }
+    },
+    "variables": {
+        "Lifelog_Activity_summary": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Lifelog_Any_application_used": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Lifelog_Any_physical_activity": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Lifelog_Daily_calorie_goal_reached": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Lifelog_Daily_steps_above": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Lifelog_Recorded_sleep": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Lifelog_Specific_application_used": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Lifelog_Step_goal_not_reached": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

@@ -1,0 +1,140 @@
+{
+    "actions": {
+        "Rain delay": [
+            {
+                "value": "*",
+                "variable": "Rachio_Iro_Rain_delay"
+            }
+        ],
+        "Seasonal adjustment": [
+            {
+                "value": "*",
+                "variable": "Rachio_Iro_Seasonal_adjustment"
+            }
+        ],
+        "Skip watering time": [
+            {
+                "value": "*",
+                "variable": "Rachio_Iro_Skip_watering_time"
+            }
+        ],
+        "Start a zone": [
+            {
+                "value": "*",
+                "variable": "Rachio_Iro_Start_a_zone"
+            }
+        ],
+        "Start watering time": [
+            {
+                "value": "*",
+                "variable": "Rachio_Iro_Start_watering_time"
+            }
+        ],
+        "Stop watering": [
+            {
+                "value": "*",
+                "variable": "Rachio_Iro_Stop_watering"
+            }
+        ]
+    },
+    "triggers": {
+        "Event registered": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Rachio_Iro_Event_registered"
+        },
+        "Watering time starts": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Rachio_Iro_Watering_time_starts"
+        },
+        "Watering time stops": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Rachio_Iro_Watering_time_stops"
+        }
+    },
+    "variables": {
+        "Rachio_Iro_Event_registered": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Rachio_Iro_Rain_delay": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Rachio_Iro_Seasonal_adjustment": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Rachio_Iro_Skip_watering_time": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Rachio_Iro_Start_a_zone": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Rachio_Iro_Start_watering_time": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Rachio_Iro_Stop_watering": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Rachio_Iro_Watering_time_starts": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Rachio_Iro_Watering_time_stops": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

@@ -1,0 +1,21 @@
+{
+    "actions": {
+        "Post to channel": [
+            {
+                "value": "*",
+                "variable": "Slack_Post_to_channel"
+            }
+        ]
+    },
+    "variables": {
+        "Slack_Post_to_channel": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

@@ -1,0 +1,37 @@
+{
+    "actions": {
+        "Send a notification": [
+            {
+                "value": "*",
+                "variable": "Android_Wear_Send_a_notification"
+            }
+        ]
+    },
+    "triggers": {
+        "Tap button": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Android_Wear_Tap_button"
+        }
+    },
+    "variables": {
+        "Android_Wear_Send_a_notification": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Android_Wear_Tap_button": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

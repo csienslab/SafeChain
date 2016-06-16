@@ -1,0 +1,51 @@
+{
+    "actions": {
+        "Disable a quick action": [
+            {
+                "value": "*",
+                "variable": "Honeywell_Single-zone_Thermostat_Disable_a_quick_action"
+            }
+        ],
+        "Enable quick action": [
+            {
+                "value": "*",
+                "variable": "Honeywell_Single-zone_Thermostat_Enable_quick_action"
+            }
+        ],
+        "Set a zone temperature": [
+            {
+                "value": "*",
+                "variable": "Honeywell_Single-zone_Thermostat_Set_a_zone_temperature"
+            }
+        ]
+    },
+    "variables": {
+        "Honeywell_Single-zone_Thermostat_Disable_a_quick_action": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Honeywell_Single-zone_Thermostat_Enable_quick_action": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Honeywell_Single-zone_Thermostat_Set_a_zone_temperature": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

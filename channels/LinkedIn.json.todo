@@ -1,0 +1,36 @@
+{
+    "actions": {
+        "Share a link": [
+            {
+                "value": "*",
+                "variable": "LinkedIn_Share_a_link"
+            }
+        ],
+        "Share an update": [
+            {
+                "value": "*",
+                "variable": "LinkedIn_Share_an_update"
+            }
+        ]
+    },
+    "variables": {
+        "LinkedIn_Share_a_link": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "LinkedIn_Share_an_update": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

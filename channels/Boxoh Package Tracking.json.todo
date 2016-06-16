@@ -1,0 +1,20 @@
+{
+    "triggers": {
+        "Any shipping status change": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Boxoh_Package_Tracking_Any_shipping_status_change"
+        }
+    },
+    "variables": {
+        "Boxoh_Package_Tracking_Any_shipping_status_change": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

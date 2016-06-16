@@ -1,0 +1,20 @@
+{
+    "triggers": {
+        "New track played to completion": {
+            "operator": "=",
+            "value": "true",
+            "variable": "MixRadio_New_track_played_to_completion"
+        }
+    },
+    "variables": {
+        "MixRadio_New_track_played_to_completion": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

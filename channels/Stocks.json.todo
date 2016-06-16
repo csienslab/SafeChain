@@ -1,0 +1,90 @@
+{
+    "triggers": {
+        "Price at close": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Stocks_Price_at_close"
+        },
+        "Price drops below": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Stocks_Price_drops_below"
+        },
+        "Price rises above": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Stocks_Price_rises_above"
+        },
+        "Today's exchange rate report": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Stocks_Today's_exchange_rate_report"
+        },
+        "Today's price drops by percentage": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Stocks_Today's_price_drops_by_percentage"
+        },
+        "Today's price rises by percentage": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Stocks_Today's_price_rises_by_percentage"
+        }
+    },
+    "variables": {
+        "Stocks_Price_at_close": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Stocks_Price_drops_below": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Stocks_Price_rises_above": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Stocks_Today's_exchange_rate_report": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Stocks_Today's_price_drops_by_percentage": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Stocks_Today's_price_rises_by_percentage": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

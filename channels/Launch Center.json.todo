@@ -1,0 +1,52 @@
+{
+    "actions": {
+        "Run custom URL": [
+            {
+                "value": "*",
+                "variable": "Launch_Center_Run_custom_URL"
+            }
+        ],
+        "Send a notification": [
+            {
+                "value": "*",
+                "variable": "Launch_Center_Send_a_notification"
+            }
+        ]
+    },
+    "triggers": {
+        "Trigger": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Launch_Center_Trigger"
+        }
+    },
+    "variables": {
+        "Launch_Center_Run_custom_URL": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Launch_Center_Send_a_notification": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Launch_Center_Trigger": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

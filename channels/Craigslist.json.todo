@@ -1,0 +1,20 @@
+{
+    "triggers": {
+        "New post from search": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Craigslist_New_post_from_search"
+        }
+    },
+    "variables": {
+        "Craigslist_New_post_from_search": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

@@ -1,0 +1,51 @@
+{
+    "actions": {
+        "Toggle on / off": [
+            {
+                "value": "*",
+                "variable": "WIFIPLUG_Toggle_on_/_off"
+            }
+        ],
+        "Turn off": [
+            {
+                "value": "*",
+                "variable": "WIFIPLUG_Turn_off"
+            }
+        ],
+        "Turn on": [
+            {
+                "value": "*",
+                "variable": "WIFIPLUG_Turn_on"
+            }
+        ]
+    },
+    "variables": {
+        "WIFIPLUG_Toggle_on_/_off": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "WIFIPLUG_Turn_off": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "WIFIPLUG_Turn_on": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

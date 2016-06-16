@@ -1,0 +1,21 @@
+{
+    "actions": {
+        "Add item to Reading List": [
+            {
+                "value": "*",
+                "variable": "iOS_Reading_List_Add_item_to_Reading_List"
+            }
+        ]
+    },
+    "variables": {
+        "iOS_Reading_List_Add_item_to_Reading_List": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

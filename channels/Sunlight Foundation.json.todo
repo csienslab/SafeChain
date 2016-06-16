@@ -1,0 +1,34 @@
+{
+    "triggers": {
+        "Congress is scheduled to vote on a bill": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Sunlight_Foundation_Congress_is_scheduled_to_vote_on_a_bill"
+        },
+        "The president signs a new bill into law": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Sunlight_Foundation_The_president_signs_a_new_bill_into_law"
+        }
+    },
+    "variables": {
+        "Sunlight_Foundation_Congress_is_scheduled_to_vote_on_a_bill": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Sunlight_Foundation_The_president_signs_a_new_bill_into_law": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

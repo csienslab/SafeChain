@@ -1,0 +1,153 @@
+{
+    "actions": {
+        "Activate smart control": [
+            {
+                "value": "*",
+                "variable": "Greenwave_Systems_Activate_smart_control"
+            }
+        ],
+        "Blink a device": [
+            {
+                "value": "*",
+                "variable": "Greenwave_Systems_Blink_a_device"
+            }
+        ],
+        "Dim a light bulb": [
+            {
+                "value": "*",
+                "variable": "Greenwave_Systems_Dim_a_light_bulb"
+            }
+        ],
+        "Override temperature schedule": [
+            {
+                "value": "*",
+                "variable": "Greenwave_Systems_Override_temperature_schedule"
+            }
+        ],
+        "Turn a device on or off": [
+            {
+                "value": "*",
+                "variable": "Greenwave_Systems_Turn_a_device_on_or_off"
+            }
+        ]
+    },
+    "triggers": {
+        "Battery level below threshold": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Greenwave_Systems_Battery_level_below_threshold"
+        },
+        "Device is turned on/off": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Greenwave_Systems_Device_is_turned_on/off"
+        },
+        "Motion is detected": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Greenwave_Systems_Motion_is_detected"
+        },
+        "Smart Control is activated": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Greenwave_Systems_Smart_Control_is_activated"
+        },
+        "Temperature changed": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Greenwave_Systems_Temperature_changed"
+        }
+    },
+    "variables": {
+        "Greenwave_Systems_Activate_smart_control": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Greenwave_Systems_Battery_level_below_threshold": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Greenwave_Systems_Blink_a_device": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Greenwave_Systems_Device_is_turned_on/off": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Greenwave_Systems_Dim_a_light_bulb": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Greenwave_Systems_Motion_is_detected": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Greenwave_Systems_Override_temperature_schedule": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Greenwave_Systems_Smart_Control_is_activated": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Greenwave_Systems_Temperature_changed": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Greenwave_Systems_Turn_a_device_on_or_off": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

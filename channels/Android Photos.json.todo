@@ -1,0 +1,48 @@
+{
+    "triggers": {
+        "Any new photo": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Android_Photos_Any_new_photo"
+        },
+        "New photo taken in area": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Android_Photos_New_photo_taken_in_area"
+        },
+        "New screenshot": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Android_Photos_New_screenshot"
+        }
+    },
+    "variables": {
+        "Android_Photos_Any_new_photo": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Android_Photos_New_photo_taken_in_area": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Android_Photos_New_screenshot": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

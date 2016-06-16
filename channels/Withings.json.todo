@@ -1,0 +1,118 @@
+{
+    "triggers": {
+        "Blood Pressure Monitor - New measurement": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Withings_Blood_Pressure_Monitor_-_New_measurement"
+        },
+        "Body Scale - New measurement": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Withings_Body_Scale_-_New_measurement"
+        },
+        "Body Scale - Weight measurement drops below": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Withings_Body_Scale_-_Weight_measurement_drops_below"
+        },
+        "Body Scale - Weight measurement rises above": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Withings_Body_Scale_-_Weight_measurement_rises_above"
+        },
+        "Pulse - New heart rate measurement": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Withings_Pulse_-_New_heart_rate_measurement"
+        },
+        "Pulse - Yesterday's activity logged": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Withings_Pulse_-_Yesterday's_activity_logged"
+        },
+        "Pulse - Yesterday's steps above": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Withings_Pulse_-_Yesterday's_steps_above"
+        },
+        "Pulse - Yesterday's steps below": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Withings_Pulse_-_Yesterday's_steps_below"
+        }
+    },
+    "variables": {
+        "Withings_Blood_Pressure_Monitor_-_New_measurement": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Withings_Body_Scale_-_New_measurement": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Withings_Body_Scale_-_Weight_measurement_drops_below": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Withings_Body_Scale_-_Weight_measurement_rises_above": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Withings_Pulse_-_New_heart_rate_measurement": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Withings_Pulse_-_Yesterday's_activity_logged": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Withings_Pulse_-_Yesterday's_steps_above": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Withings_Pulse_-_Yesterday's_steps_below": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

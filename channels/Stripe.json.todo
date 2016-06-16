@@ -1,0 +1,90 @@
+{
+    "triggers": {
+        "New customer created": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Stripe_New_customer_created"
+        },
+        "New dispute": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Stripe_New_dispute"
+        },
+        "New payment received": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Stripe_New_payment_received"
+        },
+        "New refund": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Stripe_New_refund"
+        },
+        "New transfer": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Stripe_New_transfer"
+        },
+        "Payment failed": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Stripe_Payment_failed"
+        }
+    },
+    "variables": {
+        "Stripe_New_customer_created": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Stripe_New_dispute": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Stripe_New_payment_received": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Stripe_New_refund": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Stripe_New_transfer": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Stripe_Payment_failed": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

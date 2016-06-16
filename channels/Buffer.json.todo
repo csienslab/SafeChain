@@ -1,0 +1,66 @@
+{
+    "actions": {
+        "Add photo to Buffer": [
+            {
+                "value": "*",
+                "variable": "Buffer_Add_photo_to_Buffer"
+            }
+        ],
+        "Add to Buffer": [
+            {
+                "value": "*",
+                "variable": "Buffer_Add_to_Buffer"
+            }
+        ]
+    },
+    "triggers": {
+        "Any new post in Buffer": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Buffer_Any_new_post_in_Buffer"
+        },
+        "New photo in Buffer": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Buffer_New_photo_in_Buffer"
+        }
+    },
+    "variables": {
+        "Buffer_Add_photo_to_Buffer": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Buffer_Add_to_Buffer": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Buffer_Any_new_post_in_Buffer": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Buffer_New_photo_in_Buffer": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

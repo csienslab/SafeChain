@@ -1,0 +1,270 @@
+{
+    "actions": {
+        "Launch Google Maps Navigation": [
+            {
+                "value": "*",
+                "variable": "Android_Device_Launch_Google_Maps_Navigation"
+            }
+        ],
+        "Mute ringtone": [
+            {
+                "value": "*",
+                "variable": "Android_Device_Mute_ringtone"
+            }
+        ],
+        "Play a specific song": [
+            {
+                "value": "*",
+                "variable": "Android_Device_Play_a_specific_song"
+            }
+        ],
+        "Play music": [
+            {
+                "value": "*",
+                "variable": "Android_Device_Play_music"
+            }
+        ],
+        "Set ringtone volume": [
+            {
+                "value": "*",
+                "variable": "Android_Device_Set_ringtone_volume"
+            }
+        ],
+        "Turn off Bluetooth": [
+            {
+                "value": "*",
+                "variable": "Android_Device_Turn_off_Bluetooth"
+            }
+        ],
+        "Turn off WiFi": [
+            {
+                "value": "*",
+                "variable": "Android_Device_Turn_off_WiFi"
+            }
+        ],
+        "Turn on Bluetooth": [
+            {
+                "value": "*",
+                "variable": "Android_Device_Turn_on_Bluetooth"
+            }
+        ],
+        "Turn on WiFi": [
+            {
+                "value": "*",
+                "variable": "Android_Device_Turn_on_WiFi"
+            }
+        ],
+        "Update device wallpaper": [
+            {
+                "value": "*",
+                "variable": "Android_Device_Update_device_wallpaper"
+            }
+        ]
+    },
+    "triggers": {
+        "Connects or disconnects from a specific WiFi network": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Android_Device_Connects_or_disconnects_from_a_specific_WiFi_network"
+        },
+        "Connects or disconnects from any WiFi network": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Android_Device_Connects_or_disconnects_from_any_WiFi_network"
+        },
+        "Connects to a Bluetooth device": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Android_Device_Connects_to_a_Bluetooth_device"
+        },
+        "Connects to a specific WiFi network": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Android_Device_Connects_to_a_specific_WiFi_network"
+        },
+        "Connects to any WiFi network": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Android_Device_Connects_to_any_WiFi_network"
+        },
+        "Disconnects from a Bluetooth device": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Android_Device_Disconnects_from_a_Bluetooth_device"
+        },
+        "Disconnects from a specific WiFi network": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Android_Device_Disconnects_from_a_specific_WiFi_network"
+        },
+        "Disconnects from any WiFi network": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Android_Device_Disconnects_from_any_WiFi_network"
+        }
+    },
+    "variables": {
+        "Android_Device_Connects_or_disconnects_from_a_specific_WiFi_network": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Android_Device_Connects_or_disconnects_from_any_WiFi_network": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Android_Device_Connects_to_a_Bluetooth_device": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Android_Device_Connects_to_a_specific_WiFi_network": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Android_Device_Connects_to_any_WiFi_network": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Android_Device_Disconnects_from_a_Bluetooth_device": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Android_Device_Disconnects_from_a_specific_WiFi_network": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Android_Device_Disconnects_from_any_WiFi_network": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Android_Device_Launch_Google_Maps_Navigation": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Android_Device_Mute_ringtone": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Android_Device_Play_a_specific_song": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Android_Device_Play_music": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Android_Device_Set_ringtone_volume": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Android_Device_Turn_off_Bluetooth": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Android_Device_Turn_off_WiFi": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Android_Device_Turn_on_Bluetooth": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Android_Device_Turn_on_WiFi": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Android_Device_Update_device_wallpaper": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

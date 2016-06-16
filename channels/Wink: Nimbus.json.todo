@@ -1,0 +1,21 @@
+{
+    "actions": {
+        "Set dial label": [
+            {
+                "value": "*",
+                "variable": "Wink:_Nimbus_Set_dial_label"
+            }
+        ]
+    },
+    "variables": {
+        "Wink:_Nimbus_Set_dial_label": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

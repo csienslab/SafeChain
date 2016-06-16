@@ -1,0 +1,207 @@
+{
+    "actions": {
+        "Mark folder as read": [
+            {
+                "value": "*",
+                "variable": "Inoreader_Mark_folder_as_read"
+            }
+        ],
+        "Save any web page": [
+            {
+                "value": "*",
+                "variable": "Inoreader_Save_any_web_page"
+            }
+        ],
+        "Subscribe to feed": [
+            {
+                "value": "*",
+                "variable": "Inoreader_Subscribe_to_feed"
+            }
+        ]
+    },
+    "triggers": {
+        "New Active Search result": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Inoreader_New_Active_Search_result"
+        },
+        "New article in folder": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Inoreader_New_article_in_folder"
+        },
+        "New broadcasted article": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Inoreader_New_broadcasted_article"
+        },
+        "New bundle created by someone": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Inoreader_New_bundle_created_by_someone"
+        },
+        "New bundle created by you": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Inoreader_New_bundle_created_by_you"
+        },
+        "New liked article": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Inoreader_New_liked_article"
+        },
+        "New post on our blog": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Inoreader_New_post_on_our_blog"
+        },
+        "New saved web page": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Inoreader_New_saved_web_page"
+        },
+        "New starred article": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Inoreader_New_starred_article"
+        },
+        "New subscription": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Inoreader_New_subscription"
+        },
+        "New tagged article": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Inoreader_New_tagged_article"
+        }
+    },
+    "variables": {
+        "Inoreader_Mark_folder_as_read": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Inoreader_New_Active_Search_result": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Inoreader_New_article_in_folder": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Inoreader_New_broadcasted_article": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Inoreader_New_bundle_created_by_someone": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Inoreader_New_bundle_created_by_you": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Inoreader_New_liked_article": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Inoreader_New_post_on_our_blog": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Inoreader_New_saved_web_page": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Inoreader_New_starred_article": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Inoreader_New_subscription": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Inoreader_New_tagged_article": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Inoreader_Save_any_web_page": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Inoreader_Subscribe_to_feed": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

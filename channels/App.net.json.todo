@@ -1,0 +1,107 @@
+{
+    "actions": {
+        "Post an update": [
+            {
+                "value": "*",
+                "variable": "App.net_Post_an_update"
+            }
+        ]
+    },
+    "triggers": {
+        "New follower": {
+            "operator": "=",
+            "value": "true",
+            "variable": "App.net_New_follower"
+        },
+        "New mention of you": {
+            "operator": "=",
+            "value": "true",
+            "variable": "App.net_New_mention_of_you"
+        },
+        "New post by anyone with hashtag": {
+            "operator": "=",
+            "value": "true",
+            "variable": "App.net_New_post_by_anyone_with_hashtag"
+        },
+        "New post by you": {
+            "operator": "=",
+            "value": "true",
+            "variable": "App.net_New_post_by_you"
+        },
+        "New post by you with hashtag": {
+            "operator": "=",
+            "value": "true",
+            "variable": "App.net_New_post_by_you_with_hashtag"
+        },
+        "New starred post by you": {
+            "operator": "=",
+            "value": "true",
+            "variable": "App.net_New_starred_post_by_you"
+        }
+    },
+    "variables": {
+        "App.net_New_follower": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "App.net_New_mention_of_you": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "App.net_New_post_by_anyone_with_hashtag": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "App.net_New_post_by_you": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "App.net_New_post_by_you_with_hashtag": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "App.net_New_starred_post_by_you": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "App.net_Post_an_update": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

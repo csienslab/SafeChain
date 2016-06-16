@@ -1,0 +1,48 @@
+{
+    "triggers": {
+        "Bitcoin received": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Chain_Bitcoin_received"
+        },
+        "Bitcoin sent": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Chain_Bitcoin_sent"
+        },
+        "Today's Bitcoin price": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Chain_Today's_Bitcoin_price"
+        }
+    },
+    "variables": {
+        "Chain_Bitcoin_received": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Chain_Bitcoin_sent": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Chain_Today's_Bitcoin_price": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

@@ -1,0 +1,20 @@
+{
+    "triggers": {
+        "Any new contact": {
+            "operator": "=",
+            "value": "true",
+            "variable": "iOS_Contacts_Any_new_contact"
+        }
+    },
+    "variables": {
+        "iOS_Contacts_Any_new_contact": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

@@ -1,0 +1,210 @@
+{
+    "actions": {
+        "Arm camera": [
+            {
+                "value": "*",
+                "variable": "Homeboy_Arm_camera"
+            }
+        ],
+        "Arm location": [
+            {
+                "value": "*",
+                "variable": "Homeboy_Arm_location"
+            }
+        ],
+        "Disarm camera": [
+            {
+                "value": "*",
+                "variable": "Homeboy_Disarm_camera"
+            }
+        ],
+        "Disarm location": [
+            {
+                "value": "*",
+                "variable": "Homeboy_Disarm_location"
+            }
+        ],
+        "Notify crew": [
+            {
+                "value": "*",
+                "variable": "Homeboy_Notify_crew"
+            }
+        ],
+        "Record Video": [
+            {
+                "value": "*",
+                "variable": "Homeboy_Record_Video"
+            }
+        ]
+    },
+    "triggers": {
+        "Camera armed": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Homeboy_Camera_armed"
+        },
+        "Camera disarmed": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Homeboy_Camera_disarmed"
+        },
+        "Location armed": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Homeboy_Location_armed"
+        },
+        "Location disarmed": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Homeboy_Location_disarmed"
+        },
+        "Lost connection": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Homeboy_Lost_connection"
+        },
+        "Low battery": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Homeboy_Low_battery"
+        },
+        "Motion detected at location": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Homeboy_Motion_detected_at_location"
+        },
+        "Video ready": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Homeboy_Video_ready"
+        }
+    },
+    "variables": {
+        "Homeboy_Arm_camera": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Homeboy_Arm_location": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Homeboy_Camera_armed": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Homeboy_Camera_disarmed": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Homeboy_Disarm_camera": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Homeboy_Disarm_location": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Homeboy_Location_armed": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Homeboy_Location_disarmed": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Homeboy_Lost_connection": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Homeboy_Low_battery": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Homeboy_Motion_detected_at_location": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Homeboy_Notify_crew": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Homeboy_Record_Video": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Homeboy_Video_ready": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

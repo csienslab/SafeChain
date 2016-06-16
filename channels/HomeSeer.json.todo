@@ -1,0 +1,96 @@
+{
+    "actions": {
+        "Run a HomeSeer system event": [
+            {
+                "value": "*",
+                "variable": "HomeSeer_Run_a_HomeSeer_system_event"
+            }
+        ],
+        "Turn off a device": [
+            {
+                "value": "*",
+                "variable": "HomeSeer_Turn_off_a_device"
+            }
+        ],
+        "Turn on a device": [
+            {
+                "value": "*",
+                "variable": "HomeSeer_Turn_on_a_device"
+            }
+        ],
+        "Unlock a door lock": [
+            {
+                "value": "*",
+                "variable": "HomeSeer_Unlock_a_door_lock"
+            }
+        ]
+    },
+    "triggers": {
+        "A device is turned off": {
+            "operator": "=",
+            "value": "true",
+            "variable": "HomeSeer_A_device_is_turned_off"
+        },
+        "A device is turned on": {
+            "operator": "=",
+            "value": "true",
+            "variable": "HomeSeer_A_device_is_turned_on"
+        }
+    },
+    "variables": {
+        "HomeSeer_A_device_is_turned_off": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "HomeSeer_A_device_is_turned_on": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "HomeSeer_Run_a_HomeSeer_system_event": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "HomeSeer_Turn_off_a_device": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "HomeSeer_Turn_on_a_device": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "HomeSeer_Unlock_a_door_lock": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

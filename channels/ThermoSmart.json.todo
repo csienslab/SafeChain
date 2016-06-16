@@ -1,0 +1,123 @@
+{
+    "actions": {
+        "Pause": [
+            {
+                "value": "*",
+                "variable": "ThermoSmart_Pause"
+            }
+        ],
+        "Set temperature": [
+            {
+                "value": "*",
+                "variable": "ThermoSmart_Set_temperature"
+            }
+        ],
+        "Unpause": [
+            {
+                "value": "*",
+                "variable": "ThermoSmart_Unpause"
+            }
+        ]
+    },
+    "triggers": {
+        "Temperature drops below": {
+            "operator": "=",
+            "value": "true",
+            "variable": "ThermoSmart_Temperature_drops_below"
+        },
+        "Temperature rises above": {
+            "operator": "=",
+            "value": "true",
+            "variable": "ThermoSmart_Temperature_rises_above"
+        },
+        "ThermoSmart changes program": {
+            "operator": "=",
+            "value": "true",
+            "variable": "ThermoSmart_ThermoSmart_changes_program"
+        },
+        "ThermoSmart gets paused": {
+            "operator": "=",
+            "value": "true",
+            "variable": "ThermoSmart_ThermoSmart_gets_paused"
+        },
+        "ThermoSmart gets unpaused": {
+            "operator": "=",
+            "value": "true",
+            "variable": "ThermoSmart_ThermoSmart_gets_unpaused"
+        }
+    },
+    "variables": {
+        "ThermoSmart_Pause": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "ThermoSmart_Set_temperature": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "ThermoSmart_Temperature_drops_below": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "ThermoSmart_Temperature_rises_above": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "ThermoSmart_ThermoSmart_changes_program": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "ThermoSmart_ThermoSmart_gets_paused": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "ThermoSmart_ThermoSmart_gets_unpaused": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "ThermoSmart_Unpause": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

@@ -1,0 +1,65 @@
+{
+    "actions": {
+        "Create task in project": [
+            {
+                "value": "*",
+                "variable": "Harvest_Create_task_in_project"
+            }
+        ]
+    },
+    "triggers": {
+        "Project created": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Harvest_Project_created"
+        },
+        "Timer started": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Harvest_Timer_started"
+        },
+        "Timer stopped": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Harvest_Timer_stopped"
+        }
+    },
+    "variables": {
+        "Harvest_Create_task_in_project": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Harvest_Project_created": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Harvest_Timer_started": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Harvest_Timer_stopped": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

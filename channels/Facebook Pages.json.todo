@@ -1,0 +1,137 @@
+{
+    "actions": {
+        "Create a link post": [
+            {
+                "value": "*",
+                "variable": "Facebook_Pages_Create_a_link_post"
+            }
+        ],
+        "Create a status message": [
+            {
+                "value": "*",
+                "variable": "Facebook_Pages_Create_a_status_message"
+            }
+        ],
+        "Upload a photo from URL": [
+            {
+                "value": "*",
+                "variable": "Facebook_Pages_Upload_a_photo_from_URL"
+            }
+        ]
+    },
+    "triggers": {
+        "New link post on page": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Facebook_Pages_New_link_post_on_page"
+        },
+        "New link post with hashtag on page": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Facebook_Pages_New_link_post_with_hashtag_on_page"
+        },
+        "New photo upload on page": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Facebook_Pages_New_photo_upload_on_page"
+        },
+        "New photo upload with hashtag on page": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Facebook_Pages_New_photo_upload_with_hashtag_on_page"
+        },
+        "New status message on page": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Facebook_Pages_New_status_message_on_page"
+        },
+        "New status message with hashtag on page": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Facebook_Pages_New_status_message_with_hashtag_on_page"
+        }
+    },
+    "variables": {
+        "Facebook_Pages_Create_a_link_post": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Facebook_Pages_Create_a_status_message": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Facebook_Pages_New_link_post_on_page": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Facebook_Pages_New_link_post_with_hashtag_on_page": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Facebook_Pages_New_photo_upload_on_page": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Facebook_Pages_New_photo_upload_with_hashtag_on_page": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Facebook_Pages_New_status_message_on_page": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Facebook_Pages_New_status_message_with_hashtag_on_page": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Facebook_Pages_Upload_a_photo_from_URL": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

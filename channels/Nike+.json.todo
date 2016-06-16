@@ -1,0 +1,104 @@
+{
+    "triggers": {
+        "Average daily pace reached": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Nike+_Average_daily_pace_reached"
+        },
+        "Daily NikeFuel goal not reached": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Nike+_Daily_NikeFuel_goal_not_reached"
+        },
+        "Daily NikeFuel goal reached": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Nike+_Daily_NikeFuel_goal_reached"
+        },
+        "Daily distance goal reached": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Nike+_Daily_distance_goal_reached"
+        },
+        "Weekly NikeFuel goal reached": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Nike+_Weekly_NikeFuel_goal_reached"
+        },
+        "Weekly distance goal reached": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Nike+_Weekly_distance_goal_reached"
+        },
+        "Weekly runs goal reached": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Nike+_Weekly_runs_goal_reached"
+        }
+    },
+    "variables": {
+        "Nike+_Average_daily_pace_reached": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Nike+_Daily_NikeFuel_goal_not_reached": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Nike+_Daily_NikeFuel_goal_reached": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Nike+_Daily_distance_goal_reached": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Nike+_Weekly_NikeFuel_goal_reached": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Nike+_Weekly_distance_goal_reached": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Nike+_Weekly_runs_goal_reached": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

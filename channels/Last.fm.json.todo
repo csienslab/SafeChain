@@ -1,0 +1,34 @@
+{
+    "triggers": {
+        "New loved track": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Last.fm_New_loved_track"
+        },
+        "New scrobbled track": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Last.fm_New_scrobbled_track"
+        }
+    },
+    "variables": {
+        "Last.fm_New_loved_track": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Last.fm_New_scrobbled_track": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

@@ -1,0 +1,62 @@
+{
+    "triggers": {
+        "Any new league transaction": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Yahoo!_Fantasy_Sports_Any_new_league_transaction"
+        },
+        "New player status change": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Yahoo!_Fantasy_Sports_New_player_status_change"
+        },
+        "New team standings update": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Yahoo!_Fantasy_Sports_New_team_standings_update"
+        },
+        "New team transaction": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Yahoo!_Fantasy_Sports_New_team_transaction"
+        }
+    },
+    "variables": {
+        "Yahoo!_Fantasy_Sports_Any_new_league_transaction": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Yahoo!_Fantasy_Sports_New_player_status_change": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Yahoo!_Fantasy_Sports_New_team_standings_update": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Yahoo!_Fantasy_Sports_New_team_transaction": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

@@ -1,0 +1,104 @@
+{
+    "triggers": {
+        "Any new check-in": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Foursquare_Any_new_check-in"
+        },
+        "New check-in at category": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Foursquare_New_check-in_at_category"
+        },
+        "New check-in by friend in area": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Foursquare_New_check-in_by_friend_in_area"
+        },
+        "New check-in by you in area": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Foursquare_New_check-in_by_you_in_area"
+        },
+        "New check-in tagged": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Foursquare_New_check-in_tagged"
+        },
+        "New check-in with photo": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Foursquare_New_check-in_with_photo"
+        },
+        "New venue saved to your to-do list": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Foursquare_New_venue_saved_to_your_to-do_list"
+        }
+    },
+    "variables": {
+        "Foursquare_Any_new_check-in": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Foursquare_New_check-in_at_category": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Foursquare_New_check-in_by_friend_in_area": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Foursquare_New_check-in_by_you_in_area": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Foursquare_New_check-in_tagged": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Foursquare_New_check-in_with_photo": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Foursquare_New_venue_saved_to_your_to-do_list": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

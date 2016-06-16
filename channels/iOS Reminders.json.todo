@@ -1,0 +1,79 @@
+{
+    "actions": {
+        "Add reminder to list": [
+            {
+                "value": "*",
+                "variable": "iOS_Reminders_Add_reminder_to_list"
+            }
+        ]
+    },
+    "triggers": {
+        "Any new reminder": {
+            "operator": "=",
+            "value": "true",
+            "variable": "iOS_Reminders_Any_new_reminder"
+        },
+        "Any reminder completed": {
+            "operator": "=",
+            "value": "true",
+            "variable": "iOS_Reminders_Any_reminder_completed"
+        },
+        "New reminder added to list": {
+            "operator": "=",
+            "value": "true",
+            "variable": "iOS_Reminders_New_reminder_added_to_list"
+        },
+        "Reminder completed in list": {
+            "operator": "=",
+            "value": "true",
+            "variable": "iOS_Reminders_Reminder_completed_in_list"
+        }
+    },
+    "variables": {
+        "iOS_Reminders_Add_reminder_to_list": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "iOS_Reminders_Any_new_reminder": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "iOS_Reminders_Any_reminder_completed": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "iOS_Reminders_New_reminder_added_to_list": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "iOS_Reminders_Reminder_completed_in_list": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

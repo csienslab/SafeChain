@@ -1,0 +1,94 @@
+{
+    "actions": {
+        "Upload a private track": [
+            {
+                "value": "*",
+                "variable": "SoundCloud_Upload_a_private_track"
+            }
+        ],
+        "Upload a public track": [
+            {
+                "value": "*",
+                "variable": "SoundCloud_Upload_a_public_track"
+            }
+        ]
+    },
+    "triggers": {
+        "Any new public track": {
+            "operator": "=",
+            "value": "true",
+            "variable": "SoundCloud_Any_new_public_track"
+        },
+        "New public like": {
+            "operator": "=",
+            "value": "true",
+            "variable": "SoundCloud_New_public_like"
+        },
+        "New public track by anyone you follow": {
+            "operator": "=",
+            "value": "true",
+            "variable": "SoundCloud_New_public_track_by_anyone_you_follow"
+        },
+        "New track from search": {
+            "operator": "=",
+            "value": "true",
+            "variable": "SoundCloud_New_track_from_search"
+        }
+    },
+    "variables": {
+        "SoundCloud_Any_new_public_track": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "SoundCloud_New_public_like": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "SoundCloud_New_public_track_by_anyone_you_follow": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "SoundCloud_New_track_from_search": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "SoundCloud_Upload_a_private_track": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "SoundCloud_Upload_a_public_track": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

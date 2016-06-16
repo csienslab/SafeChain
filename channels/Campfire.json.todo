@@ -1,0 +1,52 @@
+{
+    "actions": {
+        "Post a message": [
+            {
+                "value": "*",
+                "variable": "Campfire_Post_a_message"
+            }
+        ],
+        "Upload file from URL": [
+            {
+                "value": "*",
+                "variable": "Campfire_Upload_file_from_URL"
+            }
+        ]
+    },
+    "triggers": {
+        "New message from search": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Campfire_New_message_from_search"
+        }
+    },
+    "variables": {
+        "Campfire_New_message_from_search": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Campfire_Post_a_message": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Campfire_Upload_file_from_URL": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

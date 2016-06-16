@@ -1,0 +1,20 @@
+{
+    "triggers": {
+        "trigger": {
+            "operator": "=",
+            "value": "true",
+            "variable": "triggerchannel_trigger"
+        }
+    },
+    "variables": {
+        "triggerchannel_trigger": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

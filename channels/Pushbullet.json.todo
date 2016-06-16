@@ -1,0 +1,66 @@
+{
+    "actions": {
+        "Push a file": [
+            {
+                "value": "*",
+                "variable": "Pushbullet_Push_a_file"
+            }
+        ],
+        "Push a link": [
+            {
+                "value": "*",
+                "variable": "Pushbullet_Push_a_link"
+            }
+        ],
+        "Push a note": [
+            {
+                "value": "*",
+                "variable": "Pushbullet_Push_a_note"
+            }
+        ],
+        "Push an address": [
+            {
+                "value": "*",
+                "variable": "Pushbullet_Push_an_address"
+            }
+        ]
+    },
+    "variables": {
+        "Pushbullet_Push_a_file": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Pushbullet_Push_a_link": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Pushbullet_Push_a_note": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Pushbullet_Push_an_address": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

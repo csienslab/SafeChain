@@ -1,0 +1,108 @@
+{
+    "actions": {
+        "Set oven to sabbath mode": [
+            {
+                "value": "*",
+                "variable": "GE_Appliances_Cooking_Set_oven_to_sabbath_mode"
+            }
+        ],
+        "Turn off oven": [
+            {
+                "value": "*",
+                "variable": "GE_Appliances_Cooking_Turn_off_oven"
+            }
+        ]
+    },
+    "triggers": {
+        "Cooking timer done": {
+            "operator": "=",
+            "value": "true",
+            "variable": "GE_Appliances_Cooking_Cooking_timer_done"
+        },
+        "Oven timer done": {
+            "operator": "=",
+            "value": "true",
+            "variable": "GE_Appliances_Cooking_Oven_timer_done"
+        },
+        "Oven turned off": {
+            "operator": "=",
+            "value": "true",
+            "variable": "GE_Appliances_Cooking_Oven_turned_off"
+        },
+        "Oven turned on": {
+            "operator": "=",
+            "value": "true",
+            "variable": "GE_Appliances_Cooking_Oven_turned_on"
+        },
+        "Preheat temperature achieved": {
+            "operator": "=",
+            "value": "true",
+            "variable": "GE_Appliances_Cooking_Preheat_temperature_achieved"
+        }
+    },
+    "variables": {
+        "GE_Appliances_Cooking_Cooking_timer_done": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "GE_Appliances_Cooking_Oven_timer_done": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "GE_Appliances_Cooking_Oven_turned_off": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "GE_Appliances_Cooking_Oven_turned_on": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "GE_Appliances_Cooking_Preheat_temperature_achieved": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "GE_Appliances_Cooking_Set_oven_to_sabbath_mode": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "GE_Appliances_Cooking_Turn_off_oven": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

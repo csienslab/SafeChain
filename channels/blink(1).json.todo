@@ -1,0 +1,21 @@
+{
+    "actions": {
+        "Send blink event": [
+            {
+                "value": "*",
+                "variable": "blink(1)_Send_blink_event"
+            }
+        ]
+    },
+    "variables": {
+        "blink(1)_Send_blink_event": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

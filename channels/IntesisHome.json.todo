@@ -1,0 +1,124 @@
+{
+    "actions": {
+        "Disable timer": [
+            {
+                "value": "*",
+                "variable": "IntesisHome_Disable_timer"
+            }
+        ],
+        "Execute scene": [
+            {
+                "value": "*",
+                "variable": "IntesisHome_Execute_scene"
+            }
+        ],
+        "Turn off A/C": [
+            {
+                "value": "*",
+                "variable": "IntesisHome_Turn_off_A/C"
+            }
+        ],
+        "Turn on A/C": [
+            {
+                "value": "*",
+                "variable": "IntesisHome_Turn_on_A/C"
+            }
+        ]
+    },
+    "triggers": {
+        "A/C turned on": {
+            "operator": "=",
+            "value": "true",
+            "variable": "IntesisHome_A/C_turned_on"
+        },
+        "Device alert": {
+            "operator": "=",
+            "value": "true",
+            "variable": "IntesisHome_Device_alert"
+        },
+        "Temperature drops below": {
+            "operator": "=",
+            "value": "true",
+            "variable": "IntesisHome_Temperature_drops_below"
+        },
+        "Temperature rises above": {
+            "operator": "=",
+            "value": "true",
+            "variable": "IntesisHome_Temperature_rises_above"
+        }
+    },
+    "variables": {
+        "IntesisHome_A/C_turned_on": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "IntesisHome_Device_alert": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "IntesisHome_Disable_timer": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "IntesisHome_Execute_scene": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "IntesisHome_Temperature_drops_below": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "IntesisHome_Temperature_rises_above": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "IntesisHome_Turn_off_A/C": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "IntesisHome_Turn_on_A/C": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

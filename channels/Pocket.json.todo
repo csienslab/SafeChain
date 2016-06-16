@@ -1,0 +1,79 @@
+{
+    "actions": {
+        "Save for later": [
+            {
+                "value": "*",
+                "variable": "Pocket_Save_for_later"
+            }
+        ]
+    },
+    "triggers": {
+        "Any new item": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Pocket_Any_new_item"
+        },
+        "New favorite item": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Pocket_New_favorite_item"
+        },
+        "New item archived": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Pocket_New_item_archived"
+        },
+        "New item tagged": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Pocket_New_item_tagged"
+        }
+    },
+    "variables": {
+        "Pocket_Any_new_item": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Pocket_New_favorite_item": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Pocket_New_item_archived": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Pocket_New_item_tagged": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Pocket_Save_for_later": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

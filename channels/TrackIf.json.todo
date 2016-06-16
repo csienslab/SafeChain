@@ -1,0 +1,90 @@
+{
+    "triggers": {
+        "New product alert": {
+            "operator": "=",
+            "value": "true",
+            "variable": "TrackIf_New_product_alert"
+        },
+        "New real estate notification": {
+            "operator": "=",
+            "value": "true",
+            "variable": "TrackIf_New_real_estate_notification"
+        },
+        "New software released": {
+            "operator": "=",
+            "value": "true",
+            "variable": "TrackIf_New_software_released"
+        },
+        "New vehicle notification": {
+            "operator": "=",
+            "value": "true",
+            "variable": "TrackIf_New_vehicle_notification"
+        },
+        "Price drops on any product": {
+            "operator": "=",
+            "value": "true",
+            "variable": "TrackIf_Price_drops_on_any_product"
+        },
+        "Product is back in stock": {
+            "operator": "=",
+            "value": "true",
+            "variable": "TrackIf_Product_is_back_in_stock"
+        }
+    },
+    "variables": {
+        "TrackIf_New_product_alert": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "TrackIf_New_real_estate_notification": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "TrackIf_New_software_released": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "TrackIf_New_vehicle_notification": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "TrackIf_Price_drops_on_any_product": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "TrackIf_Product_is_back_in_stock": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

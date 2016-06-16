@@ -1,0 +1,51 @@
+{
+    "actions": {
+        "Add Pin to board": [
+            {
+                "value": "*",
+                "variable": "Pinterest_Add_Pin_to_board"
+            }
+        ]
+    },
+    "triggers": {
+        "New Pin on your board": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Pinterest_New_Pin_on_your_board"
+        },
+        "You like a Pin": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Pinterest_You_like_a_Pin"
+        }
+    },
+    "variables": {
+        "Pinterest_Add_Pin_to_board": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Pinterest_New_Pin_on_your_board": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Pinterest_You_like_a_Pin": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

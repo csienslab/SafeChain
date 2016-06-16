@@ -1,0 +1,138 @@
+{
+    "actions": {
+        "Arm your system": [
+            {
+                "value": "*",
+                "variable": "Myfox_HomeControl_Arm_your_system"
+            }
+        ],
+        "Disable your system": [
+            {
+                "value": "*",
+                "variable": "Myfox_HomeControl_Disable_your_system"
+            }
+        ],
+        "Partially arm your system": [
+            {
+                "value": "*",
+                "variable": "Myfox_HomeControl_Partially_arm_your_system"
+            }
+        ],
+        "Play a scenario": [
+            {
+                "value": "*",
+                "variable": "Myfox_HomeControl_Play_a_scenario"
+            }
+        ]
+    },
+    "triggers": {
+        "System detects a household risk": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Myfox_HomeControl_System_detects_a_household_risk"
+        },
+        "System detects an intrusion": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Myfox_HomeControl_System_detects_an_intrusion"
+        },
+        "System is armed": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Myfox_HomeControl_System_is_armed"
+        },
+        "System is disabled": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Myfox_HomeControl_System_is_disabled"
+        },
+        "System is partially armed": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Myfox_HomeControl_System_is_partially_armed"
+        }
+    },
+    "variables": {
+        "Myfox_HomeControl_Arm_your_system": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Myfox_HomeControl_Disable_your_system": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Myfox_HomeControl_Partially_arm_your_system": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Myfox_HomeControl_Play_a_scenario": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Myfox_HomeControl_System_detects_a_household_risk": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Myfox_HomeControl_System_detects_an_intrusion": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Myfox_HomeControl_System_is_armed": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Myfox_HomeControl_System_is_disabled": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Myfox_HomeControl_System_is_partially_armed": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

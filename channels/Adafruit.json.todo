@@ -1,0 +1,51 @@
+{
+    "actions": {
+        "Send data to Adafruit IO": [
+            {
+                "value": "*",
+                "variable": "Adafruit_Send_data_to_Adafruit_IO"
+            }
+        ]
+    },
+    "triggers": {
+        "Any new data": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Adafruit_Any_new_data"
+        },
+        "Monitor a feed on Adafruit IO": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Adafruit_Monitor_a_feed_on_Adafruit_IO"
+        }
+    },
+    "variables": {
+        "Adafruit_Any_new_data": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Adafruit_Monitor_a_feed_on_Adafruit_IO": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Adafruit_Send_data_to_Adafruit_IO": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

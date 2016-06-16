@@ -1,0 +1,51 @@
+{
+    "actions": {
+        "Schedule a reminder": [
+            {
+                "value": "*",
+                "variable": "FollowUp.cc_Schedule_a_reminder"
+            }
+        ]
+    },
+    "triggers": {
+        "New reminder scheduled": {
+            "operator": "=",
+            "value": "true",
+            "variable": "FollowUp.cc_New_reminder_scheduled"
+        },
+        "Reminder due": {
+            "operator": "=",
+            "value": "true",
+            "variable": "FollowUp.cc_Reminder_due"
+        }
+    },
+    "variables": {
+        "FollowUp.cc_New_reminder_scheduled": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "FollowUp.cc_Reminder_due": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "FollowUp.cc_Schedule_a_reminder": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

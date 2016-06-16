@@ -1,0 +1,21 @@
+{
+    "actions": {
+        "Order a photo print": [
+            {
+                "value": "*",
+                "variable": "Printhug_Order_a_photo_print"
+            }
+        ]
+    },
+    "variables": {
+        "Printhug_Order_a_photo_print": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

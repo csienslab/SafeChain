@@ -1,0 +1,118 @@
+{
+    "triggers": {
+        "Check engine light is on for any vehicle": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Zubie_Check_engine_light_is_on_for_any_vehicle"
+        },
+        "High speed driving detected": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Zubie_High_speed_driving_detected"
+        },
+        "Low battery condition for any vehicle": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Zubie_Low_battery_condition_for_any_vehicle"
+        },
+        "Trip ended": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Zubie_Trip_ended"
+        },
+        "Trip started": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Zubie_Trip_started"
+        },
+        "Vehicle arrives at a place": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Zubie_Vehicle_arrives_at_a_place"
+        },
+        "Vehicle driven between hours": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Zubie_Vehicle_driven_between_hours"
+        },
+        "Vehicle leaves a place": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Zubie_Vehicle_leaves_a_place"
+        }
+    },
+    "variables": {
+        "Zubie_Check_engine_light_is_on_for_any_vehicle": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Zubie_High_speed_driving_detected": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Zubie_Low_battery_condition_for_any_vehicle": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Zubie_Trip_ended": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Zubie_Trip_started": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Zubie_Vehicle_arrives_at_a_place": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Zubie_Vehicle_driven_between_hours": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Zubie_Vehicle_leaves_a_place": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

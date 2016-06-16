@@ -1,0 +1,118 @@
+{
+    "triggers": {
+        "Article added to category": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Wikipedia_Article_added_to_category"
+        },
+        "Article of the day": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Wikipedia_Article_of_the_day"
+        },
+        "New edit from specific user": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Wikipedia_New_edit_from_specific_user"
+        },
+        "New edit to article in category": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Wikipedia_New_edit_to_article_in_category"
+        },
+        "New edit to specific article": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Wikipedia_New_edit_to_specific_article"
+        },
+        "New edit with hashtag": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Wikipedia_New_edit_with_hashtag"
+        },
+        "Picture of the day": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Wikipedia_Picture_of_the_day"
+        },
+        "Word of the day": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Wikipedia_Word_of_the_day"
+        }
+    },
+    "variables": {
+        "Wikipedia_Article_added_to_category": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Wikipedia_Article_of_the_day": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Wikipedia_New_edit_from_specific_user": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Wikipedia_New_edit_to_article_in_category": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Wikipedia_New_edit_to_specific_article": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Wikipedia_New_edit_with_hashtag": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Wikipedia_Picture_of_the_day": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Wikipedia_Word_of_the_day": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

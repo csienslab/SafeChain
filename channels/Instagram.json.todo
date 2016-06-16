@@ -1,0 +1,174 @@
+{
+    "triggers": {
+        "Any new photo by you": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Instagram_Any_new_photo_by_you"
+        },
+        "Any new video by you": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Instagram_Any_new_video_by_you"
+        },
+        "New photo by anyone in area": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Instagram_New_photo_by_anyone_in_area"
+        },
+        "New photo by anyone with specific hashtag": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Instagram_New_photo_by_anyone_with_specific_hashtag"
+        },
+        "New photo by specific user": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Instagram_New_photo_by_specific_user"
+        },
+        "New photo by you in area": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Instagram_New_photo_by_you_in_area"
+        },
+        "New photo by you with specific hashtag": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Instagram_New_photo_by_you_with_specific_hashtag"
+        },
+        "New video by anyone with specific hashtag": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Instagram_New_video_by_anyone_with_specific_hashtag"
+        },
+        "New video by specific user": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Instagram_New_video_by_specific_user"
+        },
+        "New video by you with specific hashtag": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Instagram_New_video_by_you_with_specific_hashtag"
+        },
+        "You like a photo": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Instagram_You_like_a_photo"
+        },
+        "You like a video": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Instagram_You_like_a_video"
+        }
+    },
+    "variables": {
+        "Instagram_Any_new_photo_by_you": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Instagram_Any_new_video_by_you": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Instagram_New_photo_by_anyone_in_area": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Instagram_New_photo_by_anyone_with_specific_hashtag": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Instagram_New_photo_by_specific_user": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Instagram_New_photo_by_you_in_area": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Instagram_New_photo_by_you_with_specific_hashtag": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Instagram_New_video_by_anyone_with_specific_hashtag": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Instagram_New_video_by_specific_user": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Instagram_New_video_by_you_with_specific_hashtag": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Instagram_You_like_a_photo": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Instagram_You_like_a_video": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

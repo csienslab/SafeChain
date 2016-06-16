@@ -1,0 +1,21 @@
+{
+    "actions": {
+        "Send a notification": [
+            {
+                "value": "*",
+                "variable": "Google_Glass_Send_a_notification"
+            }
+        ]
+    },
+    "variables": {
+        "Google_Glass_Send_a_notification": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

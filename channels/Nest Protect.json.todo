@@ -1,0 +1,76 @@
+{
+    "triggers": {
+        "Battery is low": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Nest_Protect_Battery_is_low"
+        },
+        "Carbon monoxide emergency": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Nest_Protect_Carbon_monoxide_emergency"
+        },
+        "Carbon monoxide warning": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Nest_Protect_Carbon_monoxide_warning"
+        },
+        "Smoke alarm emergency": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Nest_Protect_Smoke_alarm_emergency"
+        },
+        "Smoke alarm warning": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Nest_Protect_Smoke_alarm_warning"
+        }
+    },
+    "variables": {
+        "Nest_Protect_Battery_is_low": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Nest_Protect_Carbon_monoxide_emergency": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Nest_Protect_Carbon_monoxide_warning": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Nest_Protect_Smoke_alarm_emergency": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Nest_Protect_Smoke_alarm_warning": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

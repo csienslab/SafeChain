@@ -1,0 +1,36 @@
+{
+    "actions": {
+        "Add item to a specific catalog": [
+            {
+                "value": "*",
+                "variable": "ShopYourWay_Add_item_to_a_specific_catalog"
+            }
+        ],
+        "Add item to your feed": [
+            {
+                "value": "*",
+                "variable": "ShopYourWay_Add_item_to_your_feed"
+            }
+        ]
+    },
+    "variables": {
+        "ShopYourWay_Add_item_to_a_specific_catalog": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "ShopYourWay_Add_item_to_your_feed": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

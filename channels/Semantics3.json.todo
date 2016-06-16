@@ -1,0 +1,20 @@
+{
+    "triggers": {
+        "Product price drops below target": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Semantics3_Product_price_drops_below_target"
+        }
+    },
+    "variables": {
+        "Semantics3_Product_price_drops_below_target": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

@@ -1,0 +1,118 @@
+{
+    "triggers": {
+        "New Critics' Pick movie review": {
+            "operator": "=",
+            "value": "true",
+            "variable": "The_New_York_Times_New_Critics'_Pick_movie_review"
+        },
+        "New article from search": {
+            "operator": "=",
+            "value": "true",
+            "variable": "The_New_York_Times_New_article_from_search"
+        },
+        "New article in section": {
+            "operator": "=",
+            "value": "true",
+            "variable": "The_New_York_Times_New_article_in_section"
+        },
+        "New book on the Best Sellers List": {
+            "operator": "=",
+            "value": "true",
+            "variable": "The_New_York_Times_New_book_on_the_Best_Sellers_List"
+        },
+        "New event in category": {
+            "operator": "=",
+            "value": "true",
+            "variable": "The_New_York_Times_New_event_in_category"
+        },
+        "New popular article in section": {
+            "operator": "=",
+            "value": "true",
+            "variable": "The_New_York_Times_New_popular_article_in_section"
+        },
+        "New vote in the U.S. House of Representatives": {
+            "operator": "=",
+            "value": "true",
+            "variable": "The_New_York_Times_New_vote_in_the_U.S._House_of_Representatives"
+        },
+        "New vote in the U.S. Senate": {
+            "operator": "=",
+            "value": "true",
+            "variable": "The_New_York_Times_New_vote_in_the_U.S._Senate"
+        }
+    },
+    "variables": {
+        "The_New_York_Times_New_Critics'_Pick_movie_review": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "The_New_York_Times_New_article_from_search": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "The_New_York_Times_New_article_in_section": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "The_New_York_Times_New_book_on_the_Best_Sellers_List": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "The_New_York_Times_New_event_in_category": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "The_New_York_Times_New_popular_article_in_section": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "The_New_York_Times_New_vote_in_the_U.S._House_of_Representatives": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "The_New_York_Times_New_vote_in_the_U.S._Senate": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

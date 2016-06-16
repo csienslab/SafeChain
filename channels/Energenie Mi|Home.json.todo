@@ -1,0 +1,36 @@
+{
+    "actions": {
+        "Power off device": [
+            {
+                "value": "*",
+                "variable": "Energenie_Mi|Home_Power_off_device"
+            }
+        ],
+        "Power on device": [
+            {
+                "value": "*",
+                "variable": "Energenie_Mi|Home_Power_on_device"
+            }
+        ]
+    },
+    "variables": {
+        "Energenie_Mi|Home_Power_off_device": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Energenie_Mi|Home_Power_on_device": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

@@ -1,0 +1,34 @@
+{
+    "triggers": {
+        "New event from a camera": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Sighthound_Video_New_event_from_a_camera"
+        },
+        "New event from a rule": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Sighthound_Video_New_event_from_a_rule"
+        }
+    },
+    "variables": {
+        "Sighthound_Video_New_event_from_a_camera": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Sighthound_Video_New_event_from_a_rule": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

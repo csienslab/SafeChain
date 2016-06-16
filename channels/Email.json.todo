@@ -1,0 +1,51 @@
+{
+    "actions": {
+        "Send me an email": [
+            {
+                "value": "*",
+                "variable": "Email_Send_me_an_email"
+            }
+        ]
+    },
+    "triggers": {
+        "Send IFTTT an email tagged": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Email_Send_IFTTT_an_email_tagged"
+        },
+        "Send IFTTT any email": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Email_Send_IFTTT_any_email"
+        }
+    },
+    "variables": {
+        "Email_Send_IFTTT_an_email_tagged": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Email_Send_IFTTT_any_email": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Email_Send_me_an_email": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

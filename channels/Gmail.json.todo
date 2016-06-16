@@ -1,0 +1,107 @@
+{
+    "actions": {
+        "Send an email": [
+            {
+                "value": "*",
+                "variable": "Gmail_Send_an_email"
+            }
+        ]
+    },
+    "triggers": {
+        "Any new attachment in inbox": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Gmail_Any_new_attachment_in_inbox"
+        },
+        "Any new email in inbox": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Gmail_Any_new_email_in_inbox"
+        },
+        "New email in inbox from": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Gmail_New_email_in_inbox_from"
+        },
+        "New email in inbox from search": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Gmail_New_email_in_inbox_from_search"
+        },
+        "New email in inbox labeled": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Gmail_New_email_in_inbox_labeled"
+        },
+        "New starred email in inbox": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Gmail_New_starred_email_in_inbox"
+        }
+    },
+    "variables": {
+        "Gmail_Any_new_attachment_in_inbox": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Gmail_Any_new_email_in_inbox": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Gmail_New_email_in_inbox_from": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Gmail_New_email_in_inbox_from_search": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Gmail_New_email_in_inbox_labeled": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Gmail_New_starred_email_in_inbox": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Gmail_Send_an_email": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

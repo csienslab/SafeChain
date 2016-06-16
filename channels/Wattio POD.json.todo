@@ -1,0 +1,36 @@
+{
+    "actions": {
+        "Switch off": [
+            {
+                "value": "*",
+                "variable": "Wattio_POD_Switch_off"
+            }
+        ],
+        "Switch on": [
+            {
+                "value": "*",
+                "variable": "Wattio_POD_Switch_on"
+            }
+        ]
+    },
+    "variables": {
+        "Wattio_POD_Switch_off": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Wattio_POD_Switch_on": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

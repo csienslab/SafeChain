@@ -1,0 +1,221 @@
+{
+    "actions": {
+        "Arm motion sensor": [
+            {
+                "value": "*",
+                "variable": "Wireless_Tag_Arm_motion_sensor"
+            }
+        ],
+        "Disarm motion sensor": [
+            {
+                "value": "*",
+                "variable": "Wireless_Tag_Disarm_motion_sensor"
+            }
+        ],
+        "Turn on light or switch": [
+            {
+                "value": "*",
+                "variable": "Wireless_Tag_Turn_on_light_or_switch"
+            }
+        ]
+    },
+    "triggers": {
+        "Door or window is closed": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Wireless_Tag_Door_or_window_is_closed"
+        },
+        "Door or window is opened": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Wireless_Tag_Door_or_window_is_opened"
+        },
+        "Humidity or moisture is too high": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Wireless_Tag_Humidity_or_moisture_is_too_high"
+        },
+        "Motion sensor has timed out": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Wireless_Tag_Motion_sensor_has_timed_out"
+        },
+        "Movement is detected": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Wireless_Tag_Movement_is_detected"
+        },
+        "New KumoApp message": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Wireless_Tag_New_KumoApp_message"
+        },
+        "Out of range": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Wireless_Tag_Out_of_range"
+        },
+        "Sensor detects water": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Wireless_Tag_Sensor_detects_water"
+        },
+        "Tag Manager Offline": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Wireless_Tag_Tag_Manager_Offline"
+        },
+        "Tag is moved": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Wireless_Tag_Tag_is_moved"
+        },
+        "Temperature is too high": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Wireless_Tag_Temperature_is_too_high"
+        },
+        "Temperature is too low": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Wireless_Tag_Temperature_is_too_low"
+        }
+    },
+    "variables": {
+        "Wireless_Tag_Arm_motion_sensor": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Wireless_Tag_Disarm_motion_sensor": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Wireless_Tag_Door_or_window_is_closed": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Wireless_Tag_Door_or_window_is_opened": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Wireless_Tag_Humidity_or_moisture_is_too_high": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Wireless_Tag_Motion_sensor_has_timed_out": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Wireless_Tag_Movement_is_detected": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Wireless_Tag_New_KumoApp_message": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Wireless_Tag_Out_of_range": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Wireless_Tag_Sensor_detects_water": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Wireless_Tag_Tag_Manager_Offline": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Wireless_Tag_Tag_is_moved": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Wireless_Tag_Temperature_is_too_high": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Wireless_Tag_Temperature_is_too_low": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Wireless_Tag_Turn_on_light_or_switch": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

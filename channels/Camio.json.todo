@@ -1,0 +1,110 @@
+{
+    "actions": {
+        "Start recording": [
+            {
+                "value": "*",
+                "variable": "Camio_Start_recording"
+            }
+        ],
+        "Stop recording": [
+            {
+                "value": "*",
+                "variable": "Camio_Stop_recording"
+            }
+        ],
+        "Turn off motion notifications": [
+            {
+                "value": "*",
+                "variable": "Camio_Turn_off_motion_notifications"
+            }
+        ],
+        "Turn on motion notifications": [
+            {
+                "value": "*",
+                "variable": "Camio_Turn_on_motion_notifications"
+            }
+        ]
+    },
+    "triggers": {
+        "Advanced motion detected": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Camio_Advanced_motion_detected"
+        },
+        "Motion detected": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Camio_Motion_detected"
+        },
+        "Power disconnected": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Camio_Power_disconnected"
+        }
+    },
+    "variables": {
+        "Camio_Advanced_motion_detected": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Camio_Motion_detected": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Camio_Power_disconnected": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Camio_Start_recording": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Camio_Stop_recording": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Camio_Turn_off_motion_notifications": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Camio_Turn_on_motion_notifications": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

@@ -1,0 +1,37 @@
+{
+    "actions": {
+        "Voice announcement": [
+            {
+                "value": "*",
+                "variable": "Ubi_Voice_announcement"
+            }
+        ]
+    },
+    "triggers": {
+        "Voice command": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Ubi_Voice_command"
+        }
+    },
+    "variables": {
+        "Ubi_Voice_announcement": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Ubi_Voice_command": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

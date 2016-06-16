@@ -1,0 +1,155 @@
+{
+    "actions": {
+        "Mute audio": [
+            {
+                "value": "*",
+                "variable": "Manything_Mute_audio"
+            }
+        ],
+        "Set multiple camera settings": [
+            {
+                "value": "*",
+                "variable": "Manything_Set_multiple_camera_settings"
+            }
+        ],
+        "Start recording": [
+            {
+                "value": "*",
+                "variable": "Manything_Start_recording"
+            }
+        ],
+        "Stop recording": [
+            {
+                "value": "*",
+                "variable": "Manything_Stop_recording"
+            }
+        ],
+        "Turn camera flashlight on": [
+            {
+                "value": "*",
+                "variable": "Manything_Turn_camera_flashlight_on"
+            }
+        ],
+        "Unmute audio": [
+            {
+                "value": "*",
+                "variable": "Manything_Unmute_audio"
+            }
+        ],
+        "Use front facing camera": [
+            {
+                "value": "*",
+                "variable": "Manything_Use_front_facing_camera"
+            }
+        ]
+    },
+    "triggers": {
+        "Battery Low": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Manything_Battery_Low"
+        },
+        "Motion detected": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Manything_Motion_detected"
+        },
+        "Power disconnected": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Manything_Power_disconnected"
+        }
+    },
+    "variables": {
+        "Manything_Battery_Low": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Manything_Motion_detected": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Manything_Mute_audio": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Manything_Power_disconnected": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Manything_Set_multiple_camera_settings": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Manything_Start_recording": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Manything_Stop_recording": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Manything_Turn_camera_flashlight_on": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Manything_Unmute_audio": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Manything_Use_front_facing_camera": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

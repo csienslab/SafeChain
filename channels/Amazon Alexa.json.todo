@@ -1,0 +1,216 @@
+{
+    "triggers": {
+        "Ask for a sports team's next game": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Amazon_Alexa_Ask_for_a_sports_team's_next_game"
+        },
+        "Ask for a sports team's score": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Amazon_Alexa_Ask_for_a_sports_team's_score"
+        },
+        "Ask what's on your Shopping List": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Amazon_Alexa_Ask_what's_on_your_Shopping_List"
+        },
+        "Ask what's on your To Do List": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Amazon_Alexa_Ask_what's_on_your_To_Do_List"
+        },
+        "Item added to your Shopping List": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Amazon_Alexa_Item_added_to_your_Shopping_List"
+        },
+        "Item added to your To Do List": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Amazon_Alexa_Item_added_to_your_To_Do_List"
+        },
+        "Item completed on your Shopping List": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Amazon_Alexa_Item_completed_on_your_Shopping_List"
+        },
+        "Item completed on your To Do List": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Amazon_Alexa_Item_completed_on_your_To_Do_List"
+        },
+        "Item deleted on your Shopping List": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Amazon_Alexa_Item_deleted_on_your_Shopping_List"
+        },
+        "Item deleted on your To Do List": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Amazon_Alexa_Item_deleted_on_your_To_Do_List"
+        },
+        "Item edited on your Shopping List": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Amazon_Alexa_Item_edited_on_your_Shopping_List"
+        },
+        "Item edited on your To Do List": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Amazon_Alexa_Item_edited_on_your_To_Do_List"
+        },
+        "New song played": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Amazon_Alexa_New_song_played"
+        },
+        "Your Alarm goes off": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Amazon_Alexa_Your_Alarm_goes_off"
+        },
+        "Your Timer goes off": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Amazon_Alexa_Your_Timer_goes_off"
+        }
+    },
+    "variables": {
+        "Amazon_Alexa_Ask_for_a_sports_team's_next_game": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Amazon_Alexa_Ask_for_a_sports_team's_score": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Amazon_Alexa_Ask_what's_on_your_Shopping_List": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Amazon_Alexa_Ask_what's_on_your_To_Do_List": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Amazon_Alexa_Item_added_to_your_Shopping_List": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Amazon_Alexa_Item_added_to_your_To_Do_List": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Amazon_Alexa_Item_completed_on_your_Shopping_List": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Amazon_Alexa_Item_completed_on_your_To_Do_List": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Amazon_Alexa_Item_deleted_on_your_Shopping_List": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Amazon_Alexa_Item_deleted_on_your_To_Do_List": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Amazon_Alexa_Item_edited_on_your_Shopping_List": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Amazon_Alexa_Item_edited_on_your_To_Do_List": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Amazon_Alexa_New_song_played": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Amazon_Alexa_Your_Alarm_goes_off": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Amazon_Alexa_Your_Timer_goes_off": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

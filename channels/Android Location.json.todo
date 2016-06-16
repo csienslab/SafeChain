@@ -1,0 +1,48 @@
+{
+    "triggers": {
+        "You enter an area": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Android_Location_You_enter_an_area"
+        },
+        "You enter or exit an area": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Android_Location_You_enter_or_exit_an_area"
+        },
+        "You exit an area": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Android_Location_You_exit_an_area"
+        }
+    },
+    "variables": {
+        "Android_Location_You_enter_an_area": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Android_Location_You_enter_or_exit_an_area": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Android_Location_You_exit_an_area": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

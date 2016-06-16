@@ -1,0 +1,37 @@
+{
+    "actions": {
+        "Call my phone": [
+            {
+                "value": "*",
+                "variable": "Phone_Call_Call_my_phone"
+            }
+        ]
+    },
+    "triggers": {
+        "Leave IFTTT any voicemail": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Phone_Call_Leave_IFTTT_any_voicemail"
+        }
+    },
+    "variables": {
+        "Phone_Call_Call_my_phone": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Phone_Call_Leave_IFTTT_any_voicemail": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

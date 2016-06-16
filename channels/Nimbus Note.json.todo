@@ -1,0 +1,21 @@
+{
+    "actions": {
+        "Create note": [
+            {
+                "value": "*",
+                "variable": "Nimbus_Note_Create_note"
+            }
+        ]
+    },
+    "variables": {
+        "Nimbus_Note_Create_note": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

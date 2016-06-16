@@ -1,0 +1,36 @@
+{
+    "actions": {
+        "Change color": [
+            {
+                "value": "*",
+                "variable": "ORBneXt_Change_color"
+            }
+        ],
+        "Flash alert": [
+            {
+                "value": "*",
+                "variable": "ORBneXt_Flash_alert"
+            }
+        ]
+    },
+    "variables": {
+        "ORBneXt_Change_color": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "ORBneXt_Flash_alert": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

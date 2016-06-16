@@ -1,0 +1,20 @@
+{
+    "triggers": {
+        "New item from search": {
+            "operator": "=",
+            "value": "true",
+            "variable": "eBay_New_item_from_search"
+        }
+    },
+    "variables": {
+        "eBay_New_item_from_search": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

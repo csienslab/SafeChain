@@ -1,0 +1,110 @@
+{
+    "actions": {
+        "Arm iSmartAlarm": [
+            {
+                "value": "*",
+                "variable": "iSmartAlarm_Arm_iSmartAlarm"
+            }
+        ],
+        "Disarm iSmartAlarm": [
+            {
+                "value": "*",
+                "variable": "iSmartAlarm_Disarm_iSmartAlarm"
+            }
+        ],
+        "iSmartAlarm Home": [
+            {
+                "value": "*",
+                "variable": "iSmartAlarm_iSmartAlarm_Home"
+            }
+        ],
+        "iSmartAlarm Panic Siren": [
+            {
+                "value": "*",
+                "variable": "iSmartAlarm_iSmartAlarm_Panic_Siren"
+            }
+        ]
+    },
+    "triggers": {
+        "Contact Sensor": {
+            "operator": "=",
+            "value": "true",
+            "variable": "iSmartAlarm_Contact_Sensor"
+        },
+        "CubeOne-Specific Contact Sensor Triggers": {
+            "operator": "=",
+            "value": "true",
+            "variable": "iSmartAlarm_CubeOne-Specific_Contact_Sensor_Triggers"
+        },
+        "Motion Sensor": {
+            "operator": "=",
+            "value": "true",
+            "variable": "iSmartAlarm_Motion_Sensor"
+        }
+    },
+    "variables": {
+        "iSmartAlarm_Arm_iSmartAlarm": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "iSmartAlarm_Contact_Sensor": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "iSmartAlarm_CubeOne-Specific_Contact_Sensor_Triggers": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "iSmartAlarm_Disarm_iSmartAlarm": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "iSmartAlarm_Motion_Sensor": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "iSmartAlarm_iSmartAlarm_Home": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "iSmartAlarm_iSmartAlarm_Panic_Siren": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

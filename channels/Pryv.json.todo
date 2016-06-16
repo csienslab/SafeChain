@@ -1,0 +1,110 @@
+{
+    "actions": {
+        "Add a file": [
+            {
+                "value": "*",
+                "variable": "Pryv_Add_a_file"
+            }
+        ],
+        "Add a note": [
+            {
+                "value": "*",
+                "variable": "Pryv_Add_a_note"
+            }
+        ],
+        "Add a numerical value": [
+            {
+                "value": "*",
+                "variable": "Pryv_Add_a_numerical_value"
+            }
+        ],
+        "Add a photo": [
+            {
+                "value": "*",
+                "variable": "Pryv_Add_a_photo"
+            }
+        ]
+    },
+    "triggers": {
+        "New note added by you": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Pryv_New_note_added_by_you"
+        },
+        "New numerical value added by you": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Pryv_New_numerical_value_added_by_you"
+        },
+        "New photo added by you": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Pryv_New_photo_added_by_you"
+        }
+    },
+    "variables": {
+        "Pryv_Add_a_file": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Pryv_Add_a_note": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Pryv_Add_a_numerical_value": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Pryv_Add_a_photo": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Pryv_New_note_added_by_you": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Pryv_New_numerical_value_added_by_you": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Pryv_New_photo_added_by_you": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

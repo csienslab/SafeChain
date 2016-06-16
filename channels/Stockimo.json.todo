@@ -1,0 +1,107 @@
+{
+    "actions": {
+        "Upload a photo": [
+            {
+                "value": "*",
+                "variable": "Stockimo_Upload_a_photo"
+            }
+        ]
+    },
+    "triggers": {
+        "Any live news photo uploaded by you": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Stockimo_Any_live_news_photo_uploaded_by_you"
+        },
+        "Any new photo uploaded by you": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Stockimo_Any_new_photo_uploaded_by_you"
+        },
+        "New photo by you is accepted": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Stockimo_New_photo_by_you_is_accepted"
+        },
+        "New photo by you is rejected": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Stockimo_New_photo_by_you_is_rejected"
+        },
+        "New photo by you is sold": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Stockimo_New_photo_by_you_is_sold"
+        },
+        "Payment is credited to you": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Stockimo_Payment_is_credited_to_you"
+        }
+    },
+    "variables": {
+        "Stockimo_Any_live_news_photo_uploaded_by_you": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Stockimo_Any_new_photo_uploaded_by_you": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Stockimo_New_photo_by_you_is_accepted": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Stockimo_New_photo_by_you_is_rejected": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Stockimo_New_photo_by_you_is_sold": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Stockimo_Payment_is_credited_to_you": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Stockimo_Upload_a_photo": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

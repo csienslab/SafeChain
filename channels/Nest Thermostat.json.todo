@@ -1,0 +1,109 @@
+{
+    "actions": {
+        "Set temperature": [
+            {
+                "value": "*",
+                "variable": "Nest_Thermostat_Set_temperature"
+            }
+        ],
+        "Set temperature range": [
+            {
+                "value": "*",
+                "variable": "Nest_Thermostat_Set_temperature_range"
+            }
+        ],
+        "Turn on fan for 15 minutes": [
+            {
+                "value": "*",
+                "variable": "Nest_Thermostat_Turn_on_fan_for_15_minutes"
+            }
+        ]
+    },
+    "triggers": {
+        "Nest set to Away": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Nest_Thermostat_Nest_set_to_Away"
+        },
+        "Nest set to Home": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Nest_Thermostat_Nest_set_to_Home"
+        },
+        "Temperature drops below": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Nest_Thermostat_Temperature_drops_below"
+        },
+        "Temperature rises above": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Nest_Thermostat_Temperature_rises_above"
+        }
+    },
+    "variables": {
+        "Nest_Thermostat_Nest_set_to_Away": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Nest_Thermostat_Nest_set_to_Home": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Nest_Thermostat_Set_temperature": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Nest_Thermostat_Set_temperature_range": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Nest_Thermostat_Temperature_drops_below": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Nest_Thermostat_Temperature_rises_above": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Nest_Thermostat_Turn_on_fan_for_15_minutes": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

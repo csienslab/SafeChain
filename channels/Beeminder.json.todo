@@ -1,0 +1,107 @@
+{
+    "actions": {
+        "Add datapoint": [
+            {
+                "value": "*",
+                "variable": "Beeminder_Add_datapoint"
+            }
+        ]
+    },
+    "triggers": {
+        "Beemergency day on a specific goal": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Beeminder_Beemergency_day_on_a_specific_goal"
+        },
+        "Beemergency day on any goal": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Beeminder_Beemergency_day_on_any_goal"
+        },
+        "Datapoint added to a specific goal": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Beeminder_Datapoint_added_to_a_specific_goal"
+        },
+        "Datapoint added to any goal": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Beeminder_Datapoint_added_to_any_goal"
+        },
+        "N days of safety buffer for a specific goal": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Beeminder_N_days_of_safety_buffer_for_a_specific_goal"
+        },
+        "N days of safety buffer for any goal": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Beeminder_N_days_of_safety_buffer_for_any_goal"
+        }
+    },
+    "variables": {
+        "Beeminder_Add_datapoint": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Beeminder_Beemergency_day_on_a_specific_goal": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Beeminder_Beemergency_day_on_any_goal": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Beeminder_Datapoint_added_to_a_specific_goal": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Beeminder_Datapoint_added_to_any_goal": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Beeminder_N_days_of_safety_buffer_for_a_specific_goal": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Beeminder_N_days_of_safety_buffer_for_any_goal": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

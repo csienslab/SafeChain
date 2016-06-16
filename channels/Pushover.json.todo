@@ -1,0 +1,36 @@
+{
+    "actions": {
+        "Send a high-priority notification": [
+            {
+                "value": "*",
+                "variable": "Pushover_Send_a_high-priority_notification"
+            }
+        ],
+        "Send a notification": [
+            {
+                "value": "*",
+                "variable": "Pushover_Send_a_notification"
+            }
+        ]
+    },
+    "variables": {
+        "Pushover_Send_a_high-priority_notification": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Pushover_Send_a_notification": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

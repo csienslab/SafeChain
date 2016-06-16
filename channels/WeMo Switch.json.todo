@@ -1,0 +1,111 @@
+{
+    "actions": {
+        "Toggle on/off": [
+            {
+                "value": "*",
+                "variable": "WeMo_Switch_Toggle_on/off"
+            }
+        ],
+        "Turn off": [
+            {
+                "value": "*",
+                "variable": "WeMo_Switch_Turn_off"
+            }
+        ],
+        "Turn off then on": [
+            {
+                "value": "*",
+                "variable": "WeMo_Switch_Turn_off_then_on"
+            }
+        ],
+        "Turn on": [
+            {
+                "value": "*",
+                "variable": "WeMo_Switch_Turn_on"
+            }
+        ],
+        "Turn on then off": [
+            {
+                "value": "*",
+                "variable": "WeMo_Switch_Turn_on_then_off"
+            }
+        ]
+    },
+    "triggers": {
+        "Switched off": {
+            "operator": "=",
+            "value": "true",
+            "variable": "WeMo_Switch_Switched_off"
+        },
+        "Switched on": {
+            "operator": "=",
+            "value": "true",
+            "variable": "WeMo_Switch_Switched_on"
+        }
+    },
+    "variables": {
+        "WeMo_Switch_Switched_off": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "WeMo_Switch_Switched_on": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "WeMo_Switch_Toggle_on/off": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "WeMo_Switch_Turn_off": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "WeMo_Switch_Turn_off_then_on": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "WeMo_Switch_Turn_on": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "WeMo_Switch_Turn_on_then_off": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

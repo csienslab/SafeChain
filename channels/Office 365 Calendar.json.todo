@@ -1,0 +1,37 @@
+{
+    "actions": {
+        "Create calendar item": [
+            {
+                "value": "*",
+                "variable": "Office_365_Calendar_Create_calendar_item"
+            }
+        ]
+    },
+    "triggers": {
+        "Event starting soon": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Office_365_Calendar_Event_starting_soon"
+        }
+    },
+    "variables": {
+        "Office_365_Calendar_Create_calendar_item": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Office_365_Calendar_Event_starting_soon": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

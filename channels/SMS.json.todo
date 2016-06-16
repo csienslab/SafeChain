@@ -1,0 +1,51 @@
+{
+    "actions": {
+        "Send me an SMS": [
+            {
+                "value": "*",
+                "variable": "SMS_Send_me_an_SMS"
+            }
+        ]
+    },
+    "triggers": {
+        "Send IFTTT an SMS tagged": {
+            "operator": "=",
+            "value": "true",
+            "variable": "SMS_Send_IFTTT_an_SMS_tagged"
+        },
+        "Send IFTTT any SMS": {
+            "operator": "=",
+            "value": "true",
+            "variable": "SMS_Send_IFTTT_any_SMS"
+        }
+    },
+    "variables": {
+        "SMS_Send_IFTTT_an_SMS_tagged": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "SMS_Send_IFTTT_any_SMS": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "SMS_Send_me_an_SMS": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

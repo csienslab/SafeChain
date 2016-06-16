@@ -1,0 +1,34 @@
+{
+    "triggers": {
+        "New story from section": {
+            "operator": "=",
+            "value": "true",
+            "variable": "InStyle_New_story_from_section"
+        },
+        "New trending story": {
+            "operator": "=",
+            "value": "true",
+            "variable": "InStyle_New_trending_story"
+        }
+    },
+    "variables": {
+        "InStyle_New_story_from_section": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "InStyle_New_trending_story": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

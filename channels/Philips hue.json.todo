@@ -1,0 +1,141 @@
+{
+    "actions": {
+        "Blink lights": [
+            {
+                "value": "*",
+                "variable": "Philips_hue_Blink_lights"
+            }
+        ],
+        "Change color": [
+            {
+                "value": "*",
+                "variable": "Philips_hue_Change_color"
+            }
+        ],
+        "Change color from image": [
+            {
+                "value": "*",
+                "variable": "Philips_hue_Change_color_from_image"
+            }
+        ],
+        "Change to random color": [
+            {
+                "value": "*",
+                "variable": "Philips_hue_Change_to_random_color"
+            }
+        ],
+        "Dim lights": [
+            {
+                "value": "*",
+                "variable": "Philips_hue_Dim_lights"
+            }
+        ],
+        "Toggle lights on/off": [
+            {
+                "value": "*",
+                "variable": "Philips_hue_Toggle_lights_on/off"
+            }
+        ],
+        "Turn off lights": [
+            {
+                "value": "*",
+                "variable": "Philips_hue_Turn_off_lights"
+            }
+        ],
+        "Turn on color loop": [
+            {
+                "value": "*",
+                "variable": "Philips_hue_Turn_on_color_loop"
+            }
+        ],
+        "Turn on lights": [
+            {
+                "value": "*",
+                "variable": "Philips_hue_Turn_on_lights"
+            }
+        ]
+    },
+    "variables": {
+        "Philips_hue_Blink_lights": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Philips_hue_Change_color": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Philips_hue_Change_color_from_image": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Philips_hue_Change_to_random_color": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Philips_hue_Dim_lights": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Philips_hue_Toggle_lights_on/off": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Philips_hue_Turn_off_lights": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Philips_hue_Turn_on_color_loop": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Philips_hue_Turn_on_lights": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

@@ -1,0 +1,21 @@
+{
+    "actions": {
+        "action": [
+            {
+                "value": "*",
+                "variable": "actionchannel_action"
+            }
+        ]
+    },
+    "variables": {
+        "actionchannel_action": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

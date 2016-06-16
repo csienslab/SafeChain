@@ -1,0 +1,167 @@
+{
+    "actions": {
+        "Toggle on/off": [
+            {
+                "value": "*",
+                "variable": "WeMo_Insight_Switch_Toggle_on/off"
+            }
+        ],
+        "Turn off": [
+            {
+                "value": "*",
+                "variable": "WeMo_Insight_Switch_Turn_off"
+            }
+        ],
+        "Turn off then on": [
+            {
+                "value": "*",
+                "variable": "WeMo_Insight_Switch_Turn_off_then_on"
+            }
+        ],
+        "Turn on": [
+            {
+                "value": "*",
+                "variable": "WeMo_Insight_Switch_Turn_on"
+            }
+        ],
+        "Turn on then off": [
+            {
+                "value": "*",
+                "variable": "WeMo_Insight_Switch_Turn_on_then_off"
+            }
+        ]
+    },
+    "triggers": {
+        "Daily cost rises above": {
+            "operator": "=",
+            "value": "true",
+            "variable": "WeMo_Insight_Switch_Daily_cost_rises_above"
+        },
+        "Daily minutes on is longer than": {
+            "operator": "=",
+            "value": "true",
+            "variable": "WeMo_Insight_Switch_Daily_minutes_on_is_longer_than"
+        },
+        "Monthly estimated cost rises above": {
+            "operator": "=",
+            "value": "true",
+            "variable": "WeMo_Insight_Switch_Monthly_estimated_cost_rises_above"
+        },
+        "Standby mode entered": {
+            "operator": "=",
+            "value": "true",
+            "variable": "WeMo_Insight_Switch_Standby_mode_entered"
+        },
+        "Switched off": {
+            "operator": "=",
+            "value": "true",
+            "variable": "WeMo_Insight_Switch_Switched_off"
+        },
+        "Switched on": {
+            "operator": "=",
+            "value": "true",
+            "variable": "WeMo_Insight_Switch_Switched_on"
+        }
+    },
+    "variables": {
+        "WeMo_Insight_Switch_Daily_cost_rises_above": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "WeMo_Insight_Switch_Daily_minutes_on_is_longer_than": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "WeMo_Insight_Switch_Monthly_estimated_cost_rises_above": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "WeMo_Insight_Switch_Standby_mode_entered": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "WeMo_Insight_Switch_Switched_off": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "WeMo_Insight_Switch_Switched_on": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "WeMo_Insight_Switch_Toggle_on/off": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "WeMo_Insight_Switch_Turn_off": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "WeMo_Insight_Switch_Turn_off_then_on": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "WeMo_Insight_Switch_Turn_on": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "WeMo_Insight_Switch_Turn_on_then_off": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

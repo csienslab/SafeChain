@@ -1,0 +1,178 @@
+{
+    "actions": {
+        "Post a note": [
+            {
+                "value": "*",
+                "variable": "Whistle_Post_a_note"
+            }
+        ],
+        "Post a photo": [
+            {
+                "value": "*",
+                "variable": "Whistle_Post_a_photo"
+            }
+        ]
+    },
+    "triggers": {
+        "Activity finished": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Whistle_Activity_finished"
+        },
+        "Activity started": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Whistle_Activity_started"
+        },
+        "Daily activity goal met": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Whistle_Daily_activity_goal_met"
+        },
+        "Daily activity summary": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Whistle_Daily_activity_summary"
+        },
+        "Daily goal has not been met by specific time": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Whistle_Daily_goal_has_not_been_met_by_specific_time"
+        },
+        "Highlight posted": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Whistle_Highlight_posted"
+        },
+        "Less activity than usual": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Whistle_Less_activity_than_usual"
+        },
+        "More rest than usual": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Whistle_More_rest_than_usual"
+        },
+        "Whistle's battery is fully charged": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Whistle_Whistle's_battery_is_fully_charged"
+        },
+        "Whistle's battery is low": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Whistle_Whistle's_battery_is_low"
+        }
+    },
+    "variables": {
+        "Whistle_Activity_finished": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Whistle_Activity_started": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Whistle_Daily_activity_goal_met": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Whistle_Daily_activity_summary": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Whistle_Daily_goal_has_not_been_met_by_specific_time": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Whistle_Highlight_posted": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Whistle_Less_activity_than_usual": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Whistle_More_rest_than_usual": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Whistle_Post_a_note": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Whistle_Post_a_photo": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Whistle_Whistle's_battery_is_fully_charged": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Whistle_Whistle's_battery_is_low": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

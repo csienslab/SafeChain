@@ -1,0 +1,34 @@
+{
+    "triggers": {
+        "Surf height is at least": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Surfline_Surf_height_is_at_least"
+        },
+        "Surf rating is at least": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Surfline_Surf_rating_is_at_least"
+        }
+    },
+    "variables": {
+        "Surfline_Surf_height_is_at_least": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Surfline_Surf_rating_is_at_least": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

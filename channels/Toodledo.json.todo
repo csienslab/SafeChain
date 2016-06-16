@@ -1,0 +1,136 @@
+{
+    "actions": {
+        "Add a note": [
+            {
+                "value": "*",
+                "variable": "Toodledo_Add_a_note"
+            }
+        ],
+        "Add a task": [
+            {
+                "value": "*",
+                "variable": "Toodledo_Add_a_task"
+            }
+        ]
+    },
+    "triggers": {
+        "Any new task": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Toodledo_Any_new_task"
+        },
+        "Any task completed": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Toodledo_Any_task_completed"
+        },
+        "New task in context": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Toodledo_New_task_in_context"
+        },
+        "New task in folder": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Toodledo_New_task_in_folder"
+        },
+        "New task with tag": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Toodledo_New_task_with_tag"
+        },
+        "Task completed in folder": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Toodledo_Task_completed_in_folder"
+        },
+        "Task completed with tag": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Toodledo_Task_completed_with_tag"
+        }
+    },
+    "variables": {
+        "Toodledo_Add_a_note": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Toodledo_Add_a_task": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Toodledo_Any_new_task": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Toodledo_Any_task_completed": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Toodledo_New_task_in_context": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Toodledo_New_task_in_folder": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Toodledo_New_task_with_tag": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Toodledo_Task_completed_in_folder": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Toodledo_Task_completed_with_tag": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

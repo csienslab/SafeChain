@@ -1,0 +1,51 @@
+{
+    "actions": {
+        "Toggle on/off": [
+            {
+                "value": "*",
+                "variable": "Wink:_Pivot_Power_Genius_Toggle_on/off"
+            }
+        ],
+        "Turn outlet off": [
+            {
+                "value": "*",
+                "variable": "Wink:_Pivot_Power_Genius_Turn_outlet_off"
+            }
+        ],
+        "Turn outlet on": [
+            {
+                "value": "*",
+                "variable": "Wink:_Pivot_Power_Genius_Turn_outlet_on"
+            }
+        ]
+    },
+    "variables": {
+        "Wink:_Pivot_Power_Genius_Toggle_on/off": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Wink:_Pivot_Power_Genius_Turn_outlet_off": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Wink:_Pivot_Power_Genius_Turn_outlet_on": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

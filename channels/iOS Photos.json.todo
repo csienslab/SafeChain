@@ -1,0 +1,107 @@
+{
+    "actions": {
+        "Add photo to album": [
+            {
+                "value": "*",
+                "variable": "iOS_Photos_Add_photo_to_album"
+            }
+        ]
+    },
+    "triggers": {
+        "Any new photo": {
+            "operator": "=",
+            "value": "true",
+            "variable": "iOS_Photos_Any_new_photo"
+        },
+        "New photo added to album": {
+            "operator": "=",
+            "value": "true",
+            "variable": "iOS_Photos_New_photo_added_to_album"
+        },
+        "New photo taken in area": {
+            "operator": "=",
+            "value": "true",
+            "variable": "iOS_Photos_New_photo_taken_in_area"
+        },
+        "New photo with the front camera": {
+            "operator": "=",
+            "value": "true",
+            "variable": "iOS_Photos_New_photo_with_the_front_camera"
+        },
+        "New photo with the rear camera": {
+            "operator": "=",
+            "value": "true",
+            "variable": "iOS_Photos_New_photo_with_the_rear_camera"
+        },
+        "New screenshot": {
+            "operator": "=",
+            "value": "true",
+            "variable": "iOS_Photos_New_screenshot"
+        }
+    },
+    "variables": {
+        "iOS_Photos_Add_photo_to_album": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "iOS_Photos_Any_new_photo": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "iOS_Photos_New_photo_added_to_album": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "iOS_Photos_New_photo_taken_in_area": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "iOS_Photos_New_photo_with_the_front_camera": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "iOS_Photos_New_photo_with_the_rear_camera": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "iOS_Photos_New_screenshot": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

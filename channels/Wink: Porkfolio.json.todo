@@ -1,0 +1,34 @@
+{
+    "triggers": {
+        "Balance rises above": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Wink:_Porkfolio_Balance_rises_above"
+        },
+        "Money added": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Wink:_Porkfolio_Money_added"
+        }
+    },
+    "variables": {
+        "Wink:_Porkfolio_Balance_rises_above": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Wink:_Porkfolio_Money_added": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

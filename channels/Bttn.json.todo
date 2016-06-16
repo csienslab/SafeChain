@@ -1,0 +1,20 @@
+{
+    "triggers": {
+        "Press bttn": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Bttn_Press_bttn"
+        }
+    },
+    "variables": {
+        "Bttn_Press_bttn": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

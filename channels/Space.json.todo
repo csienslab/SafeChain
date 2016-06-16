@@ -1,0 +1,118 @@
+{
+    "triggers": {
+        "Astronaut enters space": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Space_Astronaut_enters_space"
+        },
+        "Astronaut exits space": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Space_Astronaut_exits_space"
+        },
+        "Astronomy picture of the day by NASA": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Space_Astronomy_picture_of_the_day_by_NASA"
+        },
+        "Breaking news by NASA": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Space_Breaking_news_by_NASA"
+        },
+        "ISS on-orbit status report": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Space_ISS_on-orbit_status_report"
+        },
+        "ISS passes over a specific location": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Space_ISS_passes_over_a_specific_location"
+        },
+        "Image of the day by NASA": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Space_Image_of_the_day_by_NASA"
+        },
+        "Season changes on Mars": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Space_Season_changes_on_Mars"
+        }
+    },
+    "variables": {
+        "Space_Astronaut_enters_space": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Space_Astronaut_exits_space": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Space_Astronomy_picture_of_the_day_by_NASA": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Space_Breaking_news_by_NASA": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Space_ISS_on-orbit_status_report": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Space_ISS_passes_over_a_specific_location": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Space_Image_of_the_day_by_NASA": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Space_Season_changes_on_Mars": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

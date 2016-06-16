@@ -1,0 +1,322 @@
+{
+    "actions": {
+        "Activate siren/strobe": [
+            {
+                "value": "*",
+                "variable": "SmartThings_Activate_siren/strobe"
+            }
+        ],
+        "Deactivate siren/strobe": [
+            {
+                "value": "*",
+                "variable": "SmartThings_Deactivate_siren/strobe"
+            }
+        ],
+        "Lock": [
+            {
+                "value": "*",
+                "variable": "SmartThings_Lock"
+            }
+        ],
+        "Switch off": [
+            {
+                "value": "*",
+                "variable": "SmartThings_Switch_off"
+            }
+        ],
+        "Switch on": [
+            {
+                "value": "*",
+                "variable": "SmartThings_Switch_on"
+            }
+        ],
+        "Unlock": [
+            {
+                "value": "*",
+                "variable": "SmartThings_Unlock"
+            }
+        ]
+    },
+    "triggers": {
+        "Any new motion": {
+            "operator": "=",
+            "value": "true",
+            "variable": "SmartThings_Any_new_motion"
+        },
+        "Brightness drops below": {
+            "operator": "=",
+            "value": "true",
+            "variable": "SmartThings_Brightness_drops_below"
+        },
+        "Brightness rises above": {
+            "operator": "=",
+            "value": "true",
+            "variable": "SmartThings_Brightness_rises_above"
+        },
+        "Closed": {
+            "operator": "=",
+            "value": "true",
+            "variable": "SmartThings_Closed"
+        },
+        "Humidity drops below": {
+            "operator": "=",
+            "value": "true",
+            "variable": "SmartThings_Humidity_drops_below"
+        },
+        "Humidity rises above": {
+            "operator": "=",
+            "value": "true",
+            "variable": "SmartThings_Humidity_rises_above"
+        },
+        "Locked": {
+            "operator": "=",
+            "value": "true",
+            "variable": "SmartThings_Locked"
+        },
+        "Moisture detected": {
+            "operator": "=",
+            "value": "true",
+            "variable": "SmartThings_Moisture_detected"
+        },
+        "Opened": {
+            "operator": "=",
+            "value": "true",
+            "variable": "SmartThings_Opened"
+        },
+        "Presence detected": {
+            "operator": "=",
+            "value": "true",
+            "variable": "SmartThings_Presence_detected"
+        },
+        "Presence no longer detected": {
+            "operator": "=",
+            "value": "true",
+            "variable": "SmartThings_Presence_no_longer_detected"
+        },
+        "Switched off": {
+            "operator": "=",
+            "value": "true",
+            "variable": "SmartThings_Switched_off"
+        },
+        "Switched on": {
+            "operator": "=",
+            "value": "true",
+            "variable": "SmartThings_Switched_on"
+        },
+        "Temperature drops below": {
+            "operator": "=",
+            "value": "true",
+            "variable": "SmartThings_Temperature_drops_below"
+        },
+        "Temperature rises above": {
+            "operator": "=",
+            "value": "true",
+            "variable": "SmartThings_Temperature_rises_above"
+        },
+        "Unlocked": {
+            "operator": "=",
+            "value": "true",
+            "variable": "SmartThings_Unlocked"
+        }
+    },
+    "variables": {
+        "SmartThings_Activate_siren/strobe": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "SmartThings_Any_new_motion": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "SmartThings_Brightness_drops_below": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "SmartThings_Brightness_rises_above": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "SmartThings_Closed": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "SmartThings_Deactivate_siren/strobe": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "SmartThings_Humidity_drops_below": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "SmartThings_Humidity_rises_above": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "SmartThings_Lock": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "SmartThings_Locked": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "SmartThings_Moisture_detected": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "SmartThings_Opened": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "SmartThings_Presence_detected": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "SmartThings_Presence_no_longer_detected": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "SmartThings_Switch_off": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "SmartThings_Switch_on": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "SmartThings_Switched_off": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "SmartThings_Switched_on": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "SmartThings_Temperature_drops_below": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "SmartThings_Temperature_rises_above": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "SmartThings_Unlock": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "SmartThings_Unlocked": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

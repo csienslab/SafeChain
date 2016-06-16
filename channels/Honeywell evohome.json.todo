@@ -1,0 +1,81 @@
+{
+    "actions": {
+        "Disable a quick action": [
+            {
+                "value": "*",
+                "variable": "Honeywell_evohome_Disable_a_quick_action"
+            }
+        ],
+        "Enable a quick action": [
+            {
+                "value": "*",
+                "variable": "Honeywell_evohome_Enable_a_quick_action"
+            }
+        ],
+        "Set a zone temperature": [
+            {
+                "value": "*",
+                "variable": "Honeywell_evohome_Set_a_zone_temperature"
+            }
+        ],
+        "Turn hot water off": [
+            {
+                "value": "*",
+                "variable": "Honeywell_evohome_Turn_hot_water_off"
+            }
+        ],
+        "Turn hot water on": [
+            {
+                "value": "*",
+                "variable": "Honeywell_evohome_Turn_hot_water_on"
+            }
+        ]
+    },
+    "variables": {
+        "Honeywell_evohome_Disable_a_quick_action": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Honeywell_evohome_Enable_a_quick_action": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Honeywell_evohome_Set_a_zone_temperature": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Honeywell_evohome_Turn_hot_water_off": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Honeywell_evohome_Turn_hot_water_on": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

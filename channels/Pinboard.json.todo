@@ -1,0 +1,81 @@
+{
+    "actions": {
+        "Add a private bookmark": [
+            {
+                "value": "*",
+                "variable": "Pinboard_Add_a_private_bookmark"
+            }
+        ],
+        "Add a public bookmark": [
+            {
+                "value": "*",
+                "variable": "Pinboard_Add_a_public_bookmark"
+            }
+        ],
+        "Add read later bookmark": [
+            {
+                "value": "*",
+                "variable": "Pinboard_Add_read_later_bookmark"
+            }
+        ]
+    },
+    "triggers": {
+        "Any new public bookmark": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Pinboard_Any_new_public_bookmark"
+        },
+        "New public bookmark tagged": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Pinboard_New_public_bookmark_tagged"
+        }
+    },
+    "variables": {
+        "Pinboard_Add_a_private_bookmark": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Pinboard_Add_a_public_bookmark": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Pinboard_Add_read_later_bookmark": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Pinboard_Any_new_public_bookmark": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Pinboard_New_public_bookmark_tagged": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

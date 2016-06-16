@@ -1,0 +1,93 @@
+{
+    "actions": {
+        "Upload public photo from URL": [
+            {
+                "value": "*",
+                "variable": "Flickr_Upload_public_photo_from_URL"
+            }
+        ]
+    },
+    "triggers": {
+        "Any new public photo": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Flickr_Any_new_public_photo"
+        },
+        "Any new set": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Flickr_Any_new_set"
+        },
+        "New public favorite": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Flickr_New_public_favorite"
+        },
+        "New public photo tagged": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Flickr_New_public_photo_tagged"
+        },
+        "New public photos": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Flickr_New_public_photos"
+        }
+    },
+    "variables": {
+        "Flickr_Any_new_public_photo": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Flickr_Any_new_set": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Flickr_New_public_favorite": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Flickr_New_public_photo_tagged": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Flickr_New_public_photos": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Flickr_Upload_public_photo_from_URL": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

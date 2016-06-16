@@ -1,0 +1,21 @@
+{
+    "actions": {
+        "Activate shortcut": [
+            {
+                "value": "*",
+                "variable": "Wink:_Shortcuts_Activate_shortcut"
+            }
+        ]
+    },
+    "variables": {
+        "Wink:_Shortcuts_Activate_shortcut": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

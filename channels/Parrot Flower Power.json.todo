@@ -1,0 +1,76 @@
+{
+    "triggers": {
+        "Fertilizer level alert": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Parrot_Flower_Power_Fertilizer_level_alert"
+        },
+        "Light level alert": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Parrot_Flower_Power_Light_level_alert"
+        },
+        "Soil moisture alert": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Parrot_Flower_Power_Soil_moisture_alert"
+        },
+        "Temperature alert": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Parrot_Flower_Power_Temperature_alert"
+        },
+        "Time to water the plant": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Parrot_Flower_Power_Time_to_water_the_plant"
+        }
+    },
+    "variables": {
+        "Parrot_Flower_Power_Fertilizer_level_alert": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Parrot_Flower_Power_Light_level_alert": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Parrot_Flower_Power_Soil_moisture_alert": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Parrot_Flower_Power_Temperature_alert": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Parrot_Flower_Power_Time_to_water_the_plant": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

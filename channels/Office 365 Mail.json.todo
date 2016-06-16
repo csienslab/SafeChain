@@ -1,0 +1,65 @@
+{
+    "actions": {
+        "Send email": [
+            {
+                "value": "*",
+                "variable": "Office_365_Mail_Send_email"
+            }
+        ]
+    },
+    "triggers": {
+        "Any new email": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Office_365_Mail_Any_new_email"
+        },
+        "New email from": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Office_365_Mail_New_email_from"
+        },
+        "New high priority email": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Office_365_Mail_New_high_priority_email"
+        }
+    },
+    "variables": {
+        "Office_365_Mail_Any_new_email": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Office_365_Mail_New_email_from": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Office_365_Mail_New_high_priority_email": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Office_365_Mail_Send_email": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

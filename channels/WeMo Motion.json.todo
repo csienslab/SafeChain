@@ -1,0 +1,34 @@
+{
+    "triggers": {
+        "Any new motion": {
+            "operator": "=",
+            "value": "true",
+            "variable": "WeMo_Motion_Any_new_motion"
+        },
+        "New motion after quiet period": {
+            "operator": "=",
+            "value": "true",
+            "variable": "WeMo_Motion_New_motion_after_quiet_period"
+        }
+    },
+    "variables": {
+        "WeMo_Motion_Any_new_motion": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "WeMo_Motion_New_motion_after_quiet_period": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

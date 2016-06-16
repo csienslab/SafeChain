@@ -1,0 +1,36 @@
+{
+    "actions": {
+        "End activity": [
+            {
+                "value": "*",
+                "variable": "Harmony_End_activity"
+            }
+        ],
+        "Start activity": [
+            {
+                "value": "*",
+                "variable": "Harmony_Start_activity"
+            }
+        ]
+    },
+    "variables": {
+        "Harmony_End_activity": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Harmony_Start_activity": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

@@ -1,0 +1,93 @@
+{
+    "actions": {
+        "Create an issue": [
+            {
+                "value": "*",
+                "variable": "GitHub_Create_an_issue"
+            }
+        ]
+    },
+    "triggers": {
+        "Any new closed issue": {
+            "operator": "=",
+            "value": "true",
+            "variable": "GitHub_Any_new_closed_issue"
+        },
+        "Any new issue": {
+            "operator": "=",
+            "value": "true",
+            "variable": "GitHub_Any_new_issue"
+        },
+        "New issue assigned to you": {
+            "operator": "=",
+            "value": "true",
+            "variable": "GitHub_New_issue_assigned_to_you"
+        },
+        "New pull request for a specific repository": {
+            "operator": "=",
+            "value": "true",
+            "variable": "GitHub_New_pull_request_for_a_specific_repository"
+        },
+        "New repository by a specific username or organization": {
+            "operator": "=",
+            "value": "true",
+            "variable": "GitHub_New_repository_by_a_specific_username_or_organization"
+        }
+    },
+    "variables": {
+        "GitHub_Any_new_closed_issue": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "GitHub_Any_new_issue": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "GitHub_Create_an_issue": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "GitHub_New_issue_assigned_to_you": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "GitHub_New_pull_request_for_a_specific_repository": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "GitHub_New_repository_by_a_specific_username_or_organization": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

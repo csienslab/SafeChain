@@ -1,0 +1,111 @@
+{
+    "actions": {
+        "Activate scene": [
+            {
+                "value": "*",
+                "variable": "LIFX_Activate_scene"
+            }
+        ],
+        "Blink lights": [
+            {
+                "value": "*",
+                "variable": "LIFX_Blink_lights"
+            }
+        ],
+        "Breathe lights": [
+            {
+                "value": "*",
+                "variable": "LIFX_Breathe_lights"
+            }
+        ],
+        "Change color of lights": [
+            {
+                "value": "*",
+                "variable": "LIFX_Change_color_of_lights"
+            }
+        ],
+        "Toggle lights on/off": [
+            {
+                "value": "*",
+                "variable": "LIFX_Toggle_lights_on/off"
+            }
+        ],
+        "Turn lights off": [
+            {
+                "value": "*",
+                "variable": "LIFX_Turn_lights_off"
+            }
+        ],
+        "Turn lights on": [
+            {
+                "value": "*",
+                "variable": "LIFX_Turn_lights_on"
+            }
+        ]
+    },
+    "variables": {
+        "LIFX_Activate_scene": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "LIFX_Blink_lights": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "LIFX_Breathe_lights": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "LIFX_Change_color_of_lights": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "LIFX_Toggle_lights_on/off": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "LIFX_Turn_lights_off": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "LIFX_Turn_lights_on": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

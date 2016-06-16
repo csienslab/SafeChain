@@ -1,0 +1,34 @@
+{
+    "triggers": {
+        "Any new shipment": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Slice_Any_new_shipment"
+        },
+        "Shipment status changes": {
+            "operator": "=",
+            "value": "true",
+            "variable": "Slice_Shipment_status_changes"
+        }
+    },
+    "variables": {
+        "Slice_Any_new_shipment": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "Slice_Shipment_status_changes": {
+            "maxValue": 0,
+            "minValue": 0,
+            "type": "",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}
