@@ -1,0 +1,32 @@
+{
+    "actions": {
+        "Set mode": [
+            {
+                "value": "*",
+                "minValue": 0,
+                "maxValue": 15,
+                "variable": "Wattio_THERMIC_mode"
+            }
+        ],
+        "Set temperature": [
+            {
+                "value": "*",
+                "minValue": 0,
+                "maxValue": 100,
+                "variable": "Wattio_THERMIC_temperature"
+            }
+        ]
+    },
+    "variables": {
+        "Wattio_THERMIC_mode": {
+            "maxValue": 15,
+            "minValue": 0,
+            "type": "range"
+        },
+        "Wattio_THERMIC_temperature": {
+            "maxValue": 100,
+            "minValue": 0,
+            "type": "range"
+        }
+    }
+}

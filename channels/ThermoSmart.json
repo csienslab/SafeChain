@@ -1,0 +1,76 @@
+{
+    "actions": {
+        "Pause": [
+            {
+                "value": "off",
+                "variable": "ThermoSmart_thermosmart"
+            }
+        ],
+        "Set temperature": [
+            {
+                "value": "*",
+                "minValue": 0,
+                "maxValue": 100,
+                "variable": "ThermoSmart_temperature"
+            }
+        ],
+        "Unpause": [
+            {
+                "value": "on",
+                "variable": "ThermoSmart_thermosmart"
+            }
+        ]
+    },
+    "triggers": {
+        "Temperature drops below": {
+            "relationalOperator": "<=",
+            "value": "*",
+            "minValue": 0,
+            "maxValue": 100,
+            "variable": "ThermoSmart_temperature"
+        },
+        "Temperature rises above": {
+            "relationalOperator": ">=",
+            "value": "*",
+            "minValue": 0,
+            "maxValue": 100,
+            "variable": "ThermoSmart_temperature"
+        },
+        "ThermoSmart changes program": {
+            "relationalOperator": "=",
+            "value": "true",
+            "variable": "ThermoSmart_changes_program"
+        },
+        "ThermoSmart gets paused": {
+            "relationalOperator": "=",
+            "value": "off",
+            "variable": "ThermoSmart_thermosmart"
+        },
+        "ThermoSmart gets unpaused": {
+            "relationalOperator": "=",
+            "value": "on",
+            "variable": "ThermoSmart_thermosmart"
+        }
+    },
+    "variables": {
+        "ThermoSmart_thermosmart": {
+            "type": "set",
+            "value": [
+                "on",
+                "off"
+            ]
+        },
+        "ThermoSmart_temperature": {
+            "maxValue": 100,
+            "minValue": 0,
+            "type": "range"
+        },
+        "ThermoSmart_changes_program": {
+            "type": "set",
+            "value": [
+                "true",
+                "false"
+            ]
+        }
+    }
+}

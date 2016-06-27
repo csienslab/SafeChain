@@ -1,0 +1,25 @@
+{
+    "actions": {
+        "Turn A/C off": [
+            {
+                "value": "off",
+                "variable": "Sensibo_AC"
+            }
+        ],
+        "Turn A/C on": [
+            {
+                "value": "on",
+                "variable": "Sensibo_AC"
+            }
+        ]
+    },
+    "variables": {
+        "Sensibo_AC": {
+            "type": "set",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

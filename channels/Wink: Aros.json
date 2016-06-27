@@ -1,0 +1,25 @@
+{
+    "actions": {
+        "Turn A/C off": [
+            {
+                "value": "off",
+                "variable": "Wink_Aros_AC"
+            }
+        ],
+        "Turn A/C on": [
+            {
+                "value": "on",
+                "variable": "Wink_Aros_AC"
+            }
+        ]
+    },
+    "variables": {
+        "Wink_Aros_AC": {
+            "type": "set",
+            "value": [
+                "on",
+                "off"
+            ]
+        }
+    }
+}

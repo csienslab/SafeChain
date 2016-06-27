@@ -2,16 +2,14 @@
     "actions": {
         "Send blink event": [
             {
-                "value": "*",
-                "variable": "blink(1)_Send_blink_event"
+                "value": "on",
+                "variable": "blink1_blink"
             }
         ]
     },
     "variables": {
-        "blink(1)_Send_blink_event": {
-            "maxValue": 0,
-            "minValue": 0,
-            "type": "",
+        "blink1_blink": {
+            "type": "set",
             "value": [
                 "on",
                 "off"

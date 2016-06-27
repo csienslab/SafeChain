@@ -1,75 +1,65 @@
 {
     "triggers": {
         "Any new handpicked item": {
-            "operator": "=",
+            "relationalOperator": "=",
             "value": "true",
             "variable": "Etsy_Any_new_handpicked_item"
         },
         "New favorite item": {
-            "operator": "=",
+            "relationalOperator": "=",
             "value": "true",
             "variable": "Etsy_New_favorite_item"
         },
         "New item from search": {
-            "operator": "=",
+            "relationalOperator": "=",
             "value": "true",
             "variable": "Etsy_New_item_from_search"
         },
         "New item in shop": {
-            "operator": "=",
+            "relationalOperator": "=",
             "value": "true",
             "variable": "Etsy_New_item_in_shop"
         },
         "New purchased item": {
-            "operator": "=",
+            "relationalOperator": "=",
             "value": "true",
             "variable": "Etsy_New_purchased_item"
         }
     },
     "variables": {
         "Etsy_Any_new_handpicked_item": {
-            "maxValue": 0,
-            "minValue": 0,
-            "type": "",
+            "type": "set",
             "value": [
-                "on",
-                "off"
+                "true",
+                "false"
             ]
         },
         "Etsy_New_favorite_item": {
-            "maxValue": 0,
-            "minValue": 0,
-            "type": "",
+            "type": "set",
             "value": [
-                "on",
-                "off"
+                "true",
+                "false"
             ]
         },
         "Etsy_New_item_from_search": {
-            "maxValue": 0,
-            "minValue": 0,
-            "type": "",
+            "type": "set",
             "value": [
-                "on",
-                "off"
+                "true",
+                "false"
             ]
         },
         "Etsy_New_item_in_shop": {
-            "maxValue": 0,
-            "minValue": 0,
-            "type": "",
+            "type": "set",
             "value": [
-                "on",
-                "off"
+                "true",
+                "false"
             ]
         },
         "Etsy_New_purchased_item": {
-            "maxValue": 0,
-            "minValue": 0,
-            "type": "",
+            "type": "set",
             "value": [
-                "on",
-                "off"
+                "true",
+                "false"
             ]
         }
     }
