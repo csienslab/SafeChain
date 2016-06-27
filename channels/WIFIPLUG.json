@@ -1,0 +1,27 @@
+{
+    "actions": {
+        "Toggle on / off": [
+            {
+                "value": "!",
+                "variable": "WIFIPLUG_turned_on"
+            }
+        ],
+        "Turn off": [
+            {
+                "value": "FALSE",
+                "variable": "WIFIPLUG_turned_on"
+            }
+        ],
+        "Turn on": [
+            {
+                "value": "TRUE",
+                "variable": "WIFIPLUG_turned_on"
+            }
+        ]
+    },
+    "variables": {
+        "WIFIPLUG_turned_on": {
+            "type": "boolean"
+        }
+    }
+}

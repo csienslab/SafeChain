@@ -10,14 +10,14 @@
         ],
         "Disable camera motion detection": [
             {
-                "value": "off",
-                "variable": "iSecurity_camera_motion_detection"
+                "value": "FALSE",
+                "variable": "iSecurity_with_camera_motion_detection"
             }
         ],
         "Enable camera motion detection": [
             {
-                "value": "on",
-                "variable": "iSecurity_camera_motion_detection"
+                "value": "TRUE",
+                "variable": "iSecurity_with_camera_motion_detection"
             }
         ]
     },
@@ -27,19 +27,19 @@
             "operand": [
                 {
                     "relationalOperator": "=",
-                    "value": "true",
+                    "value": "TRUE",
                     "variable": "iSecurity_Motion_detected_by_camera"
                 },
                 {
                     "relationalOperator": "=",
-                    "value": "on",
-                    "variable": "iSecurity_camera_motion_detection"
+                    "value": "TRUE",
+                    "variable": "iSecurity_with_camera_motion_detection"
                 }
             ]
         },
         "Person seen by camera": {
             "relationalOperator": "=",
-            "value": "true",
+            "value": "TRUE",
             "variable": "iSecurity_Person_seen_by_camera"
         }
     },
@@ -49,26 +49,14 @@
             "minValue": 0,
             "type": "range"
         },
-        "iSecurity_camera_motion_detection": {
-            "type": "set",
-            "value": [
-                "on",
-                "off"
-            ]
+        "iSecurity_with_camera_motion_detection": {
+            "type": "boolean"
         },
         "iSecurity_Motion_detected_by_camera": {
-            "type": "set",
-            "value": [
-                "true",
-                "false"
-            ]
+            "type": "boolean"
         },
         "iSecurity_Person_seen_by_camera": {
-            "type": "set",
-            "value": [
-                "true",
-                "false"
-            ]
+            "type": "boolean"
         }
     }
 }

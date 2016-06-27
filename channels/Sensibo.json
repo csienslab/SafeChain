@@ -2,24 +2,20 @@
     "actions": {
         "Turn A/C off": [
             {
-                "value": "off",
-                "variable": "Sensibo_AC"
+                "value": "FALSE",
+                "variable": "Sensibo_AC_turned_on"
             }
         ],
         "Turn A/C on": [
             {
-                "value": "on",
-                "variable": "Sensibo_AC"
+                "value": "TRUE",
+                "variable": "Sensibo_AC_turned_on"
             }
         ]
     },
     "variables": {
-        "Sensibo_AC": {
-            "type": "set",
-            "value": [
-                "on",
-                "off"
-            ]
+        "Sensibo_AC_turned_on": {
+            "type": "boolean"
         }
     }
 }

@@ -2,18 +2,14 @@
     "actions": {
         "Send blink event": [
             {
-                "value": "on",
+                "value": "TRUE",
                 "variable": "blink1_blink"
             }
         ]
     },
     "variables": {
         "blink1_blink": {
-            "type": "set",
-            "value": [
-                "on",
-                "off"
-            ]
+            "type": "boolean"
         }
     }
 }

@@ -16,7 +16,7 @@
     "variables": {
         "Wink_Aros_AC": {
             "type": "set",
-            "value": [
+            "valueSet": [
                 "on",
                 "off"
             ]

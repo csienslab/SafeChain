@@ -38,8 +38,8 @@
         },
         "ThermoSmart changes program": {
             "relationalOperator": "=",
-            "value": "true",
-            "variable": "ThermoSmart_changes_program"
+            "value": "TRUE",
+            "variable": "ThermoSmart_program_changed"
         },
         "ThermoSmart gets paused": {
             "relationalOperator": "=",
@@ -55,7 +55,7 @@
     "variables": {
         "ThermoSmart_thermosmart": {
             "type": "set",
-            "value": [
+            "valueSet": [
                 "on",
                 "off"
             ]
@@ -65,12 +65,8 @@
             "minValue": 0,
             "type": "range"
         },
-        "ThermoSmart_changes_program": {
-            "type": "set",
-            "value": [
-                "true",
-                "false"
-            ]
+        "ThermoSmart_program_changed": {
+            "type": "boolean"
         }
     }
 }

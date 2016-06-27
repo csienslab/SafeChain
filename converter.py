@@ -6,136 +6,135 @@ import json
 
 class NuSMVConverter:
     def __init__(self, directory_path):
-        self.channels, self.channel_variables = channelparser.loadChannelsFromDirectory(directory_path)
-        self.variables = {}
+        self.channels = channelparser.loadChannelsFromDirectory(directory_path)
+        self.variables = set()
         self.rules = []
 
     def isConvertibleRule(self, trigger_channel, trigger, action_channel, action):
-        if trigger_channel not in self.channels or trigger not in self.channels[trigger_channel]['triggers']:
+        trigger_name = trigger_channel + ': ' + trigger
+        if trigger_name not in self.channels['triggers']:
             return False
 
-        if action_channel not in self.channels or action not in self.channels[action_channel]['actions']:
+        action_name = action_channel + ': ' + action
+        if action_name not in self.channels['actions']:
             return False
 
         return True
 
     def isUniqueRule(self, trigger_channel, trigger, action_channel, action):
-        if '*' in json.dumps(self.channels[trigger_channel]['triggers'][trigger]):
+        trigger_name = trigger_channel + ': ' + trigger
+        action_name = action_channel + ': ' + action
+        if self.channels['triggers'][trigger_name]['input'] or \
+                self.channels['actions'][action_name]['input']:
             return True
 
-        if '*' in json.dumps(self.channels[action_channel]['actions'][action]):
-            return True
-
-        if (trigger_channel, trigger, action_channel, action) in self.rules:
+        if (trigger_name, action_name) in self.rules:
             return False
 
         return True
 
-    def extractActionVariables(action):
-        return set(x['variable'] for x in action)
-
-    def extractTriggerVariables(trigger):
-        if 'relationalOperator' in trigger:
-            return set([trigger['variable']])
-
-        variables = set()
-        for op in trigger['operand']:
-            variables = variables | NuSMVConverter.extractTriggerVariables(op)
-
-        return variables
-
     def convertChannelTrigger(self, trigger):
         if 'relationalOperator' in trigger:
+            trigger_variable_name = trigger['variable']
+            trigger_variable = self.channels['variables'][trigger_variable_name]
+
             if trigger['value'] == '*':
-                if self.channel_variables[trigger['variable']]['type'] == 'set':
+                if trigger_variable['type'] == 'set':
                     value = random.choice(trigger['valueSet'])
-                elif self.channel_variables[trigger['variable']]['type'] == 'range':
+                elif trigger_variable['type'] == 'range':
                     value = str(random.randint(trigger['minValue'], trigger['maxValue']))
             else:
                 value = trigger['value']
 
-            return '%s %s %s' % (trigger['variable'], trigger['relationalOperator'], value)
-        elif 'logicalOperator' in trigger:
-            op = ' ' + trigger['logicalOperator'] + ' '
-            return op.join(self.convertChannelTrigger(operand) for operand in trigger['operand'])
+            return '(%s %s %s)' % (trigger_variable_name, trigger['relationalOperator'], value)
+
+        op = ' ' + trigger['logicalOperator'] + ' '
+        return op.join(self.convertChannelTrigger(operand) for operand in trigger['operand'])
 
     def convertChannelAction(self, action):
+        action_variable_name = action['variable']
+        action_variable = self.channels['variables'][action_variable_name]
+
         if action['value'] == '*':
-            if self.channel_variables[action['variable']]['type'] == 'set':
+            if action_variable['type'] == 'set':
                 return random.choice(action['valueSet'])
-            elif self.channel_variables[action['variable']]['type'] == 'range':
+            elif action_variable['type'] == 'range':
                 return str(random.randint(action['minValue'], action['maxValue']))
         elif action['value'] == '?':
-            if self.channel_variables[action['variable']]['type'] == 'set':
+            if action_variable['type'] == 'set':
                 return '{' + ', '.join(action['valueSet']) + '}'
-            elif self.channel_variables[action['variable']]['type'] == 'range':
+            elif action_variable['type'] == 'range':
                 return str(action['minValue']) + '..' + str(action['maxValue'])
+        elif action['value'] == '!':
+            return '!' + action_variable_name
         else:
-            return action['value']
+            return str(action['value'])
 
 
     def addRule(self, trigger_channel, trigger, action_channel, action):
-        if trigger_channel not in self.channels or trigger not in self.channels[trigger_channel]['triggers']:
-            raise ValueError('[%s] (%s) unsupported trigger' % (trigger_channel, trigger))
-        if action_channel not in self.channels or action not in self.channels[action_channel]['actions']:
-            raise ValueError('[%s] (%s) unsupported action' % (action_channel, action))
+        trigger_name = trigger_channel + ': ' + trigger
+        action_name = action_channel + ': ' + action
+        self.variables.update(self.channels['triggers'][trigger_name]['variables'])
+        self.variables.update(self.channels['actions'][action_name]['variables'])
+        self.rules.append((trigger_name, action_name))
 
-        variables = NuSMVConverter.extractActionVariables(self.channels[action_channel]['actions'][action]) | NuSMVConverter.extractTriggerVariables(self.channels[trigger_channel]['triggers'][trigger])
-        for variable in variables:
-            self.variables[variable] = self.channel_variables[variable]
-
-        self.rules.append((trigger_channel, trigger, action_channel, action))
-
-    def getInitValue(variable):
+    def getInitValue(self, variable):
         if variable['type'] == 'set':
             for value in ['none', 'off', 'false']:
-                if value in variable['value']:
+                if value in variable['valueSet']:
                     return value
-
-            return random.choice(variable['value'])
+            return random.choice(variable['valueSet'])
+        elif variable['type'] == 'boolean':
+            return 'FALSE'
         elif variable['type'] == 'range':
             if variable['minValue'] == 0:
                 return str(0)
             return str(random.randint(variable['minValue'], variable['maxValue']))
 
     def dump(self, filename):
-        output = 'MODULE main\n\tVAR\n'
+        output = 'MODULE main\n'
+        output += '\tVAR\n'
         for variable_name in sorted(self.variables):
-            variable = self.variables[variable_name]
+            variable = self.channels['variables'][variable_name]
             if variable['type'] == 'set':
-                output += '\t\t' + variable_name + ': {' + ', '.join(variable['value']) + '};\n'
+                variable_range = '{' + ', '.join(variable['valueSet']) + '}'
             elif variable['type'] == 'range':
-                output += '\t\t' + variable_name + ': ' + str(variable['minValue']) + '..' + str(variable['maxValue']) + ';\n'
+                variable_range = str(variable['minValue']) + '..' + str(variable['maxValue'])
+            elif variable['type'] == 'boolean':
+                variable_range = 'boolean'
+            output += '\t\t%s: %s;\n' % (variable_name, variable_range)
 
         output += '\n'
-        for idx, rule in enumerate(self.rules, start=1):
-            output += '\t\tr' + str(idx) + ': process rule' + str(idx) + '('
-            variables = NuSMVConverter.extractTriggerVariables(self.channels[rule[0]]['triggers'][rule[1]]) | NuSMVConverter.extractActionVariables(self.channels[rule[2]]['actions'][rule[3]])
-            output += ', '.join(variables)
-            output += ');\n'
+        for idx, (trigger_name, action_name) in enumerate(self.rules, start=1):
+            trigger_variables = self.channels['triggers'][trigger_name]['variables']
+            action_variables = self.channels['actions'][action_name]['variables']
+            variables = set(trigger_variables + action_variables)
+            output += '\t\tr%d: process rule%d(%s);\n' % (idx, idx, ', '.join(variables))
 
         output += '\tASSIGN\n'
         for variable_name in sorted(self.variables):
-            output += '\t\tinit(' + variable_name + ') := '
-            variable = self.variables[variable_name]
-            output += NuSMVConverter.getInitValue(variable)
-            output += ';\n'
+            variable = self.channels['variables'][variable_name]
+            value = self.getInitValue(variable)
+            output += '\t\tinit(%s) := %s;\n' % (variable_name, value)
 
         output += '\n\n'
-        for idx, rule in enumerate(self.rules, start=1):
-            output += '-- ' + str(rule) + '\n'
-            output += 'MODULE rule' + str(idx) + '('
-            variables = NuSMVConverter.extractTriggerVariables(self.channels[rule[0]]['triggers'][rule[1]]) | NuSMVConverter.extractActionVariables(self.channels[rule[2]]['actions'][rule[3]])
-            output += ', '.join(variables)
-            output += ')\n\tASSIGN\n'
-            trigger = self.convertChannelTrigger(self.channels[rule[0]]['triggers'][rule[1]])
-            actions = self.channels[rule[2]]['actions'][rule[3]]
+        for idx, (trigger_name, action_name) in enumerate(self.rules, start=1):
+            output += '-- %s\n' % str(rule)
+
+            trigger_variables = self.channels['triggers'][trigger_name]['variables']
+            action_variables = self.channels['actions'][action_name]['variables']
+            variables = set(trigger_variables + action_variables)
+            output += 'MODULE rule%d(%s)\n' % (idx, ', '.join(variables))
+
+            trigger = self.convertChannelTrigger(self.channels['triggers'][trigger_name]['trigger'])
+            actions = self.channels['actions'][action_name]['action']
+            output += '\tASSIGN\n'
             for action in actions:
-                output += '\t\tnext(' + action['variable'] +') :=\n'
+                value = self.convertChannelAction(action)
+                output += '\t\tnext(%s) :=\n' % action['variable']
                 output += '\t\t\tcase\n'
-                value = str(self.convertChannelAction(action))
-                output += '\t\t\t\t' + trigger + ': ' + value + ';\n'
-                output += '\t\t\t\tTRUE: ' + action['variable'] + ';\n'
+                output += '\t\t\t\t%s: %s;\n' % (trigger, value)
+                output += '\t\t\t\tTRUE: %s;\n' % action['variable']
                 output += '\t\t\tesac;\n'
             output += '\n'
 

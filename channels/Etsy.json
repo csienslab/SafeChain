@@ -2,65 +2,45 @@
     "triggers": {
         "Any new handpicked item": {
             "relationalOperator": "=",
-            "value": "true",
+            "value": "TRUE",
             "variable": "Etsy_Any_new_handpicked_item"
         },
         "New favorite item": {
             "relationalOperator": "=",
-            "value": "true",
+            "value": "TRUE",
             "variable": "Etsy_New_favorite_item"
         },
         "New item from search": {
             "relationalOperator": "=",
-            "value": "true",
+            "value": "TRUE",
             "variable": "Etsy_New_item_from_search"
         },
         "New item in shop": {
             "relationalOperator": "=",
-            "value": "true",
+            "value": "TRUE",
             "variable": "Etsy_New_item_in_shop"
         },
         "New purchased item": {
             "relationalOperator": "=",
-            "value": "true",
+            "value": "TRUE",
             "variable": "Etsy_New_purchased_item"
         }
     },
     "variables": {
         "Etsy_Any_new_handpicked_item": {
-            "type": "set",
-            "value": [
-                "true",
-                "false"
-            ]
+            "type": "boolean"
         },
         "Etsy_New_favorite_item": {
-            "type": "set",
-            "value": [
-                "true",
-                "false"
-            ]
+            "type": "boolean"
         },
         "Etsy_New_item_from_search": {
-            "type": "set",
-            "value": [
-                "true",
-                "false"
-            ]
+            "type": "boolean"
         },
         "Etsy_New_item_in_shop": {
-            "type": "set",
-            "value": [
-                "true",
-                "false"
-            ]
+            "type": "boolean"
         },
         "Etsy_New_purchased_item": {
-            "type": "set",
-            "value": [
-                "true",
-                "false"
-            ]
+            "type": "boolean"
         }
     }
 }
