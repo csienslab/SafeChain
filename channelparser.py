@@ -42,7 +42,10 @@ def checkIfChannelActionsErrors(channel):
             elif action_variable['type'] == 'set':
                 if (action['value'] == '*' or action['value'] == '?') and set(action['valueSet']) <= set(action_variable['valueSet']):
                     continue
-                elif (action['value'] != '*' and action['value'] != '?') and action['value'] in action_variable['valueSet']:
+                elif action['value'] == '!' and len(action_variable['valueSet']) == 2:
+                    continue
+                elif (action['value'] != '*' and action['value'] != '?' and action['value'] != '!') and \
+                        action['value'] in action_variable['valueSet']:
                     continue
                 else:
                     raise ValueError('[%s] action_variable %s is illegal' % (action_name, action_variable_name))
@@ -108,11 +111,6 @@ def checkIfChannelTriggersErrors(channel):
 
     for trigger_name, trigger in channel['triggers'].items():
         checkChannelTrigger(channel, trigger_name, trigger)
-
-def checkIfChannelErrors(channel):
-    checkIfChannelVariablesErrors(channel)
-    checkIfChannelActionsErrors(channel)
-    checkIfChannelTriggersErrors(channel)
 
 def extractTriggerVariables(trigger):
     if 'relationalOperator' in trigger:

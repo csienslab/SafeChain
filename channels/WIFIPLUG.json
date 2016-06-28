@@ -3,25 +3,29 @@
         "Toggle on / off": [
             {
                 "value": "!",
-                "variable": "WIFIPLUG_turned_on"
+                "variable": "WIFIPLUG_status"
             }
         ],
         "Turn off": [
             {
-                "value": "FALSE",
-                "variable": "WIFIPLUG_turned_on"
+                "value": "off",
+                "variable": "WIFIPLUG_status"
             }
         ],
         "Turn on": [
             {
-                "value": "TRUE",
-                "variable": "WIFIPLUG_turned_on"
+                "value": "on",
+                "variable": "WIFIPLUG_status"
             }
         ]
     },
     "variables": {
-        "WIFIPLUG_turned_on": {
-            "type": "boolean"
+        "WIFIPLUG_status": {
+            "type": "set",
+            "valueSet": [
+                "on",
+                "off"
+            ]
         }
     }
 }

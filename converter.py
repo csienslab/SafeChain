@@ -46,10 +46,10 @@ class NuSMVConverter:
             else:
                 value = trigger['value']
 
-            return '(%s %s %s)' % (trigger_variable_name, trigger['relationalOperator'], value)
+            return '%s %s %s' % (trigger_variable_name, trigger['relationalOperator'], value)
 
         op = ' ' + trigger['logicalOperator'] + ' '
-        return op.join(self.convertChannelTrigger(operand) for operand in trigger['operand'])
+        return '(' + op.join(self.convertChannelTrigger(operand) for operand in trigger['operand']) + ')'
 
     def convertChannelAction(self, action):
         action_variable_name = action['variable']
@@ -66,7 +66,14 @@ class NuSMVConverter:
             elif action_variable['type'] == 'range':
                 return str(action['minValue']) + '..' + str(action['maxValue'])
         elif action['value'] == '!':
-            return '!' + action_variable_name
+            if action_variable['type'] == 'boolean':
+                return '!' + action_variable_name
+            elif action_variable['type'] == 'set':
+                output = 'case\n'
+                output += '\t\t\t\t\t\t\t\t%s = %s: %s;\n' % (action_variable_name, action_variable['valueSet'][0], action_variable['valueSet'][1])
+                output += '\t\t\t\t\t\t\t\t%s = %s: %s;\n' % (action_variable_name, action_variable['valueSet'][1], action_variable['valueSet'][0])
+                output += '\t\t\t\t\tesac'
+                return output
         else:
             return str(action['value'])
 
@@ -119,7 +126,7 @@ class NuSMVConverter:
 
         output += '\n\n'
         for idx, (trigger_name, action_name) in enumerate(self.rules, start=1):
-            output += '-- %s\n' % str(rule)
+            output += '-- %s\n' % str((trigger_name, action_name))
 
             trigger_variables = self.channels['triggers'][trigger_name]['variables']
             action_variables = self.channels['actions'][action_name]['variables']
