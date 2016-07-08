@@ -1,153 +1,126 @@
 #!/usr/bin/python3
 
-import channelparser
 import random
 import json
 
+from ifttt import Variable, Trigger, Action, Rule
+from channelparser import loadChannelsFromDirectory
+
 class NuSMVConverter:
     def __init__(self, directory_path):
-        self.channels = channelparser.loadChannelsFromDirectory(directory_path)
-        self.variables = set()
+        self.database = loadChannelsFromDirectory(directory_path)
         self.rules = []
 
     def isConvertibleRule(self, trigger_channel, trigger, action_channel, action):
-        trigger_name = trigger_channel + ': ' + trigger
-        if trigger_name not in self.channels['triggers']:
-            return False
+        trigger_key = Trigger.getUniqueName(trigger_channel, trigger)
+        action_key = Action.getUniqueName(action_channel, action)
 
-        action_name = action_channel + ': ' + action
-        if action_name not in self.channels['actions']:
-            return False
-
-        return True
-
-    def isUniqueRule(self, trigger_channel, trigger, action_channel, action):
-        trigger_name = trigger_channel + ': ' + trigger
-        action_name = action_channel + ': ' + action
-        if self.channels['triggers'][trigger_name]['input'] or \
-                self.channels['actions'][action_name]['input']:
+        if trigger_key in self.database['triggers'] and action_key in self.database['actions']:
             return True
-
-        if (trigger_name, action_name) in self.rules:
-            return False
-
-        return True
-
-    def convertChannelTrigger(self, trigger):
-        if 'relationalOperator' in trigger:
-            trigger_variable_name = trigger['variable']
-            trigger_variable = self.channels['variables'][trigger_variable_name]
-
-            if trigger['value'] == '*':
-                if trigger_variable['type'] == 'set':
-                    value = random.choice(trigger['valueSet'])
-                elif trigger_variable['type'] == 'range':
-                    value = str(random.randint(trigger['minValue'], trigger['maxValue']))
-            else:
-                value = trigger['value']
-
-            return '%s %s %s' % (trigger_variable_name, trigger['relationalOperator'], value)
-
-        op = ' ' + trigger['logicalOperator'] + ' '
-        return '(' + op.join(self.convertChannelTrigger(operand) for operand in trigger['operand']) + ')'
-
-    def convertChannelAction(self, action):
-        action_variable_name = action['variable']
-        action_variable = self.channels['variables'][action_variable_name]
-
-        if action['value'] == '*':
-            if action_variable['type'] == 'set':
-                return random.choice(action['valueSet'])
-            elif action_variable['type'] == 'range':
-                return str(random.randint(action['minValue'], action['maxValue']))
-        elif action['value'] == '?':
-            if action_variable['type'] == 'set':
-                return '{' + ', '.join(action['valueSet']) + '}'
-            elif action_variable['type'] == 'range':
-                return str(action['minValue']) + '..' + str(action['maxValue'])
-        elif action['value'] == '!':
-            if action_variable['type'] == 'boolean':
-                return '!' + action_variable_name
-            elif action_variable['type'] == 'set':
-                output = 'case\n'
-                output += '\t\t\t\t\t\t\t\t%s = %s: %s;\n' % (action_variable_name, action_variable['valueSet'][0], action_variable['valueSet'][1])
-                output += '\t\t\t\t\t\t\t\t%s = %s: %s;\n' % (action_variable_name, action_variable['valueSet'][1], action_variable['valueSet'][0])
-                output += '\t\t\t\t\tesac'
-                return output
-        else:
-            return str(action['value'])
-
+        return False
 
     def addRule(self, trigger_channel, trigger, action_channel, action):
-        trigger_name = trigger_channel + ': ' + trigger
-        action_name = action_channel + ': ' + action
-        self.variables.update(self.channels['triggers'][trigger_name]['variables'])
-        self.variables.update(self.channels['actions'][action_name]['variables'])
-        self.rules.append((trigger_name, action_name))
+        variables = self.database['variables']
 
-    def getInitValue(self, variable):
-        if variable['type'] == 'set':
-            for value in ['none', 'off', 'false']:
-                if value in variable['valueSet']:
-                    return value
-            return random.choice(variable['valueSet'])
-        elif variable['type'] == 'boolean':
-            return 'FALSE'
-        elif variable['type'] == 'range':
-            if variable['minValue'] == 0:
-                return str(0)
-            return str(random.randint(variable['minValue'], variable['maxValue']))
+        trigger_key = Trigger.getUniqueName(trigger_channel, trigger)
+        trigger_content = self.database['triggers'][trigger_key]
+        trigger = Trigger(trigger_channel, trigger, trigger_content, variables)
+
+        action_key = Action.getUniqueName(action_channel, action)
+        action_content = self.database['actions'][action_key]
+        action = Action(action_channel, action, action_content, variables)
+
+        rule_name = '%s%d' % ('rule', len(self.rules))
+        rule = Rule(rule_name, trigger, action)
+        self.rules.append(rule)
+
+    def generateActionTargetValuePairs(self, action):
+        for target in action.content:
+            variable_name = target['variable']
+            variable_key = Variable.getUniqueName(action.channel, variable_name)
+            variable = self.database['variables'][variable_key]
+
+            if target['value'] == '?':
+                if variable.type == 'set':
+                    value = '{' + ', '.join(target['valueSet']) + '}'
+                elif variable.type == 'range':
+                    value = str(target['minValue']) + '..' + str(target['maxValue'])
+            elif target['value'] == '!':
+                if variable.type == 'boolean':
+                    value = '!' + variable_key
+                elif variable.type == 'set':
+                    value = 'case\n'
+                    value += '\t\t\t\t\t\t\t\t%s = %s: %s;\n' % (variable_key, variable.valueset[0], variable.valueset[1])
+                    value += '\t\t\t\t\t\t\t\t%s: %s;\n' % ('TRUE', variable.valueset[0])
+                    value += '\t\t\t\t\tesac'
+            else:
+                value = str(target['value'])
+
+            yield (variable_key, value)
+
+    def getAllUsedVariableKeys(self):
+        variables = set()
+        for rule in self.rules:
+            variables |= rule.getVariables()
+        return variables
 
     def dump(self, filename):
+        with open(filename, 'w') as f:
+            f.write(self.dumps())
+
+    def dumps(self):
         output = 'MODULE main\n'
         output += '\tVAR\n'
-        for variable_name in sorted(self.variables):
-            variable = self.channels['variables'][variable_name]
-            if variable['type'] == 'set':
-                variable_range = '{' + ', '.join(variable['valueSet']) + '}'
-            elif variable['type'] == 'range':
-                variable_range = str(variable['minValue']) + '..' + str(variable['maxValue'])
-            elif variable['type'] == 'boolean':
-                variable_range = 'boolean'
-            output += '\t\t%s: %s;\n' % (variable_name, variable_range)
 
+        variable_keys = sorted(self.getAllUsedVariableKeys())
+        for variable_key in variable_keys:
+            variable = self.database['variables'][variable_key]
+            if variable.type == 'set':
+                variable_range = '{' + ', '.join(variable.valueset) + '}'
+            elif variable.type == 'range':
+                variable_range = str(variable.minvalue) + '..' + str(variable.maxvalue)
+            elif variable.type == 'boolean':
+                variable_range = 'boolean'
+            output += '\t\t%s: %s;\n' % (variable_key, variable_range)
         output += '\n'
-        for idx, (trigger_name, action_name) in enumerate(self.rules, start=1):
-            trigger_variables = self.channels['triggers'][trigger_name]['variables']
-            action_variables = self.channels['actions'][action_name]['variables']
-            variables = set(trigger_variables + action_variables)
-            output += '\t\tr%d: process rule%d(%s);\n' % (idx, idx, ', '.join(variables))
+
+        for rule in self.rules:
+            action_variables = rule.getExclusiveActionVariables()
+            if len(action_variables) == 0:
+                continue
+
+            trigger_variables = rule.getTriggerVariables()
+            variables = list(trigger_variables) + list(action_variables)
+            output += '\t\t%s: process %s(%s);\n' % (rule.name, rule.name, ', '.join(variables))
 
         output += '\tASSIGN\n'
-        for variable_name in sorted(self.variables):
-            variable = self.channels['variables'][variable_name]
-            value = self.getInitValue(variable)
-            output += '\t\tinit(%s) := %s;\n' % (variable_name, value)
+        for variable_key in variable_keys:
+            variable = self.database['variables'][variable_key]
+            value = str(variable.getDefaultValue())
+            output += '\t\tinit(%s) := %s;\n' % (variable_key, value)
 
         output += '\n\n'
-        for idx, (trigger_name, action_name) in enumerate(self.rules, start=1):
-            output += '-- %s\n' % str((trigger_name, action_name))
+        for rule in self.rules:
+            action_variables = rule.getExclusiveActionVariables()
+            if len(action_variables) == 0:
+                continue
 
-            trigger_variables = self.channels['triggers'][trigger_name]['variables']
-            action_variables = self.channels['actions'][action_name]['variables']
-            variables = set(trigger_variables + action_variables)
-            output += 'MODULE rule%d(%s)\n' % (idx, ', '.join(variables))
+            trigger_variables = rule.getTriggerVariables()
+            variables = list(trigger_variables) + list(action_variables)
+            output += '-- %s %s -> %s\n' % (rule.name, rule.trigger, rule.action)
+            output += 'MODULE %s(%s)\n' % (rule.name, ', '.join(variables))
 
-            trigger = self.convertChannelTrigger(self.channels['triggers'][trigger_name]['trigger'])
-            actions = self.channels['actions'][action_name]['action']
+            trigger_text = rule.trigger.getBooleanFormat()
             output += '\tASSIGN\n'
-            for action in actions:
-                value = self.convertChannelAction(action)
-                output += '\t\tnext(%s) :=\n' % action['variable']
+            for (variable_key, value) in self.generateActionTargetValuePairs(rule.action):
+                output += '\t\tnext(%s) :=\n' % variable_key
                 output += '\t\t\tcase\n'
-                output += '\t\t\t\t%s: %s;\n' % (trigger, value)
-                output += '\t\t\t\tTRUE: %s;\n' % action['variable']
+                output += '\t\t\t\t%s: %s;\n' % (trigger_text, value)
+                output += '\t\t\t\tTRUE: %s;\n' % variable_key
                 output += '\t\t\tesac;\n'
             output += '\n'
 
-        with open(filename, 'w') as f:
-            f.write(output)
-
+        return output
 
 
 if __name__ == '__main__':
@@ -168,10 +141,7 @@ if __name__ == '__main__':
             action_channel = columns[ACTION_CHANNEL_IDX]
             action = columns[ACTION_IDX]
 
-            if not converter.isConvertibleRule(trigger_channel, trigger, action_channel, action) or \
-                    not converter.isUniqueRule(trigger_channel, trigger, action_channel, action):
-                        continue
+            if converter.isConvertibleRule(trigger_channel, trigger, action_channel, action):
+                converter.addRule(trigger_channel, trigger, action_channel, action)
 
-            converter.addRule(trigger_channel, trigger, action_channel, action)
-
-    converter.dump('test.txt')
+    converter.dump('test2.txt')

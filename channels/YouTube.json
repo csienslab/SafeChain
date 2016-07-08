@@ -1,17 +1,17 @@
 {
     "triggers": {
         "New liked video": {
-            "operator": "=",
+            "relationalOperator": "=",
             "value": "TRUE",
             "variable": "YouTube_New_liked_video"
         },
         "New public video uploaded by you": {
-            "operator": "=",
+            "relationalOperator": "=",
             "value": "TRUE",
             "variable": "YouTube_New_public_video_uploaded_by_you"
         },
         "New watch later video": {
-            "operator": "=",
+            "relationalOperator": "=",
             "value": "TRUE",
             "variable": "YouTube_New_watch_later_video"
         }
