@@ -250,6 +250,9 @@ class Rule:
 
         self.rule_string = json.dumps(trigger.content) + json.dumps(action.content)
 
+    def __str__(self):
+        return '%s %s -> %s' % (self.name, self.trigger, self.action)
+
     def getTriggerVariables(self):
         return self.trigger.getVariables()
 

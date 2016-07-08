@@ -10,6 +10,7 @@ class NuSMVConverter:
     def __init__(self, directory_path):
         self.database = loadChannelsFromDirectory(directory_path)
         self.rules = []
+        self.compromised_channels = set()
 
     def isConvertibleRule(self, trigger_channel, trigger, action_channel, action):
         trigger_key = Trigger.getUniqueName(trigger_channel, trigger)
@@ -33,6 +34,9 @@ class NuSMVConverter:
         rule_name = '%s%d' % ('rule', len(self.rules))
         rule = Rule(rule_name, trigger, action)
         self.rules.append(rule)
+
+    def addCompromisedChannel(self, channel):
+        self.compromised_channels.add(channel)
 
     def generateActionTargetValuePairs(self, action):
         for target in action.content:
@@ -64,6 +68,13 @@ class NuSMVConverter:
             variables |= rule.getVariables()
         return variables
 
+    # def getAllCompromisedVariableKeys(self):
+    #     variable_keys = set()
+    #     for variable_key, variable in self.database['variables'].items():
+    #         if variable.channel in self.compromised_channels:
+    #             variable_keys.add(variable_key)
+    #     return variable_keys
+
     def dump(self, filename):
         with open(filename, 'w') as f:
             f.write(self.dumps())
@@ -85,10 +96,10 @@ class NuSMVConverter:
         output += '\n'
 
         for rule in self.rules:
-            action_variables = rule.getExclusiveActionVariables()
-            if len(action_variables) == 0:
+            if rule.action.channel in self.compromised_channels:
                 continue
 
+            action_variables = rule.getExclusiveActionVariables()
             trigger_variables = rule.getTriggerVariables()
             variables = list(trigger_variables) + list(action_variables)
             output += '\t\t%s: process %s(%s);\n' % (rule.name, rule.name, ', '.join(variables))
@@ -101,13 +112,14 @@ class NuSMVConverter:
 
         output += '\n\n'
         for rule in self.rules:
-            action_variables = rule.getExclusiveActionVariables()
-            if len(action_variables) == 0:
+            if rule.action.channel in self.compromised_channels:
+                output += '-- %s\n' % rule
                 continue
 
+            action_variables = rule.getExclusiveActionVariables()
             trigger_variables = rule.getTriggerVariables()
             variables = list(trigger_variables) + list(action_variables)
-            output += '-- %s %s -> %s\n' % (rule.name, rule.trigger, rule.action)
+            output += '-- %s\n' % rule
             output += 'MODULE %s(%s)\n' % (rule.name, ', '.join(variables))
 
             trigger_text = rule.trigger.getBooleanFormat()
@@ -143,5 +155,7 @@ if __name__ == '__main__':
 
             if converter.isConvertibleRule(trigger_channel, trigger, action_channel, action):
                 converter.addRule(trigger_channel, trigger, action_channel, action)
+
+    converter.addCompromisedChannel('Android Device')
 
     converter.dump('test2.txt')
