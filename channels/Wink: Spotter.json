@@ -1,14 +1,14 @@
 {
     "triggers": {
         "Temperature drops below": {
-            "relationalOperator": "=",
+            "relationalOperator": "<=",
             "value": "*",
             "minValue": 0,
             "maxValue": 100,
             "variable": "Wink_Spotter_temperature"
         },
         "Temperature rises above": {
-            "relationalOperator": "=",
+            "relationalOperator": ">=",
             "value": "*",
             "minValue": 0,
             "maxValue": 100,

@@ -2,6 +2,8 @@
 
 import random
 import json
+import copy
+import collections
 
 class Variable:
     # TODO 
@@ -101,6 +103,17 @@ class Variable:
             else:
                 raise ValueError('[%s] action %s with range variable %s ill-assignment' % (self.channel, action_name, self.name))
 
+    def getPossibleValues(self, content):
+        if self.type == 'set':
+            if content['value'] == '!':
+                return set(self.valueset)
+            else:
+                return set(content['valueSet'])
+        elif self.type == 'range':
+            return set(range(content['minValue'], content['maxValue'] + 1))
+        else:
+            return set(['TRUE', 'FALSE'])
+
     def getRandomValue(self, content):
         if self.type == 'set':
             return random.choice(content['valueSet'])
@@ -125,6 +138,137 @@ class Variable:
     def getUniqueName(channel, name):
         return name
 
+class ExtendSetVariable(Variable):
+    def __init__(self, old_variable, valueset):
+        if old_variable.type == 'boolean':
+            variable_valueset = ['true', 'false']
+        elif old_variable.type == 'range':
+            variable_valueset = []
+            sorted_valueset = sorted(valueset)
+            self.sorted_valueset = sorted_valueset
+
+            if old_variable.minvalue not in valueset:
+                if sorted_valueset[0] - old_variable.minvalue == 1:
+                    variable_valueset.append('d_%s' % old_variable.minvalue)
+                else:
+                    variable_valueset.append('d_%s_%s' % (old_variable.minvalue, sorted_valueset[0]))
+
+
+            i = 0;
+            while i + 1 < len(sorted_valueset):
+                variable_valueset.append('d_%s' % sorted_valueset[i])
+                if sorted_valueset[i+1] - sorted_valueset[i] > 1:
+                    variable_valueset.append('d_%s_%s' % (sorted_valueset[i], sorted_valueset[i+1]))
+                i += 1
+
+            variable_valueset.append('d_%s' % sorted_valueset[i])
+            if old_variable.maxvalue not in valueset:
+                if old_variable.maxvalue - sorted_valueset[-1] == 1:
+                    variable_valueset.append('d_%s' % old_variable.maxvalue)
+                else:
+                    variable_valueset.append('d_%s_%s' % (sorted_valueset[-1], old_variable.maxvalue))
+        else:
+            variable_valueset = old_variable.valueset
+
+        content = {'type': 'set', 'valueSet': variable_valueset}
+        Variable.__init__(self, old_variable.channel, old_variable.name, content)
+        self.old_variable = old_variable
+
+    def getApproriateValueSet(self, relational_operator, value):
+        if self.old_variable.type == 'boolean':
+            if value == 'TRUE':
+                return (relational_operator, ['true'])
+            else:
+                return (relational_operator, ['false'])
+
+        if self.old_variable.type == 'set':
+            return (relational_operator, [value])
+
+        # range
+        if relational_operator == '=' or relational_operator == '!=':
+            return (relational_operator, ['d_' + str(value)])
+
+        # <, <=, >, >=
+        if relational_operator == '>' or relational_operator == '>=':
+            valueset = []
+            i = self.sorted_valueset.index(value)
+            if relational_operator == '>=':
+                valueset.append('d_%s' % self.sorted_valueset[i])
+
+            while i+1 < len(self.sorted_valueset):
+                if self.sorted_valueset[i+1] - self.sorted_valueset[i] > 1:
+                    valueset.append('d_%s_%s' % (self.sorted_valueset[i], self.sorted_valueset[i+1]))
+                valueset.append('d_%s' % self.sorted_valueset[i+1])
+                i += 1
+
+            if self.old_variable.maxvalue not in self.sorted_valueset:
+                valueset.append('d_%s_%s' % (self.sorted_valueset[-1], self.old_variable.maxvalue))
+        else:
+            valueset = []
+            i = self.sorted_valueset.index(value)
+            if relational_operator == '<=':
+                valueset.append('d_%s' % self.sorted_valueset[i])
+
+            while i-1 > 0:
+                if self.sorted_valueset[i] - self.sorted_valueset[i-1] > 1:
+                    valueset.append('d_%s_%s' % (self.sorted_valueset[i-1], self.sorted_valueset[i]))
+                valueset.append('d_%s' % self.sorted_valueset[i-1])
+                i -= 1
+
+            if self.old_variable.minvalue not in self.sorted_valueset:
+                valueset.append('d_%s_%s' % (self.old_variable.minvalue, self.sorted_valueset[0]))
+
+        return ('=', valueset)
+
+    def getPossibleValueSet(self, relational_operator, value):
+        if self.old_variable.type == 'boolean':
+            if value == 'TRUE':
+                value = 'true'
+            else:
+                value = 'false'
+
+        if relational_operator == '=':
+            if isinstance(value, int):
+                value = 'd_%s' % str(value)
+            return set([value])
+        elif relational_operator == '!=':
+            if isinstance(value, int):
+                value = 'd_%s' % str(value)
+            return set(self.valueset) - set([value])
+        else:
+            # range <, <=, >, >=
+            if relational_operator == '>' or relational_operator == '>=':
+                valueset = set()
+                i = self.sorted_valueset.index(value)
+                if relational_operator == '>=':
+                    valueset.add('d_%s' % self.sorted_valueset[i])
+
+                while i+1 < len(self.sorted_valueset):
+                    if self.sorted_valueset[i+1] - self.sorted_valueset[i] > 1:
+                        valueset.add('d_%s_%s' % (self.sorted_valueset[i], self.sorted_valueset[i+1]))
+                    valueset.add('d_%s' % self.sorted_valueset[i+1])
+                    i += 1
+
+                if self.old_variable.maxvalue not in self.sorted_valueset:
+                    valueset.add('d_%s_%s' % (self.sorted_valueset[-1], self.old_variable.maxvalue))
+            else:
+                valueset = set()
+                i = self.sorted_valueset.index(value)
+                if relational_operator == '<=':
+                    valueset.add('d_%s' % self.sorted_valueset[i])
+
+                while i-1 >= 0:
+                    if self.sorted_valueset[i] - self.sorted_valueset[i-1] > 1:
+                        valueset.add('d_%s_%s' % (self.sorted_valueset[i-1], self.sorted_valueset[i]))
+                    valueset.add('d_%s' % self.sorted_valueset[i-1])
+                    i -= 1
+
+                if self.old_variable.minvalue not in self.sorted_valueset:
+                    valueset.add('d_%s_%s' % (self.old_variable.minvalue, self.sorted_valueset[0]))
+
+            return valueset
+
+
 class Trigger:
     def checkErrors(channel, name, content, variables):
         if 'relationalOperator' in content:
@@ -146,9 +290,11 @@ class Trigger:
             raise ValueError('[%s] trigger %s is not defined well' % (channel, name))
 
     def __init__(self, channel, name, content, variables):
+        content = copy.deepcopy(content)
         self.channel = channel
         self.name = name
         self.content = self.setUserInput(channel, content, variables)
+        self.variable_value_pairs = self.getVariableValuePairs(channel, self.content)
 
     def __str__(self):
         return str((self.channel, self.name))
@@ -164,10 +310,24 @@ class Trigger:
                 content.pop('valueSet', None)
                 content.pop('minValue', None)
                 content.pop('maxValue', None)
+
             return content
 
         content['operand'] = [self.setUserInput(channel, operand, variables) for operand in content['operand']]
         return content
+
+    def getVariableValuePairs(self, channel, content):
+        if 'relationalOperator' in content:
+            variable_name = content['variable']
+            variable_key = Variable.getUniqueName(channel, variable_name)
+            valueset = set([content['value']])
+
+            return [(variable_key, valueset)]
+
+        variable_value_pairs = []
+        for operand in content['operand']:
+            variable_value_pairs += self.getVariableValuePairs(channel, operand)
+        return variable_value_pairs
 
     def getVariables(self, content=None):
         if content is None:
@@ -182,15 +342,39 @@ class Trigger:
             variables |= self.getVariables(operand)
         return variables
 
-    def getBooleanFormat(self, content=None):
+    def getBooleanFormat(self, variables, content=None):
         if content is None:
             content = self.content
 
         if 'relationalOperator' in content:
-            return '%s %s %s' % (content['variable'], content['relationalOperator'], content['value'])
+            variable_name = content['variable']
+            variable_key = Variable.getUniqueName(self.channel, variable_name)
+            variable = variables[variable_key]
+            relational_operator, valueset = variable.getApproriateValueSet(content['relationalOperator'], content['value'])
+            if len(valueset) == 1:
+                return '%s %s %s' % (variable_key, relational_operator, valueset[0])
+            else:
+                return ' | '.join('%s %s %s' % (variable_key, relational_operator, value) for value in valueset)
 
         op = ' ' + content['logicalOperator'] + ' '
-        return '(' + op.join(self.getBooleanFormat(operand) for operand in content['operand']) + ')'
+        return '(' + op.join(self.getBooleanFormat(variables, operand) for operand in content['operand']) + ')'
+
+    def getPossibleValueSet(self, variables, content=None):
+        if content is None:
+            content = self.content
+            self.variable_possible_valueset = collections.defaultdict(set)
+
+        if 'relationalOperator' in content:
+            variable_name = content['variable']
+            variable_key = Variable.getUniqueName(self.channel, variable_name)
+            variable = variables[variable_key]
+            valueset = variable.getPossibleValueSet(content['relationalOperator'], content['value'])
+            self.variable_possible_valueset[variable_key].update(valueset)
+            return self.variable_possible_valueset
+
+        for operand in content['operand']:
+            self.getPossibleValueSet(variables, operand)
+        return self.variable_possible_valueset
 
     def getUniqueName(channel, name):
         return ': '.join([channel, name])
@@ -209,27 +393,43 @@ class Action:
             variable.checkAssignErrors(name, action)
 
     def __init__(self, channel, name, content, variables):
+        content = copy.deepcopy(content)
         self.channel = channel
         self.name = name
         self.content = self.setUserInput(channel, content, variables)
+        self.variable_value_pairs = self.getVariableValuePairs(channel, content, variables)
 
     def __str__(self):
         return str((self.channel, self.name))
 
     def setUserInput(self, channel, content, variables):
         for action in content:
-            if action['value'] != '*':
-                continue
+            if action['value'] == '*':
+                variable_name = action['variable']
+                variable_key = Variable.getUniqueName(channel, variable_name)
+                variable = variables[variable_key]
 
+                action['value'] = variable.getRandomValue(action)
+                action.pop('valueSet', None)
+                action.pop('minValue', None)
+                action.pop('maxValue', None)
+        return content
+
+    def getVariableValuePairs(self, channel, content, variables):
+        variable_value_pairs = []
+        for action in content:
             variable_name = action['variable']
             variable_key = Variable.getUniqueName(channel, variable_name)
             variable = variables[variable_key]
 
-            action['value'] = variable.getRandomValue(action)
-            action.pop('valueSet', None)
-            action.pop('minValue', None)
-            action.pop('maxValue', None)
-        return content
+            if action['value'] == '?' or action['value'] == '!':
+                valueset = variable.getPossibleValues(action)
+            else:
+                valueset = set([action['value']])
+
+            variable_value_pairs.append((variable_key, valueset))
+
+        return variable_value_pairs
 
     def getVariables(self):
         variables = set()
@@ -237,6 +437,46 @@ class Action:
             variable_key = Variable.getUniqueName(self.channel, action['variable'])
             variables.add(variable_key)
         return variables
+
+    def getPossibleValueSet(self, variables):
+        variable_possible_valueset = collections.defaultdict(set)
+        for target in self.content:
+            variable_name = target['variable']
+            variable_key = Variable.getUniqueName(self.channel, variable_name)
+            # variable = self.database['variables'][variable_key]
+            variable = variables[variable_key]
+
+            if target['value'] == '?':
+                if variable.old_variable.type == 'set':
+                    valueset = target['valueSet']
+                elif variable.old_variable.type == 'range':
+                    valueset = []
+                    i = variable.sorted_valueset.index(target['minValue'])
+                    while variable.sorted_valueset[i] != target['maxValue']:
+                        valueset.append('d_%s' % variable.sorted_valueset[i])
+                        if variable.sorted_valueset[i+1] - variable.sorted_valueset[i] > 1:
+                            valueset.append('d_%s_%s' % (variable.sorted_valueset[i], variable.sorted_valueset[i+1]))
+                        i += 1
+                    valueset.append('d_%s' % variable.sorted_valueset[i])
+            elif target['value'] == '!':
+                if variable.old_variable.type == 'boolean':
+                    valueset = ['true', 'false']
+                elif variable.type == 'set':
+                    valueset = variable.valueset
+            else:
+                if variable.old_variable.type == 'boolean':
+                    if target['value'] == 'TRUE':
+                        valueset = ['true']
+                    else:
+                        valueset = ['false']
+                elif variable.old_variable.type == 'range':
+                    valueset = ['d_' + str(target['value'])]
+                else:
+                    valueset = [target['value']]
+
+            variable_possible_valueset[variable_key].update(valueset)
+
+        return variable_possible_valueset
 
     def getUniqueName(channel, name):
         return ': '.join([channel, name])
@@ -252,6 +492,9 @@ class Rule:
 
     def __str__(self):
         return '%s %s -> %s' % (self.name, self.trigger, self.action)
+
+    def getVariableValuePairs(self):
+        return self.trigger.variable_value_pairs + self.action.variable_value_pairs
 
     def getTriggerVariables(self):
         return self.trigger.getVariables()

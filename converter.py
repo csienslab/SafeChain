@@ -2,14 +2,26 @@
 
 import random
 import json
+import copy
+import collections
+import networkx
 
-from ifttt import Variable, Trigger, Action, Rule
+from ifttt import Variable, ExtendSetVariable, Trigger, Action, Rule
 from channelparser import loadChannelsFromDirectory
+import booleanparser
+
+def check_int(s):
+    if s[0] in ('-', '+'):
+        return s[1:].isdigit()
+    return s.isdigit()
 
 class NuSMVConverter:
     def __init__(self, directory_path):
         self.database = loadChannelsFromDirectory(directory_path)
         self.rules = []
+        self.constraint = []
+        self.variables = dict()
+        self.variable_values = collections.defaultdict(set)
         self.compromised_channels = set()
 
     def isConvertibleRule(self, trigger_channel, trigger, action_channel, action):
@@ -33,6 +45,10 @@ class NuSMVConverter:
 
         rule_name = '%s%d' % ('rule', len(self.rules))
         rule = Rule(rule_name, trigger, action)
+
+        for variable_key, valueset in rule.getVariableValuePairs():
+            self.variable_values[variable_key].update(valueset)
+
         self.rules.append(rule)
 
     def addCompromisedChannel(self, channel):
@@ -42,13 +58,24 @@ class NuSMVConverter:
         for target in action.content:
             variable_name = target['variable']
             variable_key = Variable.getUniqueName(action.channel, variable_name)
-            variable = self.database['variables'][variable_key]
+            # variable = self.database['variables'][variable_key]
+            variable = self.variables[variable_key]
 
             if target['value'] == '?':
-                if variable.type == 'set':
-                    value = '{' + ', '.join(target['valueSet']) + '}'
-                elif variable.type == 'range':
-                    value = str(target['minValue']) + '..' + str(target['maxValue'])
+                if variable.old_variable.type == 'set':
+                    valueset = target['valueSet']
+                elif variable.old_variable.type == 'range':
+                    valueset = []
+                    i = variable.sorted_valueset.index(target['minValue'])
+                    while variable.sorted_valueset[i] != target['maxValue']:
+                        valueset.append('d_%s' % variable.sorted_valueset[i])
+                        if variable.sorted_valueset[i+1] - variable.sorted_valueset[i] > 1:
+                            valueset.append('d_%s_%s' % (variable.sorted_valueset[i], variable.sorted_valueset[i+1]))
+                        i += 1
+                    valueset.append('d_%s' % variable.sorted_valueset[i])
+
+                value = '{' + ', '.join(valueset) + '}'
+
             elif target['value'] == '!':
                 if variable.type == 'boolean':
                     value = '!' + variable_key
@@ -58,7 +85,15 @@ class NuSMVConverter:
                     value += '\t\t\t\t\t\t\t\t%s: %s;\n' % ('TRUE', variable.valueset[0])
                     value += '\t\t\t\t\tesac'
             else:
-                value = str(target['value'])
+                if variable.old_variable.type == 'boolean':
+                    if target['value'] == 'TRUE':
+                        value = 'true'
+                    else:
+                        value = 'false'
+                elif variable.old_variable.type == 'range':
+                    value = 'd_' + str(target['value'])
+                else:
+                    value = str(target['value'])
 
             yield (variable_key, value)
 
@@ -74,18 +109,108 @@ class NuSMVConverter:
     #         if variable.channel in self.compromised_channels:
     #             variable_keys.add(variable_key)
     #     return variable_keys
+    def addBooleanConstraints(self, boolean):
+        self.constraint.append(boolean)
+
+    def convertVariablesToSet(self):
+        infix_tokens = booleanparser.tokenParser(self.constraint)
+        for variable_key, relational_operator, value in booleanparser.getVariableValuePairs(infix_tokens):
+            if check_int(value):
+                value = int(value)
+            self.variable_values[variable_key].update([value])
+
+        for variable_key, valueset in self.variable_values.items():
+            old_variable = self.database['variables'][variable_key]
+            self.variables[variable_key] = ExtendSetVariable(old_variable, valueset)
+
+        # self.remaing_rules = []
+        G = networkx.DiGraph()
+        for rule in self.rules:
+            for trigger_variable_key, trigger_valueset in rule.trigger.getPossibleValueSet(self.variables).items():
+                for trigger_value in trigger_valueset:
+                    trigger_node_name = '_'.join((trigger_variable_key, trigger_value))
+                    if trigger_node_name not in G:
+                        G.add_node(trigger_node_name)
+
+                    for action_variable_key, action_valueset in rule.action.getPossibleValueSet(self.variables).items():
+                        for action_value in action_valueset:
+                            action_node_name = '_'.join((action_variable_key, action_value))
+                            if action_node_name not in G:
+                                G.add_node(action_node_name)
+
+                            if not G.has_edge(trigger_node_name, action_node_name):
+                                G.add_edge(trigger_node_name, action_node_name, rules=[])
+
+                            G.edge[trigger_node_name][action_node_name]['rules'].append(rule.name)
+
+        postfix_tokens = booleanparser.infixToPostfix(infix_tokens)
+        postfix_tokens.append('!')
+        postfix_tokens = booleanparser.expandNotOperator(postfix_tokens)
+
+        endnode_name = set()
+        for variable_key, relational_operator, value in booleanparser.getVariableValuePairs(postfix_tokens):
+            if check_int(value):
+                value = int(value)
+
+            valueset = self.variables[variable_key].getPossibleValueSet(relational_operator, value)
+            for value in valueset:
+                node_name = '_'.join((variable_key, value))
+                endnode_name.add(node_name)
+
+        flag = True
+        unexplored_node = endnode_name
+        explored_node = set()
+        related_rules = set()
+        while flag:
+            flag = False
+            new_unexplored_node = set()
+            for node in unexplored_node:
+                for predecessor in G.predecessors_iter(node):
+                    related_rules.update(G[predecessor][node]['rules'])
+
+                    if predecessor not in explored_node:
+                        new_unexplored_node.add(predecessor)
+                        flag = True
+                explored_node.add(node)
+
+            unexplored_node = new_unexplored_node
+
+
+
+        self.all_rules = self.rules
+        self.rules = [rule for rule in self.rules if rule.name in related_rules and rule.action.channel not in self.compromised_channels]
+        self.graph = G
+        self.variable_values = collections.defaultdict(set)
+
+        for rule in self.rules:
+            for variable_key, valueset in rule.getVariableValuePairs():
+                self.variable_values[variable_key].update(valueset)
+
+        infix_tokens = booleanparser.tokenParser(self.constraint)
+        for variable_key, relational_operator, value in booleanparser.getVariableValuePairs(infix_tokens):
+            if check_int(value):
+                value = int(value)
+            self.variable_values[variable_key].update([value])
+
+        for variable_key, valueset in self.variable_values.items():
+            old_variable = self.database['variables'][variable_key]
+            self.variables[variable_key] = ExtendSetVariable(old_variable, valueset)
+
+
 
     def dump(self, filename):
         with open(filename, 'w') as f:
             f.write(self.dumps())
 
     def dumps(self):
+        self.convertVariablesToSet()
         output = 'MODULE main\n'
         output += '\tVAR\n'
 
         variable_keys = sorted(self.getAllUsedVariableKeys())
         for variable_key in variable_keys:
-            variable = self.database['variables'][variable_key]
+            # variable = self.database['variables'][variable_key]
+            variable = self.variables[variable_key]
             if variable.type == 'set':
                 variable_range = '{' + ', '.join(variable.valueset) + '}'
             elif variable.type == 'range':
@@ -106,23 +231,45 @@ class NuSMVConverter:
 
         output += '\tASSIGN\n'
         for variable_key in variable_keys:
-            variable = self.database['variables'][variable_key]
+            # variable = self.database['variables'][variable_key]
+            variable = self.variables[variable_key]
             value = str(variable.getDefaultValue())
             output += '\t\tinit(%s) := %s;\n' % (variable_key, value)
+
+        infix_tokens = booleanparser.tokenParser(self.constraint)
+        testoutput = ''
+        for token in infix_tokens:
+            if not isinstance(token, tuple):
+                testoutput += ' ' + token + ' '
+                continue
+
+            variable_key, relational_operator, value = token
+
+            if check_int(value):
+                value = int(value)
+
+            valueset = self.variables[variable_key].getPossibleValueSet(relational_operator, value)
+            testoutput += '(' + ' | '.join('%s = %s' % (variable_key, value) for value in valueset) + ')'
+        output += '\tLTLSPEC G(%s)\n' % testoutput
+
 
         output += '\n\n'
         for rule in self.rules:
             if rule.action.channel in self.compromised_channels:
                 output += '-- %s\n' % rule
+                output += '-- %s\n' % list(rule.trigger.getPossibleValueSet(self.variables).items())
+                output += '-- %s\n' % list(rule.action.getPossibleValueSet(self.variables).items())
                 continue
 
             action_variables = rule.getExclusiveActionVariables()
             trigger_variables = rule.getTriggerVariables()
             variables = list(trigger_variables) + list(action_variables)
             output += '-- %s\n' % rule
+            output += '-- %s\n' % list(rule.trigger.getPossibleValueSet(self.variables).items())
+            output += '-- %s\n' % list(rule.action.getPossibleValueSet(self.variables).items())
             output += 'MODULE %s(%s)\n' % (rule.name, ', '.join(variables))
 
-            trigger_text = rule.trigger.getBooleanFormat()
+            trigger_text = rule.trigger.getBooleanFormat(self.variables)
             output += '\tASSIGN\n'
             for (variable_key, value) in self.generateActionTargetValuePairs(rule.action):
                 output += '\t\tnext(%s) :=\n' % variable_key
@@ -156,6 +303,8 @@ if __name__ == '__main__':
             if converter.isConvertibleRule(trigger_channel, trigger, action_channel, action):
                 converter.addRule(trigger_channel, trigger, action_channel, action)
 
-    converter.addCompromisedChannel('Android Device')
+    # converter.addCompromisedChannel('Android Device')
+
+    converter.constraint = 'Android_Device_ringtone_volume >= 9 | Garageio_garage_door_changed = FALSE'
 
     converter.dump('test2.txt')
