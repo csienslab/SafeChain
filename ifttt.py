@@ -103,6 +103,9 @@ class Variable:
             else:
                 raise ValueError('[%s] action %s with range variable %s ill-assignment' % (self.channel, action_name, self.name))
 
+    def getApproriateValueSet(self, relational_operator, value):
+        return (relational_operator, [value])
+
     def getPossibleValues(self, content):
         if self.type == 'set':
             if content['value'] == '!':
@@ -291,15 +294,17 @@ class Trigger:
 
     def __init__(self, channel, name, content, variables):
         content = copy.deepcopy(content)
+
         self.channel = channel
         self.name = name
-        self.content = self.setUserInput(channel, content, variables)
-        self.variable_value_pairs = self.getVariableValuePairs(channel, self.content)
+        self.content = self.genUserInput(channel, content, variables)
 
     def __str__(self):
         return str((self.channel, self.name))
 
-    def setUserInput(self, channel, content, variables):
+    # TODO
+    # self probably not needed
+    def genUserInput(self, channel, content, variables):
         if 'relationalOperator' in content:
             if content['value'] == '*':
                 variable_name = content['variable']
@@ -313,20 +318,23 @@ class Trigger:
 
             return content
 
-        content['operand'] = [self.setUserInput(channel, operand, variables) for operand in content['operand']]
+        content['operand'] = [self.genUserInput(channel, operand, variables) for operand in content['operand']]
         return content
 
-    def getVariableValuePairs(self, channel, content):
+    def getVariableValuePairs(self, content=None):
+        if content == None:
+            content = self.content
+
         if 'relationalOperator' in content:
             variable_name = content['variable']
-            variable_key = Variable.getUniqueName(channel, variable_name)
+            variable_key = Variable.getUniqueName(self.channel, variable_name)
             valueset = set([content['value']])
 
             return [(variable_key, valueset)]
 
         variable_value_pairs = []
         for operand in content['operand']:
-            variable_value_pairs += self.getVariableValuePairs(channel, operand)
+            variable_value_pairs += self.getVariableValuePairs(operand)
         return variable_value_pairs
 
     def getVariables(self, content=None):
@@ -394,15 +402,15 @@ class Action:
 
     def __init__(self, channel, name, content, variables):
         content = copy.deepcopy(content)
+
         self.channel = channel
         self.name = name
-        self.content = self.setUserInput(channel, content, variables)
-        self.variable_value_pairs = self.getVariableValuePairs(channel, content, variables)
+        self.content = self.genUserInput(channel, content, variables)
 
     def __str__(self):
         return str((self.channel, self.name))
 
-    def setUserInput(self, channel, content, variables):
+    def genUserInput(self, channel, content, variables):
         for action in content:
             if action['value'] == '*':
                 variable_name = action['variable']
@@ -415,11 +423,11 @@ class Action:
                 action.pop('maxValue', None)
         return content
 
-    def getVariableValuePairs(self, channel, content, variables):
+    def getVariableValuePairs(self, variables):
         variable_value_pairs = []
-        for action in content:
+        for action in self.content:
             variable_name = action['variable']
-            variable_key = Variable.getUniqueName(channel, variable_name)
+            variable_key = Variable.getUniqueName(self.channel, variable_name)
             variable = variables[variable_key]
 
             if action['value'] == '?' or action['value'] == '!':
@@ -494,7 +502,7 @@ class Rule:
         return '%s %s -> %s' % (self.name, self.trigger, self.action)
 
     def getVariableValuePairs(self):
-        return self.trigger.variable_value_pairs + self.action.variable_value_pairs
+        return self.trigger.getVariableValuePairs() + self.action.getVariableValuePairs()
 
     def getTriggerVariables(self):
         return self.trigger.getVariables()
