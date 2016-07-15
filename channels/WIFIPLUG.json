@@ -3,28 +3,28 @@
         "Toggle on / off": [
             {
                 "value": "!",
-                "variable": "WIFIPLUG_status"
+                "variable": "status"
             }
         ],
         "Turn off": [
             {
-                "value": "off",
-                "variable": "WIFIPLUG_status"
+                "value": "OFF",
+                "variable": "status"
             }
         ],
         "Turn on": [
             {
-                "value": "on",
-                "variable": "WIFIPLUG_status"
+                "value": "ON",
+                "variable": "status"
             }
         ]
     },
     "variables": {
-        "WIFIPLUG_status": {
+        "status": {
             "type": "set",
             "valueSet": [
-                "on",
-                "off"
+                "ON",
+                "OFF"
             ]
         }
     }

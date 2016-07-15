@@ -3,20 +3,16 @@
         "Temperature drops below": {
             "relationalOperator": "<=",
             "value": "*",
-            "minValue": 0,
-            "maxValue": 100,
-            "variable": "Wink_Spotter_temperature"
+            "variable": "temperature"
         },
         "Temperature rises above": {
             "relationalOperator": ">=",
             "value": "*",
-            "minValue": 0,
-            "maxValue": 100,
-            "variable": "Wink_Spotter_temperature"
+            "variable": "temperature"
         }
     },
     "variables": {
-        "Wink_Spotter_temperature": {
+        "temperature": {
             "maxValue": 100,
             "minValue": 0,
             "type": "range"

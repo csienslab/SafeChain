@@ -125,13 +125,13 @@ def expandNotOperator(postfix_tokens):
     new_postfix_tokens = list(flattenList(new_postfix_tokens))
     return new_postfix_tokens
 
-def getVariableValuePairs(tokens):
-    variable_value_pairs = []
+def getVariableKeyOperatorValuePairs(tokens):
+    variable_key_operator_value_pairs = []
     for token in tokens:
         if isinstance(token, tuple):
-            variable_value_pairs.append(token)
+            variable_key_operator_value_pairs.append(token)
 
-    return variable_value_pairs
+    return variable_key_operator_value_pairs
 
 
 

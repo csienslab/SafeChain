@@ -3,13 +3,11 @@
         "Egg count drops below": {
             "relationalOperator": "<=",
             "value": "*",
-            "minValue": 0,
-            "maxValue": 63,
-            "variable": "Wink_Egg_Minder_egg_count"
+            "variable": "egg_count"
         }
     },
     "variables": {
-        "Wink_Egg_Minder_egg_count": {
+        "egg_count": {
             "maxValue": 63,
             "minValue": 0,
             "type": "range"

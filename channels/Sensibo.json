@@ -2,20 +2,42 @@
     "actions": {
         "Turn A/C off": [
             {
-                "value": "FALSE",
-                "variable": "Sensibo_AC_turned_on"
+                "value": "OFF",
+                "variable": "air_conditioner_status"
             }
         ],
         "Turn A/C on": [
             {
-                "value": "TRUE",
-                "variable": "Sensibo_AC_turned_on"
+                "value": "ON",
+                "variable": "air_conditioner_status"
+            },
+            {
+                "value": "*",
+                "variable": "temperature"
+            },
+            {
+                "value": "*",
+                "variable": "fan_level"
             }
         ]
     },
     "variables": {
-        "Sensibo_AC_turned_on": {
-            "type": "boolean"
+        "air_conditioner_status": {
+            "type": "set",
+            "valueSet": [
+                "ON",
+                "OFF"
+            ]
+        },
+        "temperature": {
+            "type": "range",
+            "minValue": 0,
+            "maxValue": 100
+        },
+        "fan_level": {
+            "type": "range",
+            "minValue": 0,
+            "maxValue": 3
         }
     }
 }

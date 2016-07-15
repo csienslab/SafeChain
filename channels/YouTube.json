@@ -3,27 +3,27 @@
         "New liked video": {
             "relationalOperator": "=",
             "value": "TRUE",
-            "variable": "YouTube_New_liked_video"
+            "variable": "new_liked_video"
         },
         "New public video uploaded by you": {
             "relationalOperator": "=",
             "value": "TRUE",
-            "variable": "YouTube_New_public_video_uploaded_by_you"
+            "variable": "new_public_video_uploaded_by_you"
         },
         "New watch later video": {
             "relationalOperator": "=",
             "value": "TRUE",
-            "variable": "YouTube_New_watch_later_video"
+            "variable": "new_watch_later_video"
         }
     },
     "variables": {
-        "YouTube_New_liked_video": {
+        "new_liked_video": {
             "type": "boolean"
         },
-        "YouTube_New_public_video_uploaded_by_you": {
+        "new_public_video_uploaded_by_you": {
             "type": "boolean"
         },
-        "YouTube_New_watch_later_video": {
+        "new_watch_later_video": {
             "type": "boolean"
         }
     }

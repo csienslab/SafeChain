@@ -3,14 +3,12 @@
         "Set dial label": [
             {
                 "value": "*",
-                "minValue": 0,
-                "maxValue": 127,
-                "variable": "Wink_Nimbus_dial_label"
+                "variable": "dial_label"
             }
         ]
     },
     "variables": {
-        "Wink_Nimbus_dial_label": {
+        "dial_label": {
             "maxValue": 127,
             "minValue": 0,
             "type": "range"

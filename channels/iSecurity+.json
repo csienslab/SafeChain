@@ -3,21 +3,23 @@
         "Aim your camera": [
             {
                 "value": "*",
-                "minValue": 0,
-                "maxValue": 359,
-                "variable": "iSecurity_camera_angle"
+                "variable": "camera_pan"
+            },
+            {
+                "value": "*",
+                "variable": "camera_tilt"
             }
         ],
         "Disable camera motion detection": [
             {
-                "value": "FALSE",
-                "variable": "iSecurity_with_camera_motion_detection"
+                "value": "OFF",
+                "variable": "camera_motion_detection"
             }
         ],
         "Enable camera motion detection": [
             {
-                "value": "TRUE",
-                "variable": "iSecurity_with_camera_motion_detection"
+                "value": "ON",
+                "variable": "camera_motion_detection"
             }
         ]
     },
@@ -27,35 +29,44 @@
             "operand": [
                 {
                     "relationalOperator": "=",
-                    "value": "TRUE",
-                    "variable": "iSecurity_Motion_detected_by_camera"
+                    "value": "ON",
+                    "variable": "camera_motion_detection"
                 },
                 {
                     "relationalOperator": "=",
                     "value": "TRUE",
-                    "variable": "iSecurity_with_camera_motion_detection"
+                    "variable": "motion_detected"
                 }
             ]
         },
         "Person seen by camera": {
             "relationalOperator": "=",
             "value": "TRUE",
-            "variable": "iSecurity_Person_seen_by_camera"
+            "variable": "person_seen"
         }
     },
     "variables": {
-        "iSecurity_camera_angle": {
+        "camera_pan": {
             "maxValue": 359,
             "minValue": 0,
             "type": "range"
         },
-        "iSecurity_with_camera_motion_detection": {
+        "camera_tilt": {
+            "maxValue": 359,
+            "minValue": 0,
+            "type": "range"
+        },
+        "camera_motion_detection": {
+            "type": "set",
+            "valueSet": [
+                "ON",
+                "OFF"
+            ]
+        },
+        "motion_detected": {
             "type": "boolean"
         },
-        "iSecurity_Motion_detected_by_camera": {
-            "type": "boolean"
-        },
-        "iSecurity_Person_seen_by_camera": {
+        "person_seen": {
             "type": "boolean"
         }
     }

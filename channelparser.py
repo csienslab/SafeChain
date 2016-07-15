@@ -36,17 +36,21 @@ def loadChannelFromFiles(filepaths):
         channel_name = filepath.stem
 
         for variable_name, variable_content in channel['variables'].items():
+            Variable.checkErrors(channel_name, variable_name, variable_content)
+
             variable = Variable(channel_name, variable_name, variable_content)
             variable_key = Variable.getUniqueName(channel_name, variable_name)
             variables[variable_key] = variable
 
         for trigger_name, trigger_content in channel['triggers'].items():
-            trigger = Trigger.checkErrors(channel_name, trigger_name, trigger_content, variables)
+            Trigger.checkErrors(channel_name, trigger_name, trigger_content, variables)
+
             trigger_key = Trigger.getUniqueName(channel_name, trigger_name)
             triggers[trigger_key] = trigger_content
 
         for action_name, action_content in channel['actions'].items():
-            action = Action.checkErrors(channel_name, action_name, action_content, variables)
+            Action.checkErrors(channel_name, action_name, action_content, variables)
+
             action_key = Action.getUniqueName(channel_name, action_name)
             actions[action_key] = action_content
 
@@ -62,5 +66,5 @@ def loadChannelsFromDirectory(directory_path):
 
 
 if __name__ == '__main__':
-    channels = loadChannelsFromDirectory('./channels')
+    channels = loadChannelsFromDirectory('channels')
 

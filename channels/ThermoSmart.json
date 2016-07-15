@@ -2,22 +2,20 @@
     "actions": {
         "Pause": [
             {
-                "value": "off",
-                "variable": "ThermoSmart_thermosmart"
+                "value": "OFF",
+                "variable": "status"
             }
         ],
         "Set temperature": [
             {
                 "value": "*",
-                "minValue": 0,
-                "maxValue": 100,
-                "variable": "ThermoSmart_temperature"
+                "variable": "temperature"
             }
         ],
         "Unpause": [
             {
-                "value": "on",
-                "variable": "ThermoSmart_thermosmart"
+                "value": "ON",
+                "variable": "status"
             }
         ]
     },
@@ -25,47 +23,43 @@
         "Temperature drops below": {
             "relationalOperator": "<=",
             "value": "*",
-            "minValue": 0,
-            "maxValue": 100,
-            "variable": "ThermoSmart_temperature"
+            "variable": "temperature"
         },
         "Temperature rises above": {
             "relationalOperator": ">=",
             "value": "*",
-            "minValue": 0,
-            "maxValue": 100,
-            "variable": "ThermoSmart_temperature"
+            "variable": "temperature"
         },
         "ThermoSmart changes program": {
             "relationalOperator": "=",
             "value": "TRUE",
-            "variable": "ThermoSmart_program_changed"
+            "variable": "program_changed"
         },
         "ThermoSmart gets paused": {
             "relationalOperator": "=",
-            "value": "off",
-            "variable": "ThermoSmart_thermosmart"
+            "value": "OFF",
+            "variable": "status"
         },
         "ThermoSmart gets unpaused": {
             "relationalOperator": "=",
-            "value": "on",
-            "variable": "ThermoSmart_thermosmart"
+            "value": "ON",
+            "variable": "status"
         }
     },
     "variables": {
-        "ThermoSmart_thermosmart": {
+        "status": {
             "type": "set",
             "valueSet": [
-                "on",
-                "off"
+                "ON",
+                "OFF"
             ]
         },
-        "ThermoSmart_temperature": {
+        "temperature": {
             "maxValue": 100,
             "minValue": 0,
             "type": "range"
         },
-        "ThermoSmart_program_changed": {
+        "program_changed": {
             "type": "boolean"
         }
     }

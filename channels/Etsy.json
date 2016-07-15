@@ -3,43 +3,43 @@
         "Any new handpicked item": {
             "relationalOperator": "=",
             "value": "TRUE",
-            "variable": "Etsy_Any_new_handpicked_item"
+            "variable": "any_new_handpicked_item"
         },
         "New favorite item": {
             "relationalOperator": "=",
             "value": "TRUE",
-            "variable": "Etsy_New_favorite_item"
+            "variable": "new_favorite_item"
         },
         "New item from search": {
             "relationalOperator": "=",
             "value": "TRUE",
-            "variable": "Etsy_New_item_from_search"
+            "variable": "new_item_from_search"
         },
         "New item in shop": {
             "relationalOperator": "=",
             "value": "TRUE",
-            "variable": "Etsy_New_item_in_shop"
+            "variable": "new_item_in_shop"
         },
         "New purchased item": {
             "relationalOperator": "=",
             "value": "TRUE",
-            "variable": "Etsy_New_purchased_item"
+            "variable": "new_purchased_item"
         }
     },
     "variables": {
-        "Etsy_Any_new_handpicked_item": {
+        "any_new_handpicked_item": {
             "type": "boolean"
         },
-        "Etsy_New_favorite_item": {
+        "new_favorite_item": {
             "type": "boolean"
         },
-        "Etsy_New_item_from_search": {
+        "new_item_from_search": {
             "type": "boolean"
         },
-        "Etsy_New_item_in_shop": {
+        "new_item_in_shop": {
             "type": "boolean"
         },
-        "Etsy_New_purchased_item": {
+        "new_purchased_item": {
             "type": "boolean"
         }
     }
