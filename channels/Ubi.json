@@ -1,0 +1,55 @@
+{
+    "actions": {
+        "Voice announcement": [
+            {
+                "value": "TRUE",
+                "variable": "voice_announcement"
+            },
+            {
+                "value": "*",
+                "variable": "voice_announcement_text"
+            }
+        ]
+    },
+    "triggers": {
+        "Voice command": {
+            "logicalOperator": "&",
+            "operand": [
+                {
+                    "relationalOperator": "=",
+                    "value": "TRUE",
+                    "variable": "voice_command"
+                },
+                {
+                    "relationalOperator": "=",
+                    "value": "*",
+                    "variable": "voice_command_text"
+                }
+            ]
+        }
+    },
+    "variables": {
+        "voice_command": {
+            "type": "boolean"
+        },
+        "voice_command_text": {
+            "type": "set",
+            "valueSet": [
+                "HI",
+                "YO",
+                "FIND_MY_PHONE"
+            ]
+        },
+        "voice_announcement": {
+            "type": "boolean"
+        },
+        "voice_announcement_text": {
+            "type": "set",
+            "valueSet": [
+                "HI",
+                "YO",
+                "FIND_YOUR_PHONE"
+            ]
+        }
+    }
+}

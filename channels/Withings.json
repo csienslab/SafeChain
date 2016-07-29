@@ -1,0 +1,108 @@
+{
+    "triggers": {
+        "Blood Pressure Monitor - New measurement": {
+            "relationalOperator": "=",
+            "value": "TRUE",
+            "variable": "blood_pressure_monitor_new_measurement"
+        },
+        "Body Scale - New measurement": {
+            "relationalOperator": "=",
+            "value": "TRUE",
+            "variable": "body_scale_new_measurement"
+        },
+        "Body Scale - Weight measurement drops below": {
+            "logicalOperator": "&",
+            "operand": [
+                {
+                    "relationalOperator": "=",
+                    "value": "TRUE",
+                    "variable": "body_scale_new_measurement"
+                },
+                {
+                    "relationalOperator": "<=",
+                    "value": "*",
+                    "variable": "body_scale_weight"
+                }
+            ]
+        },
+        "Body Scale - Weight measurement rises above": {
+            "logicalOperator": "&",
+            "operand": [
+                {
+                    "relationalOperator": "=",
+                    "value": "TRUE",
+                    "variable": "body_scale_new_measurement"
+                },
+                {
+                    "relationalOperator": ">=",
+                    "value": "*",
+                    "variable": "body_scale_weight"
+                }
+            ]
+        },
+        "Pulse - New heart rate measurement": {
+            "relationalOperator": "=",
+            "value": "TRUE",
+            "variable": "pulse_new_heart_rate_measurement"
+        },
+        "Pulse - Yesterday's activity logged": {
+            "relationalOperator": "=",
+            "value": "TRUE",
+            "variable": "pulse_yesterdays_activity_logged"
+        },
+        "Pulse - Yesterday's steps above": {
+            "logicalOperator": "&",
+            "operand": [
+                {
+                    "relationalOperator": "=",
+                    "value": "TRUE",
+                    "variable": "pulse_yesterdays_activity_logged"
+                },
+                {
+                    "relationalOperator": ">=",
+                    "value": "*",
+                    "variable": "pulse_yesterdays_steps"
+                }
+            ]
+        },
+        "Pulse - Yesterday's steps below": {
+            "logicalOperator": "&",
+            "operand": [
+                {
+                    "relationalOperator": "=",
+                    "value": "TRUE",
+                    "variable": "pulse_yesterdays_activity_logged"
+                },
+                {
+                    "relationalOperator": "<=",
+                    "value": "*",
+                    "variable": "pulse_yesterdays_steps"
+                }
+            ]
+        }
+    },
+    "variables": {
+        "blood_pressure_monitor_new_measurement": {
+            "type": "boolean"
+        },
+        "body_scale_new_measurement": {
+            "type": "boolean"
+        },
+        "body_scale_weight": {
+            "maxValue": 250,
+            "minValue": 0,
+            "type": "range"
+        },
+        "pulse_new_heart_rate_measurement": {
+            "type": "boolean"
+        },
+        "pulse_yesterdays_activity_logged": {
+            "type": "boolean"
+        },
+        "pulse_yesterdays_steps": {
+            "maxValue": 10000,
+            "minValue": 0,
+            "type": "range"
+        }
+    }
+}

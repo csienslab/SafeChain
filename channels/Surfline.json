@@ -1,0 +1,51 @@
+{
+    "triggers": {
+        "Surf height is at least": {
+            "logicalOperator": "&",
+            "operand": [
+                {
+                    "relationalOperator": ">=",
+                    "value": "*",
+                    "variable": "surf_height"
+                },
+                {
+                    "relationalOperator": "=",
+                    "value": "*",
+                    "variable": "surf_location"
+                }
+            ]
+        },
+        "Surf rating is at least": {
+            "logicalOperator": "&",
+            "operand": [
+                {
+                    "relationalOperator": ">=",
+                    "value": "*",
+                    "variable": "surf_rating"
+                },
+                {
+                    "relationalOperator": "=",
+                    "value": "*",
+                    "variable": "surf_location"
+                }
+            ]
+        }
+    },
+    "variables": {
+        "surf_height": {
+            "maxValue": 1000,
+            "minValue": 0,
+            "type": "range"
+        },
+        "surf_rating": {
+            "maxValue": 10,
+            "minValue": 0,
+            "type": "range"
+        },
+        "surf_location": {
+            "maxValue": 1023,
+            "minValue": 0,
+            "type": "range"
+        }
+    }
+}

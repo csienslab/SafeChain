@@ -1,0 +1,14 @@
+{
+    "triggers": {
+        "Any new contact": {
+            "relationalOperator": "=",
+            "value": "TRUE",
+            "variable": "any_new_contact"
+        }
+    },
+    "variables": {
+        "any_new_contact": {
+            "type": "boolean"
+        }
+    }
+}

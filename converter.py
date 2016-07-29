@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
+import timeit
+
 from ifttt import VariableType, Trigger, Action, Rule
 from channelparser import loadChannelsFromDirectory
 import pruner
@@ -83,8 +85,8 @@ class NuSMVConverter:
                 raise ValueError('[%s] variable %s with undefined type' % (variable.channel_name, variable.name))
 
             output += '\t\t%s: %s;\n' % (variable_key, variable_range)
-        output += '\n'
 
+        output += '\n'
         for rule in rules:
             action_variables = rule.getExclusiveActionVariables()
             trigger_variables = rule.getTriggerVariables()
@@ -146,6 +148,8 @@ if __name__ == '__main__':
 
     # converter.addCompromisedChannel('Android Device')
 
-    converter.constraint = 'GARAGEIO_door = OPEN'
+    # converter.constraint = 'ANDROID_DEVICE_wifi_status = ON | ANDROID_DEVICE_wifi_status != ON | PHONE_CALL_status = PHONECALL | PHONE_CALL_status != PHONECALL'
+    converter.constraint = 'BLINK_1__status = BLINK | BLINK_1__status = NONE'
 
-    converter.dump('test2.txt', pruning=True, grouping=True)
+    converter.dump('test2.txt', pruning=False, grouping=False)
+

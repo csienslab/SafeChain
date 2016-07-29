@@ -1,0 +1,22 @@
+{
+    "triggers": {
+        "New event from a camera": {
+            "relationalOperator": "=",
+            "value": "TRUE",
+            "variable": "new_event_from_a_camera"
+        },
+        "New event from a rule": {
+            "relationalOperator": "=",
+            "value": "TRUE",
+            "variable": "new_event_from_a_rule"
+        }
+    },
+    "variables": {
+        "new_event_from_a_camera": {
+            "type": "boolean"
+        },
+        "new_event_from_a_rule": {
+            "type": "boolean"
+        }
+    }
+}

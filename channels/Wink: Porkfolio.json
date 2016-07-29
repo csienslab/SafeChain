@@ -1,0 +1,24 @@
+{
+    "triggers": {
+        "Balance rises above": {
+            "relationalOperator": ">=",
+            "value": "*",
+            "variable": "balance"
+        },
+        "Money added": {
+            "relationalOperator": "=",
+            "value": "TRUE",
+            "variable": "money_added"
+        }
+    },
+    "variables": {
+        "balance": {
+            "maxValue": 10000,
+            "minValue": 0,
+            "type": "range"
+        },
+        "money_added": {
+            "type": "boolean"
+        }
+    }
+}

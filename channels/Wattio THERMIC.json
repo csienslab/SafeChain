@@ -9,7 +9,7 @@
         "Set temperature": [
             {
                 "value": "*",
-                "variable": "temperature"
+                "variable": "desired_temperature"
             }
         ]
     },
@@ -19,7 +19,7 @@
             "minValue": 0,
             "type": "range"
         },
-        "temperature": {
+        "desired_temperature": {
             "maxValue": 100,
             "minValue": 0,
             "type": "range"

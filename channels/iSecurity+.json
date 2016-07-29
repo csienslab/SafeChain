@@ -40,9 +40,19 @@
             ]
         },
         "Person seen by camera": {
-            "relationalOperator": "=",
-            "value": "TRUE",
-            "variable": "person_seen"
+            "logicalOperator": "&",
+            "operand": [
+                {
+                    "relationalOperator": "=",
+                    "value": "ON",
+                    "variable": "camera_motion_detection"
+                },
+                {
+                    "relationalOperator": "=",
+                    "value": "TRUE",
+                    "variable": "person_seen"
+                }
+            ]
         }
     },
     "variables": {

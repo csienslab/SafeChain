@@ -1,0 +1,77 @@
+{
+    "actions": {
+        "Blink lights": [
+            {
+                "value": "?",
+                "variable": "status"
+            }
+        ],
+        "Change color": [
+            {
+                "value": "*",
+                "variable": "color"
+            }
+        ],
+        "Change color from image": [
+            {
+                "value": "*",
+                "variable": "color"
+            }
+        ],
+        "Change to random color": [
+            {
+                "value": "?",
+                "variable": "color"
+            }
+        ],
+        "Dim lights": [
+            {
+                "value": "*",
+                "variable": "level"
+            }
+        ],
+        "Toggle lights on/off": [
+            {
+                "value": "!",
+                "variable": "status"
+            }
+        ],
+        "Turn off lights": [
+            {
+                "value": "OFF",
+                "variable": "status"
+            }
+        ],
+        "Turn on color loop": [
+            {
+                "value": "?",
+                "variable": "color"
+            }
+        ],
+        "Turn on lights": [
+            {
+                "value": "ON",
+                "variable": "status"
+            }
+        ]
+    },
+    "variables": {
+        "status": {
+            "type": "set",
+            "valueSet": [
+                "ON",
+                "OFF"
+            ]
+        },
+        "color": {
+            "maxValue": 127,
+            "minValue": 0,
+            "type": "range"
+        },
+        "level": {
+            "maxValue": 100,
+            "minValue": 1,
+            "type": "range"
+        }
+    }
+}

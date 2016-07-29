@@ -1,0 +1,23 @@
+{
+    "triggers": {
+        "You Yo IFTTT": {
+            "relationalOperator": "=",
+            "value": 0,
+            "variable": "send_target"
+        }
+    },
+    "variables": {
+        "send_target": {
+            "maxValue": 1023,
+            "minValue": 0,
+            "type": "range"
+        },
+        "status": {
+            "type": "set",
+            "valueSet": [
+                "RECEIVED",
+                "NONE"
+            ]
+        }
+    }
+}

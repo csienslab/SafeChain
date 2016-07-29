@@ -61,7 +61,7 @@ class ExtendedSetVariable(Variable):
 
 
     def getEquivalentValueSet(self, relational_operator, value):
-        if value == '?':
+        if value in ('?', '!'):
             return self.valueset
 
         if self.original_type in (VariableType.BOOLEAN, VariableType.SET):
@@ -95,12 +95,10 @@ class ExtendedSetVariable(Variable):
                     variable_valueset.append(self.getElementName(sorted_values[i]))
 
                 for current_value, next_value in zip(sorted_values[i:], sorted_values[i+1:]):
-                    if '<' in relational_operator:
-                        if current_value - next_value != 1:
-                            variable_valueset.append('d_%d_%d' % (next_value, current_value))
-                    else:
-                        if next_value - current_value != 1:
-                            variable_valueset.append('d_%d_%d' % (current_value, next_value))
+                    if '<' in relational_operator and current_value - next_value != 1:
+                        variable_valueset.append('d_%d_%d' % (next_value, current_value))
+                    elif '>' in relational_operator and next_value - current_value != 1:
+                        variable_valueset.append('d_%d_%d' % (current_value, next_value))
                     variable_valueset.append(self.getElementName(next_value))
 
                 return set(variable_valueset)
@@ -109,19 +107,6 @@ class ExtendedSetVariable(Variable):
 
         else:
             raise ValueError('[%s] variable %s is not defined well' % (self.channel_name, self.name))
-
-    def getTrueValueSet(self, relational_operator, valueset):
-        if self.type == VariableType.SET:
-            if relational_operator == '=':
-                return valueset
-            elif relational_operator == '!=':
-                return set(self.valueset) - valueset
-            else:
-                raise ValueError('[%s] variable %s with incompatible relational operator' % (self.channel_name, self.name))
-
-        else:
-            raise ValueError('[%s] variable %s cannot get the true value set' % (self.channel_name, self.name))
-
 
 
 class ExtendedTrigger(Trigger):
@@ -262,8 +247,7 @@ def convertToSetVariables(variables, rules, constraint):
         trigger = ExtendedTrigger(rule.trigger, set_variables)
         action = ExtendedAction(rule.action, set_variables)
 
-        rule_name = '%s%d' % ('rule', len(set_rules) + 1)
-        rule = Rule(rule_name, trigger, action)
+        rule = Rule(rule.name, trigger, action)
         set_rules.append(rule)
 
     set_constraint = convertConstraintToSetVariables(constraint, set_variables)

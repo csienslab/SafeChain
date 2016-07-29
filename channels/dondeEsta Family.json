@@ -1,0 +1,46 @@
+{
+    "triggers": {
+        "My kid arrives at home": {
+            "relationalOperator": "=",
+            "value": "TRUE",
+            "variable": "my_kid_arrives_at_home"
+        },
+        "My kid arrives at school": {
+            "relationalOperator": "=",
+            "value": "TRUE",
+            "variable": "my_kid_arrives_at_school"
+        },
+        "My kid leaves home": {
+            "relationalOperator": "=",
+            "value": "TRUE",
+            "variable": "my_kid_leaves_home"
+        },
+        "My kid leaves school": {
+            "relationalOperator": "=",
+            "value": "TRUE",
+            "variable": "my_kid_leaves_school"
+        },
+        "My kid presses the panic button": {
+            "relationalOperator": "=",
+            "value": "TRUE",
+            "variable": "my_kid_presses_the_panic_button"
+        }
+    },
+    "variables": {
+        "my_kid_arrives_at_home": {
+            "type": "boolean"
+        },
+        "my_kid_arrives_at_school": {
+            "type": "boolean"
+        },
+        "my_kid_leaves_home": {
+            "type": "boolean"
+        },
+        "my_kid_leaves_school": {
+            "type": "boolean"
+        },
+        "my_kid_presses_the_panic_button": {
+            "type": "boolean"
+        }
+    }
+}

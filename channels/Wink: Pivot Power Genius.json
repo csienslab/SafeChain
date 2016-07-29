@@ -1,20 +1,26 @@
 {
     "actions": {
-        "Power off device": [
+        "Toggle on/off": [
             {
-                "value": "OFF",
-                "variable": "device"
+                "value": "!",
+                "variable": "outlet"
             }
         ],
-        "Power on device": [
+        "Turn outlet off": [
+            {
+                "value": "OFF",
+                "variable": "outlet"
+            }
+        ],
+        "Turn outlet on": [
             {
                 "value": "ON",
-                "variable": "device"
+                "variable": "outlet"
             }
         ]
     },
     "variables": {
-        "device": {
+        "outlet": {
             "type": "set",
             "valueSet": [
                 "ON",

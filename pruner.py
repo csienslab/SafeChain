@@ -51,6 +51,9 @@ def getTargetNodes(constraint, variables):
     return target_nodes
 
 def getRelatedRules(variables, rules, constraint):
+    if constraint == None:
+        return rules
+
     original_variables = variables
     variables, _, _ = grouper.convertToSetVariables(variables, rules, constraint)
 
@@ -67,6 +70,8 @@ def getRelatedRules(variables, rules, constraint):
                 G.add_edge(trigger_node_name, action_node_name, rules=set())
 
             G.edge[trigger_node_name][action_node_name]['rules'].add(rule.name)
+
+    print(list(networkx.find_cycle(G, orientation='original')))
 
 
     unexplored_node = getTargetNodes(constraint, variables)

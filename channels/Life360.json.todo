@@ -11,7 +11,7 @@
         "First family member arrives at a specific place": {
             "operator": "=",
             "value": "true",
-            "variable": "Life360_First_family_member_arrives_at_a_specific_place"
+            "variable": "first_family_member_arrived"
         },
         "Last family member leaves a specific place": {
             "operator": "=",

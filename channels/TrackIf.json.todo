@@ -1,90 +1,54 @@
 {
     "triggers": {
         "New product alert": {
-            "operator": "=",
-            "value": "true",
-            "variable": "TrackIf_New_product_alert"
+            "relationalOperator": "=",
+            "value": "TRUE",
+            "variable": "new_product_alert"
         },
         "New real estate notification": {
-            "operator": "=",
-            "value": "true",
-            "variable": "TrackIf_New_real_estate_notification"
+            "relationalOperator": "=",
+            "value": "TRUE",
+            "variable": "new_real_estate_notification"
         },
         "New software released": {
-            "operator": "=",
-            "value": "true",
-            "variable": "TrackIf_New_software_released"
-        },
+            "relationalOperator": "=",
+            "value": "TRUE",
+            "variable": "new_software_released"
+       },
         "New vehicle notification": {
-            "operator": "=",
-            "value": "true",
-            "variable": "TrackIf_New_vehicle_notification"
+            "relationalOperator": "=",
+            "value": "TRUE",
+            "variable": "new_vehicle_notification"
         },
         "Price drops on any product": {
-            "operator": "=",
-            "value": "true",
-            "variable": "TrackIf_Price_drops_on_any_product"
+            "relationalOperator": "=",
+            "value": "TRUE",
+            "variable": "price_drops_on_any_product"
         },
         "Product is back in stock": {
-            "operator": "=",
-            "value": "true",
-            "variable": "TrackIf_Product_is_back_in_stock"
+            "relationalOperator": "=",
+            "value": "TRUE",
+            "variable": "product_is_back_in_stock"
         }
     },
     "variables": {
-        "TrackIf_New_product_alert": {
-            "maxValue": 0,
-            "minValue": 0,
-            "type": "",
-            "value": [
-                "on",
-                "off"
-            ]
+        "new_product_alert": {
+            "type": "boolean"
         },
-        "TrackIf_New_real_estate_notification": {
-            "maxValue": 0,
-            "minValue": 0,
-            "type": "",
-            "value": [
-                "on",
-                "off"
-            ]
+        "new_real_estate_notification": {
+            "type": "boolean"
         },
-        "TrackIf_New_software_released": {
-            "maxValue": 0,
-            "minValue": 0,
-            "type": "",
-            "value": [
-                "on",
-                "off"
-            ]
+        "new_software_released": {
+            "type": "boolean"
         },
-        "TrackIf_New_vehicle_notification": {
-            "maxValue": 0,
-            "minValue": 0,
-            "type": "",
-            "value": [
-                "on",
-                "off"
-            ]
+        "new_vehicle_notification": {
+            "type": "boolean"
         },
-        "TrackIf_Price_drops_on_any_product": {
-            "maxValue": 0,
-            "minValue": 0,
-            "type": "",
-            "value": [
-                "on",
-                "off"
-            ]
+        "price_drops_on_any_product": {
+            "type": "boolean"
         },
-        "TrackIf_Product_is_back_in_stock": {
-            "maxValue": 0,
-            "minValue": 0,
-            "type": "",
-            "value": [
-                "on",
-                "off"
-            ]
+        "product_is_back_in_stock": {
+            "type": "boolean"
         }
     }
 }
