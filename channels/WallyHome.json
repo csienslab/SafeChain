@@ -1,0 +1,20 @@
+{
+    "triggers": {
+        "New alert from WallyHome": {
+            "relationalOperator": "=",
+            "value": "*",
+            "variable": "alert"
+        }
+    },
+    "variables": {
+        "alert": {
+            "type": "set",
+            "valueSet": [
+                "WATER_LEAKS",
+                "HUMIDITY",
+                "TEMPERATURE",
+                "NONE"
+            ]
+        }
+    }
+}
