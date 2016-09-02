@@ -71,7 +71,7 @@ def getRelatedRules(variables, rules, constraint):
 
             G.edge[trigger_node_name][action_node_name]['rules'].add(rule.name)
 
-    print(list(networkx.find_cycle(G, orientation='original')))
+    # print(list(networkx.find_cycle(G, orientation='original')))
 
 
     unexplored_node = getTargetNodes(constraint, variables)
