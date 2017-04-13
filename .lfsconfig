@@ -1,0 +1,3 @@
+[lfs]
+	url = https://140.112.31.96:10443/r04922156/ifttt.git/info/lfs
+	ssh = [git@gitlab]:r04922156/ifttt.git
