@@ -1,2 +1,3 @@
 [lfs]
-	url = https://140.112.31.96:10443/r04922156/ifttt.git/info/lfs
+	url = ssh://git@140.112.31.96:10022/r04922156/ifttt
+	url2 = https://140.112.31.96:10443/r04922156/ifttt.git/info/lfs
