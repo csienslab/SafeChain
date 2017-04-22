@@ -11,7 +11,7 @@ def is_dir(dirname):
     """Check if a path is an actual directory"""
     path = pathlib.Path(dirname)
     if not path.is_dir():
-        msg = "{0} is not a directory".format(dirname)
+        msg = '{0} is not a directory'.format(dirname)
         raise argparse.ArgumentTypeError(msg)
 
     return dirname
@@ -54,7 +54,6 @@ if __name__ == '__main__':
     subparsers = parser.add_subparsers()
 
     # set up the second level parser for extract
-    # TODO https://gist.github.com/brantfaircloth/1443543
     parser_extract = subparsers.add_parser('extract', help='extract the channels from dataset')
     parser_extract.add_argument('-i', '--input', required=True, type=argparse.FileType('r'), help='the file of dataset')
     parser_extract.add_argument('-o', '--output_directory', required=True, type=is_dir, help='the directory to save extracted channels')
