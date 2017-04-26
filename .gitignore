@@ -9,5 +9,7 @@ __pycache__/
 # Vim swap file
 *.swp
 
-# My TODO list
+# My list
 *.todo
+*.dat
+*.smv

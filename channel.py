@@ -1,64 +1,52 @@
 #!/usr/bin/env python3
 
-import argparse
-import json
-import collections
-import functools
-import operator
-import pathlib
+import copy
 
-def is_dir(dirname):
-    """Check if a path is an actual directory"""
-    path = pathlib.Path(dirname)
-    if not path.is_dir():
-        msg = '{0} is not a directory'.format(dirname)
-        raise argparse.ArgumentTypeError(msg)
+import variable as myvariable
+import action as myaction
+import trigger as mytrigger
 
-    return dirname
+class Channel:
+    def __init__(self, name, content):
+        self.name = name
+        self.variables = dict()
+        self.triggers = dict()
+        self.actions = dict()
 
-def extract(args):
-    # Constant index
-    TRIGGER_CHANNEL_IDX = 5
-    TRIGGER_IDX = 6
-    ACTION_CHANNEL_IDX = 8
-    ACTION_IDX = 9
+        # make a copy for modification
+        content = copy.copy(content)
 
-    # set up the variable to store data, which is a dict of dict of dict
-    channels = collections.defaultdict(functools.partial(collections.defaultdict, dict))
-    itemgetter = operator.itemgetter(TRIGGER_CHANNEL_IDX, TRIGGER_IDX, ACTION_CHANNEL_IDX, ACTION_IDX)
+        # update if empty
+        if 'actions' not in content:
+            content['actions'] = dict()
 
-    # accumlate the triggers and actions for each channel
-    with args.input as f:
-        for line in f:
-            line = line.strip()
-            columns = line.split('\t')
+        if 'triggers' not in content:
+            content['triggers'] = dict()
 
-            trigger_channel, trigger, action_channel, action = itemgetter(columns)
 
-            channels[trigger_channel]['triggers'][trigger] = {}
-            channels[trigger_channel]['variables'] = {}
+        # use variable constructor and check if there are errors
+        for variable_name, variable_content in content['variables'].items():
+            if variable_content['type'] == 'boolean':
+                constructor = myvariable.BooleanVariable
+            elif variable_content['type'] == 'set':
+                constructor = myvariable.SetVariable
+            elif variable_content['type'] == 'range':
+                constructor = myvariable.RangeVariable
+            elif variable_content['type'] == 'timer':
+                constructor = myvariable.TimerVariable
+            else:
+                raise ValueError('[{0}] variable {1} with unsupported type'.format(self.name, variable_name))
 
-            channels[action_channel]['actions'][action] = {}
-            channels[action_channel]['variables'] = {}
+            variable = constructor(self.name, variable_name, variable_content)
+            self.variables[variable_name] = variable
 
-    # for each channel, write its data into file.json
-    for channel in channels:
-        filename = '{}.json.todo'.format(channel)
-        path = pathlib.Path(args.output_directory, filename)
-        with path.open(mode='w', encoding='UTF-8') as f:
-            f.write(json.dumps(channels[channel], sort_keys=True, indent=2))
+        # use trigger constructor and check if there are errors in trigger
+        for trigger_name, trigger_content in content['triggers'].items():
+            trigger = mytrigger.Trigger(self.name, trigger_name, trigger_content, self.variables)
+            self.triggers[trigger_name] = trigger
 
-if __name__ == '__main__':
-    # set up the top level parser
-    parser = argparse.ArgumentParser(description='A program written to handle the dataset')
-    subparsers = parser.add_subparsers()
+        # use action constructor and check if there are errors in action
+        for action_name, action_content in content['actions'].items():
+            action = myaction.Action(self.name, action_name, action_content, self.variables)
+            self.actions[action_name] = action
 
-    # set up the second level parser for extract
-    parser_extract = subparsers.add_parser('extract', help='extract the channels from dataset')
-    parser_extract.add_argument('-i', '--input', required=True, type=argparse.FileType('r'), help='the file of dataset')
-    parser_extract.add_argument('-o', '--output_directory', required=True, type=is_dir, help='the directory to save extracted channels')
-    parser_extract.set_defaults(func=extract)
-
-    # parse the command line and call the associated function
-    args = parser.parse_args()
-    args.func(args)
