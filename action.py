@@ -53,15 +53,14 @@ class Action:
 
             if (isinstance(assignment['device'], str) and
                 assignment['device'].startswith('$') and
-                assignment['device'][1:].isdigit()):
-                continue
+                not assignment['device'][1:].isdigit()):
+                raise ValueError('[{0}] action {1} definition without proper input index'.format(channel_name, name))
 
             if (isinstance(assignment['value'], str) and
                 assignment['value'].startswith('$') and
-                assignment['value'][1:].isdigit()):
-                continue
+                not assignment['value'][1:].isdigit()):
+                raise ValueError('[{0}] action {1} definition without proper input index'.format(channel_name, name))
 
-            raise ValueError('[{0}] action {1} definition without proper input index'.format(channel_name, name))
 
         return None
 
@@ -99,5 +98,63 @@ class Action:
 
         return False
 
+    def getRequiredDevices(self, inputs):
+        devices = set()
+        for input_requirement, value in zip(self.input_requirements, inputs):
+            if input_requirement['type'] != 'device':
+                continue
+
+            devices.add(value)
+
+        return devices
+
+    def getRequiredVariables(self):
+        variables = set()
+        for assignment in self.definition:
+            variables.add(assignment['variable'])
+
+        return variables
+
+    def getDeviceAssociatedVariables(self, inputs, required_device):
+        variables = list()
+
+        for assignment in self.definition:
+            if (isinstance(assignment['device'], str) and
+                assignment['device'].startswith('$')):
+                index = int(assignment['device'][1:])
+                device = inputs[index]
+
+            if device != required_device:
+                continue
+
+            variable = assignment['variable']
+            variables.append(variable)
+
+        return variables
+
+    def getDeviceVariableAssociatedValues(self, inputs, required_device, required_variable, variables):
+        for assignment in self.definition:
+            if (isinstance(assignment['device'], str) and
+                assignment['device'].startswith('$')):
+                index = int(assignment['device'][1:])
+                device_name = inputs[index]
+
+            variable_name = assignment['variable']
+            if (device_name != required_device or
+                variable_name != required_variable):
+                continue
+
+            if (isinstance(assignment['value'], str) and
+                assignment['value'].startswith('$')):
+                index = int(assignment['value'][1:])
+                value = inputs[index]
+            elif assignment['value'] == 'toggle':
+                variable = variables[variable_name]
+                values = variable.getPossibleValues()
+                value = '{0} = {1} ? {2} : {1}'.format(variable_name, values[0], values[1])
+            else:
+                value = assignment['value']
+
+            return value
 
 

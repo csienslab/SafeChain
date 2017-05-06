@@ -25,6 +25,10 @@ class Variable(metaclass=abc.ABCMeta):
     def getPossibleValues(self):
         pass
 
+    @abc.abstractmethod
+    def getPossibleValuesInNuSMV(self):
+        pass
+
 
 class BooleanVariable(Variable):
     def __init__(self, channel_name, name, content):
@@ -32,6 +36,10 @@ class BooleanVariable(Variable):
 
         self.channel_name = channel_name
         self.name = name
+        if 'previous' in content and content['previous'] == 'true':
+            self.previous = True
+        else:
+            self.previous = False
 
     @classmethod
     def checkDefinitionErrors(cls, channel_name, name, content):
@@ -56,7 +64,10 @@ class BooleanVariable(Variable):
         return True
 
     def getPossibleValues(self):
-        return ['true', 'false']
+        return ['TRUE', 'FALSE']
+
+    def getPossibleValuesInNuSMV(self):
+        return '{TRUE, FALSE}'
 
 class SetVariable(Variable):
     def __init__(self, channel_name, name, content):
@@ -65,6 +76,10 @@ class SetVariable(Variable):
         self.channel_name = channel_name
         self.name = name
         self.value_set = content['setValue']
+        if 'previous' in content and content['previous'] == 'true':
+            self.previous = True
+        else:
+            self.previous = False
 
     @classmethod
     def checkDefinitionErrors(cls, channel_name, name, content):
@@ -103,6 +118,9 @@ class SetVariable(Variable):
     def getPossibleValues(self):
         return list(self.value_set)
 
+    def getPossibleValuesInNuSMV(self):
+        return '{{{0}}}'.format(', '.join(str(x) for x in self.value_set))
+
 class RangeVariable(Variable):
     def __init__(self, channel_name, name, content):
         super().__init__(channel_name, name, content)
@@ -112,6 +130,10 @@ class RangeVariable(Variable):
         self.min_value = content['minValue']
         self.max_value = content['maxValue']
         self.reset_value = content['resetValue'] if 'resetValue' in content else None
+        if 'previous' in content and content['previous'] == 'true':
+            self.previous = True
+        else:
+            self.previous = False
 
     @classmethod
     def checkDefinitionErrors(cls, channel_name, name, content):
@@ -162,6 +184,9 @@ class RangeVariable(Variable):
     def getPossibleValues(self):
         return list(range(self.min_value, self.max_value + 1))
 
+    def getPossibleValuesInNuSMV(self):
+        return '{0}..{1}'.format(self.min_value, self.max_value)
+
 class TimerVariable(Variable):
     def __init__(self, channel_name, name, content):
         super().__init__(channel_name, name, content)
@@ -170,6 +195,10 @@ class TimerVariable(Variable):
         self.name = name
         self.max_value = content['maxValue']
         self.repeat = (content['repeat'] == 'true')
+        if 'previous' in content and content['previous'] == 'true':
+            self.previous = True
+        else:
+            self.previous = False
 
     @classmethod
     def checkDefinitionErrors(cls, channel_name, name, content):
@@ -191,6 +220,14 @@ class TimerVariable(Variable):
         return None
 
     def hasComparisonErrors(self, operator, value):
+        if operator not in ('=', '!='):
+            return True
+
+        if (isinstance(value, int) and
+            value <= self.max_value and
+            value >= -1):
+            return False
+
         return True
 
     def hasAssignmentErrors(self, value):
@@ -203,6 +240,14 @@ class TimerVariable(Variable):
 
     def getPossibleValues(self):
         return list(range(0, self.max_value + 1))
+
+    def getPossibleValuesInNuSMV(self):
+        if self.repeat:
+            min_value = 0
+        else:
+            min_value = -1
+
+        return '{}..{}'.format(min_value, self.max_value)
 
 
 

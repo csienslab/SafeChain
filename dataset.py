@@ -53,6 +53,8 @@ def extract(args):
 
 def generate(args):
     channels = dict()
+
+    # find all possible defined channels
     path = pathlib.Path(args.input_directory)
     filepaths = path.glob('*.json')
 
@@ -64,6 +66,7 @@ def generate(args):
         channel = mychannel.Channel(channel_name, channel_content)
         channels[channel_name] = channel
 
+    # dump the customized dataset
     with args.output as f:
         pickle.dump(channels, f, protocol=pickle.HIGHEST_PROTOCOL)
 

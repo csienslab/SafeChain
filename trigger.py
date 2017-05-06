@@ -70,20 +70,22 @@ class Trigger:
     def hasObjectiveErrors(cls, channel_name, name, content, variables):
         if 'value' in content:
             if (isinstance(content['value'], str) and
-                content['device'].startswith('$') and
-                not content['device'][1:].isdigit()):
+                content['value'].startswith('$') and
+                not content['value'][1:].isdigit()):
                 return True
 
             return False
 
-        if 'device2' in content:
-            if ('previous2' in content and
-                content['previous2'] in variables):
+        if ('previous2' in content and
+            content['previous2'] in variables):
+            if (isinstance(content['device2'], str) and
+                content['device2'].startswith('$') and
+                content['device2'][1:].isdigit()):
                 return False
 
             return True
 
-        return False
+        return True
 
     @classmethod
     def checkDefinitionPartErrors(cls, channel_name, name, content, variables):
@@ -178,3 +180,73 @@ class Trigger:
                 return True
 
         return False
+
+    def getRequiredDevices(self, inputs):
+        devices = set()
+        for input_requirement, value in zip(self.input_requirements, inputs):
+            if input_requirement['type'] != 'device':
+                continue
+
+            devices.add(value)
+
+        return devices
+
+    def getRequiredVariables(self, content=None):
+        if content == None:
+            content = self.definition
+
+        if 'logicalOperator' in content:
+            variables = set()
+            for operand in content['operands']:
+                variables |= self.getRequiredVariables(operand)
+
+            return variables
+
+        variables = set()
+        if 'variable' in content:
+            variables.add(content['variable'])
+        else:
+            variables.add(content['previous'])
+
+        if 'previous2' in content:
+            variables.add(content['previous2'])
+
+        return variables
+
+    def toBooleanString(self, inputs, content=None):
+        if content == None:
+            content = self.definition
+
+        if 'logicalOperator' in content:
+            booleans = list()
+            for operand in content['operands']:
+                booleans.append('({})'.format(self.toBooleanString(inputs, operand)))
+
+            operator = ' {} '.format(content['logicalOperator'])
+            return operator.join(booleans)
+
+        index = int(content['device'][1:])
+        device = inputs[index]
+        if 'variable' in content:
+            sub = '{0}.{1}'.format(device, content['variable'])
+        elif 'previous' in content:
+            sub = '{0}.{1}'.format(device, content['previous'] + '_previous')
+
+        if 'value' in content:
+            if (isinstance(content['value'], str) and
+                content['value'].startswith('$')):
+                index = int(content['value'][1:])
+                obj = inputs(index)
+            else:
+                obj = content['value']
+
+        elif 'previous2' in content:
+            if (isinstance(content['device2'], str) and
+                content['device2'].startswith('$')):
+                index2 = int(content['device2'][1:])
+                device2 = inputs[index2]
+            obj = '{0}.{1}'.format(device2, content['previous2'] + '_previous')
+
+        return '{0} {1} {2}'.format(sub, content['relationalOperator'], obj)
+
+
