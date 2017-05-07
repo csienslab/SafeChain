@@ -195,7 +195,12 @@ class Channel:
 
             if variable_name in self.customs:
                 custom = self.customs[variable_name]
-                for trigger, value in custom.getTriggersAndValues(self.variables, device_name, all_variable_constraints):
+                if grouping:
+                    custom_trigger_and_values = custom.getTriggersAndValuesWithConstraints(self.variables, device_name, all_variable_constraints)
+                else:
+                    custom_trigger_and_values = custom.getTriggersAndValues(self.variables)
+
+                for trigger, value in custom_trigger_and_values:
                     comments.append((trigger, value))
                     trigger_and_values.append((trigger, value))
 

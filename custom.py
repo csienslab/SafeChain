@@ -79,41 +79,35 @@ class Custom:
         else:
             raise ValueError('[{0}] trigger {1} has unsupported operator'.format(channel_name, variable_name))
 
-    def toBooleanFormat(self, content, variables, device_name, all_variable_constraints):
+    def toBooleanFormat(self, content):
         if 'relationalOperator' in content:
             if 'variable' in content:
-                variable_name = content['variable']
+                variable = content['variable']
             elif 'previous' in content:
-                variable_name = content['previous']
+                variable = content['previous']
 
             operator = content['relationalOperator']
             value = content['value']
-
-            variable = variables[variable_name]
-            variable_constraints = all_variable_constraints[(device_name, self.variable_name)]
-            operator, value = variable.getEquivalentComparisonWithConstraints(variable_constraints, operator, value)
-
-            return '{0} {1} {2}'.format(variable_name, operator, value)
+            return '{0} {1} {2}'.format(variable, operator, value)
 
         operator = ' {0} '.format(content['logicalOperator'])
-        string = operator.join(self.toBooleanFormat(operand, variables, device_name, all_variable_constraints) for operand in content['operands'])
+        string = operator.join(self.toBooleanFormat(operand) for operand in content['operands'])
         return '({0})'.format(string)
 
-    def getTriggersAndValues(self, variables, device_name, all_variable_constraints):
+    def getTriggersAndValues(self, variables):
         triggers_and_values = list()
 
         for definition in self.definition:
             if 'trigger' not in definition:
                 trigger = 'TRUE'
             else:
-                trigger = self.toBooleanFormat(definition['trigger'], variables, device_name, all_variable_constraints)
+                trigger = self.toBooleanFormat(definition['trigger'])
 
             if 'value' in definition:
                 value = definition['value']
                 if value == 'random':
                     variable = variables[self.variable_name]
-                    variable_constraints = all_variable_constraints[(device_name, self.variable_name)]
-                    value = variable.getPossibleValuesInNuSMVwithConstraints(variable_constraints)
+                    value = variable.getPossibleValuesInNuSMV()
             elif 'variable' in definition:
                 if 'operator' in definition and 'operand' in definition:
                     value = '{0} {1} {2}'.format(definition['variable'], definition['operator'], definition['operand'])
@@ -160,3 +154,48 @@ class Custom:
             results += [(self.variable_name, '=', value)]
 
         return results
+
+    def toBooleanFormatWithConstrints(self, content, variables, device_name, all_variable_constraints):
+        if 'relationalOperator' in content:
+            if 'variable' in content:
+                variable_name = content['variable']
+            elif 'previous' in content:
+                variable_name = content['previous']
+
+            operator = content['relationalOperator']
+            value = content['value']
+
+            variable = variables[variable_name]
+            variable_constraints = all_variable_constraints[(device_name, self.variable_name)]
+            operator, value = variable.getEquivalentComparisonWithConstraints(variable_constraints, operator, value)
+
+            return '{0} {1} {2}'.format(variable_name, operator, value)
+
+        operator = ' {0} '.format(content['logicalOperator'])
+        string = operator.join(self.toBooleanFormatWithConstrints(operand, variables, device_name, all_variable_constraints) for operand in content['operands'])
+        return '({0})'.format(string)
+
+    def getTriggersAndValuesWithConstraints(self, variables, device_name, all_variable_constraints):
+        triggers_and_values = list()
+
+        for definition in self.definition:
+            if 'trigger' not in definition:
+                trigger = 'TRUE'
+            else:
+                trigger = self.toBooleanFormatWithConstrints(definition['trigger'], variables, device_name, all_variable_constraints)
+
+            if 'value' in definition:
+                value = definition['value']
+                if value == 'random':
+                    variable = variables[self.variable_name]
+                    variable_constraints = all_variable_constraints[(device_name, self.variable_name)]
+                    value = variable.getPossibleValuesInNuSMVwithConstraints(variable_constraints)
+            elif 'variable' in definition:
+                if 'operator' in definition and 'operand' in definition:
+                    value = '{0} {1} {2}'.format(definition['variable'], definition['operator'], definition['operand'])
+                else:
+                    value = definition['variable']
+
+            triggers_and_values.append((trigger, value))
+
+        return triggers_and_values
