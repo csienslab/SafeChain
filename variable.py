@@ -29,6 +29,17 @@ class Variable(metaclass=abc.ABCMeta):
     def getPossibleValuesInNuSMV(self):
         pass
 
+    @abc.abstractmethod
+    def getPossibleValuesInNuSMVwithConstraints(self, constraints):
+        pass
+
+    @abc.abstractmethod
+    def getEquivalentAssignmentWithConstraints(self, constraints, assignment_value):
+        pass
+
+    @abc.abstractmethod
+    def getEquivalentComparisonWithConstraints(self, constraints, comparison_operator, comparison_value):
+        pass
 
 class BooleanVariable(Variable):
     def __init__(self, channel_name, name, content):
@@ -36,10 +47,8 @@ class BooleanVariable(Variable):
 
         self.channel_name = channel_name
         self.name = name
-        if 'previous' in content and content['previous'] == 'true':
-            self.previous = True
-        else:
-            self.previous = False
+        self.previous = ('previous' in content and content['previous'] == 'true')
+        self.split_points = set()
 
     @classmethod
     def checkDefinitionErrors(cls, channel_name, name, content):
@@ -69,6 +78,23 @@ class BooleanVariable(Variable):
     def getPossibleValuesInNuSMV(self):
         return '{TRUE, FALSE}'
 
+    def getPossibleValuesInNuSMVwithConstraints(self, constraints):
+        if len(constraints) == 0:
+            return '{ALL}'
+        else:
+            return '{TRUE, FALSE}'
+
+    def getEquivalentAssignmentWithConstraints(self, constraints, assignment_value):
+        if len(constraints) == 0:
+            return 'ALL'
+        else:
+            return value
+
+    def getEquivalentComparisonWithConstraints(self, constraints, comparison_operator, comparison_value):
+        if len(constraints) == 0:
+            raise ValueError('[GG1]')
+        return (comparison_operator, comparison_value)
+
 class SetVariable(Variable):
     def __init__(self, channel_name, name, content):
         super().__init__(channel_name, name, content)
@@ -76,10 +102,7 @@ class SetVariable(Variable):
         self.channel_name = channel_name
         self.name = name
         self.value_set = content['setValue']
-        if 'previous' in content and content['previous'] == 'true':
-            self.previous = True
-        else:
-            self.previous = False
+        self.previous = ('previous' in content and content['previous'] == 'true')
 
     @classmethod
     def checkDefinitionErrors(cls, channel_name, name, content):
@@ -121,6 +144,46 @@ class SetVariable(Variable):
     def getPossibleValuesInNuSMV(self):
         return '{{{0}}}'.format(', '.join(str(x) for x in self.value_set))
 
+    def getPossibleValuesInNuSMVwithConstraints(self, constraints):
+        values = set()
+        for operator, value in constraints:
+            if value == None:
+                return self.getPossibleValuesInNuSMV()
+
+            values.add(value)
+
+        if len(values) == 0:
+            return '{ALL}'
+        elif (len(values) == len(self.getPossibleValues()) - 1 or
+              len(values) == len(self.getPossibleValues())):
+            return self.getPossibleValuesInNuSMV()
+        else:
+            values.add('OTHERS')
+            return '{{{0}}}'.format(', '.join(str(x) for x in values))
+
+    def getEquivalentAssignmentWithConstraints(self, constraints, assignment_value):
+        values = set()
+        for operator, value in constraints:
+            if value == None:
+                return assignment_value
+
+            values.add(value)
+
+        if len(values) == 0:
+            return 'ALL'
+        elif (len(values) == len(self.getPossibleValues()) - 1 or
+              len(values) == len(self.getPossibleValues())):
+            return assignment_value
+        elif value in values:
+            return assignment_value
+        else:
+            return 'OTHERS'
+
+    def getEquivalentComparisonWithConstraints(self, constraints, comparison_operator, comparison_value):
+        if len(constraints) == 0:
+            raise ValueError('[GG1]')
+        return (comparison_operator, comparison_value)
+
 class RangeVariable(Variable):
     def __init__(self, channel_name, name, content):
         super().__init__(channel_name, name, content)
@@ -130,10 +193,7 @@ class RangeVariable(Variable):
         self.min_value = content['minValue']
         self.max_value = content['maxValue']
         self.reset_value = content['resetValue'] if 'resetValue' in content else None
-        if 'previous' in content and content['previous'] == 'true':
-            self.previous = True
-        else:
-            self.previous = False
+        self.previous = ('previous' in content and content['previous'] == 'true')
 
     @classmethod
     def checkDefinitionErrors(cls, channel_name, name, content):
@@ -187,6 +247,130 @@ class RangeVariable(Variable):
     def getPossibleValuesInNuSMV(self):
         return '{0}..{1}'.format(self.min_value, self.max_value)
 
+    def getPossibleValuesInNuSMVwithConstraints(self, constraints):
+        continuous = False
+        values = set()
+
+        for operator, value in constraints:
+            if operator not in ('=', '!='):
+                continuous = True
+
+            if value == None:
+                return self.getPossibleValuesInNuSMV()
+
+            values.add(value)
+
+        if len(values) == 0:
+            return '{ALL}'
+
+        if continuous:
+            results = list()
+            values = sorted(values)
+            if self.min_value not in values:
+                results.append('between_min_{}'.format(values[0]))
+
+            for i in range(len(values) - 1):
+                results.append('{}'.format(values[i]))
+                results.append('between_{0}_{1}'.format(values[i], values[i+1]))
+            results.append('{}'.format(values[-1]))
+
+            if self.max_value not in values:
+                results.append('between_{}_max'.format(values[-1]))
+
+            return '{{{0}}}'.format(', '.join(results))
+        else:
+            if (len(values) == len(self.getPossibleValues()) or
+                len(values) == len(self.getPossibleValues()) - 1):
+                return self.getPossibleValuesInNuSMV()
+
+            results = sorted(values)
+            results.append('OTHERS')
+            return '{' + ', '.join('{}'.format(x) for x in results) + '}'
+
+    def getEquivalentAssignmentWithConstraints(self, constraints, assignment_value):
+        continuous = False
+        values = set()
+
+        for operator, value in constraints:
+            if operator not in ('=', '!='):
+                continuous = True
+
+            if value == None:
+                return assignment_value
+
+            values.add(value)
+
+        if len(values) == 0:
+            return 'ALL'
+
+        if continuous:
+            if assignment_value in values:
+                return '{}'.format(assignment_value)
+
+            values.add(assignment_value)
+            values = sorted(values)
+            index = values.index(assignment_value)
+            if index == 0:
+                return 'between_min_{}'.format(values[index+1])
+            elif index == len(values) - 1:
+                return 'between_{}_max'.format(values[index-1])
+            else:
+                return 'between_{}_{}'.format(values[index-1], values[index+1])
+        else:
+            if (len(values) == len(self.getPossibleValues()) or
+                len(values) == len(self.getPossibleValues()) - 1):
+                return assignment_value
+
+            if assignment_value in values:
+                return assignment_value
+
+            return 'OTHERS'
+
+    def getEquivalentComparisonWithConstraints(self, constraints, comparison_operator, comparison_value):
+        if comparison_operator in ('=', '!='):
+            return (comparison_operator, comparison_value)
+
+        continuous = False
+        values = set()
+
+        for operator, value in constraints:
+            if operator not in ('=', '!='):
+                continuous = True
+
+            if value == None:
+                return (comparison_operator, comparison_value)
+
+            values.add(value)
+
+        if len(values) == 0:
+            raise ValueError('[GG3]')
+
+        results = list()
+        values = sorted(values)
+        index = values.index(comparison_value)
+        if '<' in comparison_operator:
+            if self.min_value not in values:
+                results.append('between_min_{}'.format(values[0]))
+            for i in range(index):
+                results.append('{}'.format(values[i]))
+                results.append('between_{0}_{1}'.format(values[i], values[i+1]))
+
+        if '>' in comparison_operator:
+            if self.max_value not in values:
+                results.append('between_{}_max'.format(values[-1]))
+
+            for i in range(len(values) - 1, index, -1):
+                results.append('{}'.format(values[i]))
+                results.append('between_{0}_{1}'.format(values[i-1], values[i]))
+
+        if '=' in comparison_operator:
+            results.append('{}'.format(values[index]))
+
+        if '>' in comparison_operator:
+            results = reversed(results)
+
+        return ('in', '{{{0}}}'.format(', '.join(results)))
+
 class TimerVariable(Variable):
     def __init__(self, channel_name, name, content):
         super().__init__(channel_name, name, content)
@@ -195,10 +379,7 @@ class TimerVariable(Variable):
         self.name = name
         self.max_value = content['maxValue']
         self.repeat = (content['repeat'] == 'true')
-        if 'previous' in content and content['previous'] == 'true':
-            self.previous = True
-        else:
-            self.previous = False
+        self.previous = ('previous' in content and content['previous'] == 'true')
 
     @classmethod
     def checkDefinitionErrors(cls, channel_name, name, content):
@@ -249,6 +430,11 @@ class TimerVariable(Variable):
 
         return '{}..{}'.format(min_value, self.max_value)
 
+    def getPossibleValuesInNuSMVwithConstraints(self, constraints):
+        return self.getPossibleValuesInNuSMV()
 
+    def getEquivalentAssignmentWithConstraints(self, constraints, assignment_value):
+        return assignment_value
 
-
+    def getEquivalentComparisonWithConstraints(self, constraints, operator, comparison_value):
+        return (operator, comparison_value)

@@ -115,7 +115,21 @@ class Channel:
 
         return associated_rules
 
-    def toNuSMVformat(self, device_name, device_state, rules, all_devices_name):
+    def getAssociatedVariableOperatorAndValue(self):
+        results = list()
+        for variable_name, custom in self.customs.items():
+            result = custom.getAssociatedVariableOperatorAndValue()
+            results += result
+
+        for variable_name, variable in self.variables.items():
+            if not isinstance(variable, myvariable.TimerVariable):
+                continue
+
+            results.append((variable_name, '=', None))
+
+        return results
+
+    def toNuSMVformat(self, database, device_name, device_state, rules, all_devices_name, grouping, all_variable_constraints):
         # associated rules and group by variable
         variable_rules = collections.defaultdict(list)
         associated_rules = self.getAssociatedRules(device_name, rules)
@@ -133,9 +147,14 @@ class Channel:
         string += '  VAR\n'
         for variable_name in sorted(self.variables.keys()):
             variable = self.variables[variable_name]
-            string += '    {0}: {1};\n'.format(variable_name, variable.getPossibleValuesInNuSMV())
+            if grouping:
+                values = variable.getPossibleValuesInNuSMVwithConstraints(all_variable_constraints[(device_name, variable_name)])
+            else:
+                values = variable.getPossibleValuesInNuSMV()
+
+            string += '    {0}: {1};\n'.format(variable_name, values)
             if variable.previous:
-                string += '    {0}: {1};\n'.format(variable_name + '_previous', variable.getPossibleValuesInNuSMV())
+                string += '    {0}: {1};\n'.format(variable_name + '_previous', values)
         string += '\n'
 
         # initial conditions
@@ -143,37 +162,56 @@ class Channel:
         for variable_name in sorted(self.variables.keys()):
             variable = self.variables[variable_name]
             value = device_state[variable_name]
+            if grouping:
+                value = variable.getEquivalentAssignmentWithConstraints(all_variable_constraints[(device_name, variable_name)], value)
+
+            string += '    -- init({0}) := {1};\n'.format(variable_name, device_state[variable_name])
             string += '    init({0}) := {1};\n'.format(variable_name, value)
             if variable.previous:
-                string += '    init({0}) := {1};\n'.format(variable_name + '_previous', variable_name)
+                string += '    init({0}) := {1};\n'.format(variable_name + '_previous', value)
         string += '\n'
 
         # rules and customs
         for variable_name in sorted(self.variables.keys()):
             variable = self.variables[variable_name]
             trigger_and_values = list()
+            comments = list()
 
             if variable_name in variable_rules:
                 for rule in variable_rules[variable_name]:
+                    trigger_channel_name = rule.trigger.channel_name
+                    trigger_variables = database[trigger_channel_name].variables
+
                     trigger = rule.trigger.toBooleanString(rule.trigger_inputs)
                     value = rule.action.getDeviceVariableAssociatedValues(rule.action_inputs, device_name, variable_name, self.variables)
+                    comments.append((trigger, value))
+
+                    if grouping:
+                        trigger = rule.trigger.toEquivalentBooleanString(rule.trigger_inputs, trigger_variables, all_variable_constraints)
+                        value = variable.getEquivalentAssignmentWithConstraints(all_variable_constraints[(device_name, variable_name)], value)
+
                     trigger_and_values.append((trigger, value))
+
 
             if variable_name in self.customs:
                 custom = self.customs[variable_name]
-                for trigger, value in custom.getTriggersAndValues(self.variables):
+                for trigger, value in custom.getTriggersAndValues(self.variables, device_name, all_variable_constraints):
+                    comments.append((trigger, value))
                     trigger_and_values.append((trigger, value))
 
             if isinstance(variable, myvariable.TimerVariable):
                 trigger = '{0} > 0'.format(variable_name)
                 value = '{0} - 1'.format(variable_name)
+                comments.append((trigger, value))
                 trigger_and_values.append((trigger, value))
 
                 trigger = '{0} = 0'.format(variable_name)
                 value = variable.max_value if variable.repeat else -1
+                comments.append((trigger, value))
                 trigger_and_values.append((trigger, value))
 
             if hasattr(variable, 'reset_value') and variable.reset_value != None:
+                comments.append(('TRUE', variable.reset_value))
                 trigger_and_values.append(('TRUE', variable.reset_value))
 
             if variable.previous:
@@ -185,20 +223,25 @@ class Channel:
             if len(trigger_and_values) == 1:
                 trigger, value = trigger_and_values[0]
                 if trigger == 'TRUE':
+                    string += '    -- next({0}) := {1};\n'.format(comments[0][0], comments[0][1])
                     string += '    next({0}) := {1};\n'.format(variable_name, value)
                 else:
+                    string += '    -- next({0}) := {1} ? {2}: {0};\n'.format(variable_name, comments[0][0], comments[0][1])
                     string += '    next({0}) := {1} ? {2}: {0};\n'.format(variable_name, trigger, value)
 
             elif len(trigger_and_values) == 2 and trigger_and_values[1][0] == 'TRUE':
                 trigger, value = trigger_and_values[0]
                 _, value2 = trigger_and_values[1]
+                string += '    -- next({0}) := {1} ? {2}: {3};\n'.format(variable_name, comments[0][0], comments[0][1], comments[1][1])
                 string += '    next({0}) := {1} ? {2}: {3};\n'.format(variable_name, trigger, value, value2)
 
             else:
                 string += '    next({0}) :=\n'.format(variable_name)
                 string += '      case\n'
-                for trigger, value in trigger_and_values:
-                    string += '        {0}: {1};\n'.format(trigger, value)
+                for trigger_and_value, comment in zip(trigger_and_values, comments):
+                    trigger, value = trigger_and_value
+                    string += '        -- {0}: {1};\n'.format(comment[0], comment[1])
+                    string += '        {0}: {1};\n\n'.format(trigger, value)
                 if trigger_and_values[-1][0] != 'TRUE':
                     string += '        TRUE: {0};\n'.format(variable_name)
                 string += '      esac;\n'

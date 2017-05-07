@@ -181,6 +181,45 @@ class Trigger:
 
         return False
 
+    def getAssociatedDeviceVariableOperatorAndValue(self, inputs, content=None):
+        if content == None:
+            content = self.definition
+
+        if 'logicalOperator' in content:
+            results = list()
+            for operand in content['operands']:
+                result = self.getAssociatedDeviceVariableOperatorAndValue(inputs, operand)
+                if result == None:
+                    continue
+
+                results.extend(result)
+            return results
+
+        index = int(content['device'][1:])
+        device = inputs[index]
+        if 'variable' in content:
+            variable = content['variable']
+        elif 'previous' in content:
+            variable = content['previous']
+
+        if 'previous2' in content:
+            return [(device, variable, '=', None)]
+
+        if 'value' in content:
+            if (isinstance(content['value'], str) and
+                content['value'].startswith('$')):
+                index = int(content['value'][1:])
+                value = inputs[index]
+            else:
+                value = content['value']
+
+        operator = content['relationalOperator']
+        if (isinstance(operator, str) and
+            operator.startswith('$')):
+            index = int(operator[1:])
+            operator = inputs[index]
+        return [(device, variable, operator, value)]
+
     def getRequiredDevices(self, inputs):
         devices = set()
         for input_requirement, value in zip(self.input_requirements, inputs):
@@ -226,17 +265,17 @@ class Trigger:
             return operator.join(booleans)
 
         index = int(content['device'][1:])
-        device = inputs[index]
+        device_name = inputs[index]
         if 'variable' in content:
-            sub = '{0}.{1}'.format(device, content['variable'])
+            sub = '{0}.{1}'.format(device_name, content['variable'])
         elif 'previous' in content:
-            sub = '{0}.{1}'.format(device, content['previous'] + '_previous')
+            sub = '{0}.{1}'.format(device_name, content['previous'] + '_previous')
 
         if 'value' in content:
             if (isinstance(content['value'], str) and
                 content['value'].startswith('$')):
                 index = int(content['value'][1:])
-                obj = inputs(index)
+                obj = inputs[index]
             else:
                 obj = content['value']
 
@@ -247,6 +286,59 @@ class Trigger:
                 device2 = inputs[index2]
             obj = '{0}.{1}'.format(device2, content['previous2'] + '_previous')
 
-        return '{0} {1} {2}'.format(sub, content['relationalOperator'], obj)
+        operator = content['relationalOperator']
+        if (isinstance(operator, str) and
+            operator.startswith('$')):
+            index = int(operator[1:])
+            operator = inputs[index]
+        return '{0} {1} {2}'.format(sub, operator, obj)
+
+    def toEquivalentBooleanString(self, inputs, variables, all_variable_constraints, content=None):
+        if content == None:
+            content = self.definition
+
+        if 'logicalOperator' in content:
+            booleans = list()
+            for operand in content['operands']:
+                booleans.append('({})'.format(self.toEquivalentBooleanString(inputs, variables, all_variable_constraints, operand)))
+
+            operator = ' {} '.format(content['logicalOperator'])
+            return operator.join(booleans)
+
+        index = int(content['device'][1:])
+        device_name = inputs[index]
+        if 'variable' in content:
+            variable_name = content['variable']
+            sub = '{0}.{1}'.format(device_name, content['variable'])
+        elif 'previous' in content:
+            variable_name = content['previous']
+            sub = '{0}.{1}'.format(device_name, content['previous'] + '_previous')
+
+        operator = content['relationalOperator']
+        if (isinstance(operator, str) and
+            operator.startswith('$')):
+            index = int(operator[1:])
+            operator = inputs[index]
+
+        if 'value' in content:
+            if (isinstance(content['value'], str) and
+                content['value'].startswith('$')):
+                index = int(content['value'][1:])
+                obj = inputs[index]
+            else:
+                obj = content['value']
+
+            variable = variables[variable_name]
+            variable_constraints = all_variable_constraints[(device_name, variable_name)]
+            operator, obj = variable.getEquivalentComparisonWithConstraints(variable_constraints, operator, obj)
+
+        elif 'previous2' in content:
+            if (isinstance(content['device2'], str) and
+                content['device2'].startswith('$')):
+                index2 = int(content['device2'][1:])
+                device2 = inputs[index2]
+            obj = '{0}.{1}'.format(device2, content['previous2'] + '_previous')
+
+        return '{0} {1} {2}'.format(sub, operator, obj)
 
 

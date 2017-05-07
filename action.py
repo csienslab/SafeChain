@@ -157,4 +157,30 @@ class Action:
 
             return value
 
+    def getAssociatedDeviceVariableOperatorAndValue(self, inputs, variables):
+        results = list()
+        for assignment in self.definition:
+            if (isinstance(assignment['device'], str) and
+                assignment['device'].startswith('$')):
+                index = int(assignment['device'][1:])
+                device_name = inputs[index]
+
+            variable_name = assignment['variable']
+
+            if (isinstance(assignment['value'], str) and
+                assignment['value'].startswith('$')):
+                index = int(assignment['value'][1:])
+                value = inputs[index]
+            elif assignment['value'] == 'toggle':
+                variable = variables[variable_name]
+                values = variable.getPossibleValues()
+                results.append((device_name, variable_name, '=', values[1]))
+                value = values[0]
+            else:
+                value = assignment['value']
+
+            results.append((device_name, variable_name, '=', value))
+
+        return results
+
 

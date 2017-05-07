@@ -7,3 +7,7 @@ class Rule:
         self.trigger_inputs = trigger_inputs
         self.action = action
         self.action_inputs = action_inputs
+
+    def getAssociatedDeviceVariableOperatorAndValue(self, variables):
+        results = self.trigger.getAssociatedDeviceVariableOperatorAndValue(self.trigger_inputs)
+        return results
