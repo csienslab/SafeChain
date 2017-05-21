@@ -63,8 +63,7 @@ def generate(args):
         with filepath.open() as f:
             channel_content = json.load(f)
 
-        channel = mychannel.Channel(channel_name, channel_content)
-        channels[channel_name] = channel
+        channels[channel_name] = channel_content
 
     # dump the customized dataset
     with args.output as f:
