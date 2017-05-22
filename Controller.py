@@ -4,6 +4,7 @@
 # rules attached to variables and devices
 # divide using set
 # combine boolean into set
+# class sensor and actuator
 
 import pickle
 import collections
@@ -16,13 +17,15 @@ import Trigger as MyTrigger
 import Action as MyAction
 import Rule as MyRule
 import InvariantPolicy as MyInvariantPolicy
+import PrivacyPolicy as MyPrivacyPolicy
 
 class Controller:
     def __init__(self, database):
         self.database = database
 
         self.devices = dict()
-        self.rules = collections.OrderedDict()
+        self.rules = list()
+        self.vulnerables = set()
 
     def getFeasibleDevices(self):
         return self.database.items()
@@ -30,6 +33,27 @@ class Controller:
     def addDevice(self, device):
         device_name = device.name
         self.devices[device_name] = device
+
+    def addVulnerableDevice(self, device_name):
+        if device_name not in self.devices:
+            return False
+
+        device = self.devices[device_name]
+        for variable_name in device.getVariableNames():
+            self.vulnerables.add((device_name, variable_name))
+
+        return True
+
+    def addVulnerableDeviceVariable(self, device_name, variable_name):
+        if device_name not in self.devices:
+            return False
+
+        device = self.devices[device_name]
+        if variable_name not in device.getVariableNames():
+            return False
+
+        self.vulnerables.add((device_name, variable_name))
+        return True
 
     def getFeasibleInputs(self, input_definitions, parameters):
         index = len(parameters)
@@ -94,7 +118,7 @@ class Controller:
         action = MyAction.Action(rule_name, action_channel_name, action_definition, action_name, action_inputs)
 
         rule = MyRule.Rule(rule_name, trigger, action)
-        self.rules[rule_name] = rule
+        self.rules.append(rule)
 
     def addCustomRule(self, rule_name,
                       trigger_channel_name, trigger_name, trigger_definition, trigger_inputs,
@@ -103,7 +127,7 @@ class Controller:
         action = MyAction.Action(rule_name, action_channel_name, action_definition, action_name, action_inputs)
 
         rule = MyRule.Rule(rule_name, trigger, action)
-        self.rules[rule_name] = rule
+        self.rules.append(rule)
 
     def getDevice(self, device_name):
         if device_name not in self.devices:
@@ -111,18 +135,30 @@ class Controller:
 
         return self.devices[device_name]
 
-    def getVariableTransition(self, device_name, variable_name):
-        target = '{0}.{1}'.format(device_name, variable_name)
-        for rule_name, rule in self.rules.items():
-            for boolean, variable, value in rule.getTransitions():
-                if variable == target:
-                    yield (boolean, value)
+    def getTransitions(self):
+        transitions = collections.defaultdict(list)
 
-    def dumpNumvModel(self, name='main'):
+        for device_name, variable_name in self.vulnerables:
+            device = self.devices[device_name]
+            variable = device.getVariable(variable_name)
+
+            device_variable = '{0}.{1}'.format(device_name, variable_name)
+            variable_range = variable.getPossibleGroupsInNuSMV()
+            transitions[device_variable].append(('next(attack)', variable_range))
+
+        for rule in self.rules:
+            for boolean, device_variable, value in rule.getTransitions():
+                transitions[device_variable].append((boolean, value))
+
+        return transitions
+
+    def dumpNumvModel(self, name='main', init=True):
         string = ''
 
         device_names = sorted(device_name for device_name, device in self.devices.items() if not device.pruned)
-        device_names_string = ', '.join(device_names)
+        device_names_string = ', '.join(['attack'] + device_names)
+        transitions = self.getTransitions()
+
         for device_name in device_names:
             device = self.devices[device_name]
 
@@ -144,19 +180,20 @@ class Controller:
 
             # initial conditions
             string += '  ASSIGN\n'
-            for variable_name in sorted(device.getVariableNames()):
-                variable = device.getVariable(variable_name)
-                if variable.pruned:
-                    continue
+            if init:
+                for variable_name in sorted(device.getVariableNames()):
+                    variable = device.getVariable(variable_name)
+                    if variable.pruned and not init:
+                        continue
 
-                value = variable.getEquivalentActionCondition(variable.value)
-                string += '    init({0}):= {1};\n'.format(variable_name, value)
+                    value = variable.getEquivalentActionCondition(variable.value)
+                    string += '    init({0}):= {1};\n'.format(variable_name, value)
 
-                if variable.previous:
-                    string += '    init({0}):= {1};\n'.format(variable_name + '_previous', value)
+                    if variable.previous:
+                        string += '    init({0}):= {1};\n'.format(variable_name + '_previous', value)
+                string += '\n'
 
             # rules
-            string += '\n'
             for variable_name in sorted(device.getVariableNames()):
                 variable = device.getVariable(variable_name)
                 if variable.pruned:
@@ -165,7 +202,8 @@ class Controller:
                 if variable.previous:
                     string += '    next({0}):= {1};\n'.format(variable_name + '_previous', variable_name)
 
-                rules = list(self.getVariableTransition(device_name, variable_name))
+                device_variable = '{0}.{1}'.format(device_name, variable_name)
+                rules = transitions[device_variable]
                 if variable.reset_value != None:
                     value = variable.getEquivalentActionCondition(variable.reset_value)
                     rules.append(('TRUE', value))
@@ -173,14 +211,8 @@ class Controller:
                 if len(rules) == 0:
                     continue
 
-                if len(rules) == 1:
-                    boolean, value = rules[0]
-                    if boolean == 'TRUE':
-                        string += '    next({0}):= {1};\n'.format(variable_name, value)
-                    else:
-                        string += '    next({0}):= {1} ? {2}: {0};\n'.format(variable_name, boolean, value)
-                elif len(rules) == 2 and rules[-1][0] == 'TRUE':
-                    string += '    next({0}):= {1} ? {2}: {3};\n'.format(variable_name, rules[0][0], rules[0][1], rules[1][1])
+                if len(rules) == 1 and rules[0][0] == 'TRUE':
+                    string += '    next({0}):= {1};\n'.format(variable_name, rules[0][1])
                 else:
                     string += '    next({0}):=\n'.format(variable_name)
                     string += '      case\n'
@@ -198,10 +230,15 @@ class Controller:
             module_name = device_name.upper()
             string += '    {0}: {1}({2});\n'.format(device_name, module_name, device_names_string)
 
+        string += '\n'
+        string += '    attack: boolean;\n'
+        string += '\n'
+        string += '  ASSIGN init(attack) := TRUE;\n'
+
         return string
 
     def grouping(self, policy):
-        for rule_name, rule in self.rules.items():
+        for rule in self.rules:
             for condition in rule.getConditions():
                 for device_name, variable_name, operator, value in condition.getConstraints():
                     if operator == '←':
@@ -211,7 +248,7 @@ class Controller:
                     variable = device.getVariable(variable_name)
                     variable.addConstraint(operator, value)
 
-        for device_name, variable_name, operator, value in policy.getConstraints():
+        for device_name, variable_name, operator, value in policy.getConstraints(self):
             if operator == '←':
                 continue
 
@@ -223,14 +260,15 @@ class Controller:
             for variable_name, variable in device.variables.items():
                 variable.setGrouping(True)
 
-        for rule_name, rule in self.rules.items():
+        for rule in self.rules:
             for condition in rule.getConditions():
                 condition.toEquivalentCondition(self)
 
     def pruning(self, policy):
         graph = networkx.DiGraph()
 
-        for rule_name, rule in self.rules.items():
+        for rule in self.rules:
+            rule_name = rule.name
             for trigger_variable, action_variable in rule.getDependencies():
                 if trigger_variable not in graph:
                     graph.add_node(trigger_variable)
@@ -275,39 +313,6 @@ class Controller:
 
         string = policy.dumpNumvModel(self)
         print(string)
-
-
-#         string = ''
-# 
-#         all_devices_name = sorted(set(device_name for devices in self.channels.values() for device_name in devices.keys()))
-# 
-#         for channel_name in sorted(self.channels.keys()):
-#             channel = self.database[channel_name]
-#             devices = self.channels[channel_name]
-# 
-#             for device_name in sorted(devices.keys()):
-#                 device_state = devices[device_name]
-#                 string += channel.toNuSMVformat(self.database, device_name, device_state, self.rules, all_devices_name, grouping, self.variable_constraints)
-# 
-#                 string += '\n'
-# 
-#         # main module
-#         string += 'MODULE main\n'
-#         string += '  VAR\n'
-# 
-#         # initial each devices
-#         for channel_name in sorted(self.channels.keys()):
-#             channel = self.database[channel_name]
-#             devices = self.channels[channel_name]
-# 
-#             for device_name in sorted(devices.keys()):
-#                 module_name = channel.getModuleName(device_name)
-#                 string += '    {0}: {1}({2});\n'.format(device_name, module_name, ', '.join(all_devices_name))
-#         string += '\n'
-# 
-#         print(string)
-
-
 
 if __name__ == '__main__':
     # load database
@@ -366,7 +371,9 @@ if __name__ == '__main__':
     action_inputs = controller.getFeasibleInputsForAction(action_channel_name, action_name)
     controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
 
-    policy = MyInvariantPolicy.InvariantPolicy('wemoinsightswitch.status != ON | wemoinsightswitch.status = ON')
+    controller.addVulnerableDevice('wemoinsightswitch')
+    # policy = MyInvariantPolicy.InvariantPolicy('adafruit.data != 1 | adafruit.data = 1')
+    policy = MyPrivacyPolicy.PrivacyPolicy(set([('adafruit', 'data')]))
 
     controller.check(policy, grouping=False, pruning=False)
 

@@ -6,7 +6,7 @@ class InvariantPolicy:
     def __init__(self, string):
         self.boolean = MyBoolean.Boolean(string)
 
-    def getConstraints(self):
+    def getConstraints(self, controller):
         for condition in self.boolean.getConditions():
             yield from condition.getConstraints()
 

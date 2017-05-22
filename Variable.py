@@ -122,6 +122,7 @@ class BooleanVariable(Variable):
             values = set([self.mapping[value]])
 
         if len(values) > 1:
+            values = sorted(values)
             return '{{{0}}}'.format(', '.join(values))
         else:
             value = values.pop()
@@ -155,7 +156,7 @@ class SetVariable(Variable):
         return set(self.mapping.values())
 
     def getPossibleGroupsInNuSMV(self):
-        groups = self.getPossibleGroups()
+        groups = sorted(self.getPossibleGroups())
         string = ', '.join(groups)
         return '{{{0}}}'.format(string)
 
@@ -206,6 +207,7 @@ class SetVariable(Variable):
             values = set([self.mapping[value]])
 
         if len(values) > 1:
+            values = sorted(values)
             return '{{{0}}}'.format(', '.join(values))
         else:
             value = values.pop()
@@ -240,7 +242,7 @@ class RangeVariable(Variable):
 
     def getPossibleGroupsInNuSMV(self):
         if self.grouped:
-            groups = self.getPossibleGroups()
+            groups = sorted(self.getPossibleGroups())
             string = ', '.join(groups)
             return '{{{0}}}'.format(string)
         else:
@@ -357,6 +359,7 @@ class RangeVariable(Variable):
             value = values.pop()
             return value
         else:
+            values = sorted(values)
             return '{{{0}}}'.format(', '.join(values))
 
     def setCompromised(self, status):

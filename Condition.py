@@ -28,7 +28,7 @@ class Condition:
 
     def getVariables(self):
         for token in self.tupple:
-            if re.match('\w+\.\w+', token) == None:
+            if re.fullmatch('\w+\.\w+', token) == None:
                 continue
 
             device_name, variable_name = token.split('.')
