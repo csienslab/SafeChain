@@ -26,11 +26,13 @@ class Action:
 
             self.situations.append((boolean, assignment))
 
-    def getConditions(self):
+    def getTriggerConditions(self):
         for boolean, assignment in self.situations:
             if boolean != None:
                 yield from boolean.getConditions()
 
+    def getActionConditions(self):
+        for boolean, assignment in self.situations:
             yield from assignment.getConditions()
 
     def getTransitions(self):

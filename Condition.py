@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
 
 import copy
+import re
 
 class Condition:
     def __init__(self, tupple):
         self.original = copy.copy(tupple)
         self.tupple = copy.copy(tupple)
 
-    def getConstraints(self, controller):
+    def getConstraints(self):
         if len(self.tupple) != 3:
             # computation or true
-            for device_name, variable_name in self.getVariables(controller):
+            for device_name, variable_name in self.getVariables():
                 yield (device_name, variable_name, None, None)
             raise StopIteration
 
@@ -19,23 +20,22 @@ class Condition:
             # previous
             raise StopIteration
 
-        if subject.endswith('_previous'):
-            subject = subject[:-9]
-
         device_name, variable_name = subject.split('.')
+        if variable_name.endswith('_previous'):
+            variable_name = variable_name[:-9]
+
         yield (device_name, variable_name, operator, value)
 
-    def getVariables(self, controller):
+    def getVariables(self):
         for token in self.tupple:
-            if '.' not in token:
+            if re.match('\w+\.\w+', token) == None:
                 continue
 
-            if token.endswith('_previous'):
-                token = token[:-9]
-
             device_name, variable_name = token.split('.')
-            if controller.hasVariable(device_name, variable_name):
-                yield (device_name, variable_name)
+            if variable_name.endswith('_previous'):
+                variable_name = variable_name[:-9]
+
+            yield (device_name, variable_name)
 
     def toEquivalentCondition(self, controller):
         if len(self.tupple) != 3:

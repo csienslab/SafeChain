@@ -35,6 +35,14 @@ class Variable(metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
+    def setCompromised(self, status):
+        pass
+
+    @abc.abstractmethod
+    def setPruned(self, status):
+        pass
+
+    @abc.abstractmethod
     def getEquivalentTriggerCondition(self, operator, value):
         pass
 
@@ -53,6 +61,9 @@ class BooleanVariable(Variable):
 
         self.setGrouping(False)
         self.constraints = list()
+
+        self.compromised = False
+        self.pruned = False
 
     def getPossibleValues(self):
         return set(['TRUE', 'FALSE'])
@@ -116,6 +127,12 @@ class BooleanVariable(Variable):
             value = values.pop()
             return value
 
+    def setCompromised(self, status):
+        self.compromised = status
+
+    def setPruned(self, status):
+        self.pruned = status
+
 class SetVariable(Variable):
     def __init__(self, device_name, definition, name):
         self.device_name = device_name
@@ -127,6 +144,9 @@ class SetVariable(Variable):
 
         self.setGrouping(False)
         self.constraints = list()
+
+        self.compromised = False
+        self.pruned = False
 
     def getPossibleValues(self):
         return set(self.definition['setValue'])
@@ -191,6 +211,12 @@ class SetVariable(Variable):
             value = values.pop()
             return value
 
+    def setCompromised(self, status):
+        self.compromised = status
+
+    def setPruned(self, status):
+        self.pruned = status
+
 class RangeVariable(Variable):
     def __init__(self, device_name, definition, name):
         self.device_name = device_name
@@ -202,6 +228,9 @@ class RangeVariable(Variable):
 
         self.setGrouping(False)
         self.constraints = list()
+
+        self.compromised = False
+        self.pruned = False
 
     def getPossibleValues(self):
         return set(range(self.definition['minValue'], self.definition['maxValue'] + 1))
@@ -329,3 +358,9 @@ class RangeVariable(Variable):
             return value
         else:
             return '{{{0}}}'.format(', '.join(values))
+
+    def setCompromised(self, status):
+        self.compromised = status
+
+    def setPruned(self, status):
+        self.pruned = status

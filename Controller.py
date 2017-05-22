@@ -3,16 +3,19 @@
 # TODO
 # rules attached to variables and devices
 # divide using set
+# combine boolean into set
 
 import pickle
 import collections
 import random
 import re
+import networkx
 
 import Device as MyDevice
 import Trigger as MyTrigger
 import Action as MyAction
 import Rule as MyRule
+import InvariantPolicy as MyInvariantPolicy
 
 class Controller:
     def __init__(self, database):
@@ -102,13 +105,6 @@ class Controller:
         rule = MyRule.Rule(rule_name, trigger, action)
         self.rules[rule_name] = rule
 
-    def hasVariable(self, device_name, variable_name):
-        if device_name not in self.devices:
-            return False
-
-        device = self.devices[device_name]
-        return device.hasVariable(variable_name)
-
     def getDevice(self, device_name):
         if device_name not in self.devices:
             return None
@@ -122,10 +118,10 @@ class Controller:
                 if variable == target:
                     yield (boolean, value)
 
-    def toNuSMVModel(self):
+    def dumpNumvModel(self, name='main'):
         string = ''
 
-        device_names = sorted(self.devices.keys())
+        device_names = sorted(device_name for device_name, device in self.devices.items() if not device.pruned)
         device_names_string = ', '.join(device_names)
         for device_name in device_names:
             device = self.devices[device_name]
@@ -137,6 +133,9 @@ class Controller:
             string += '  VAR\n'
             for variable_name in sorted(device.getVariableNames()):
                 variable = device.getVariable(variable_name)
+                if variable.pruned:
+                    continue
+
                 variable_range = variable.getPossibleGroupsInNuSMV()
                 string += '    {0}: {1};\n'.format(variable_name, variable_range)
 
@@ -147,6 +146,9 @@ class Controller:
             string += '  ASSIGN\n'
             for variable_name in sorted(device.getVariableNames()):
                 variable = device.getVariable(variable_name)
+                if variable.pruned:
+                    continue
+
                 value = variable.getEquivalentActionCondition(variable.value)
                 string += '    init({0}):= {1};\n'.format(variable_name, value)
 
@@ -154,9 +156,12 @@ class Controller:
                     string += '    init({0}):= {1};\n'.format(variable_name + '_previous', value)
 
             # rules
-            string += '  ASSIGN\n'
+            string += '\n'
             for variable_name in sorted(device.getVariableNames()):
                 variable = device.getVariable(variable_name)
+                if variable.pruned:
+                    continue
+
                 if variable.previous:
                     string += '    next({0}):= {1};\n'.format(variable_name + '_previous', variable_name)
 
@@ -187,27 +192,32 @@ class Controller:
 
             string += '\n'
 
-        string += 'MODULE main\n'
+        string += 'MODULE {}\n'.format(name)
         string += '  VAR\n'
         for device_name in device_names:
             module_name = device_name.upper()
             string += '    {0}: {1}({2});\n'.format(device_name, module_name, device_names_string)
 
-        print(string)
+        return string
 
-    def check(self, grouping=False, pruning=False):
-        for device_name, device in self.devices.items():
-            device.addCustomRules(self)
-
+    def grouping(self, policy):
         for rule_name, rule in self.rules.items():
             for condition in rule.getConditions():
-                for device_name, variable_name, operator, value in condition.getConstraints(self):
+                for device_name, variable_name, operator, value in condition.getConstraints():
                     if operator == '←':
                         continue
 
                     device = self.devices[device_name]
                     variable = device.getVariable(variable_name)
                     variable.addConstraint(operator, value)
+
+        for device_name, variable_name, operator, value in policy.getConstraints():
+            if operator == '←':
+                continue
+
+            device = self.devices[device_name]
+            variable = device.getVariable(variable_name)
+            variable.addConstraint(operator, value)
 
         for device_name, device in self.devices.items():
             for variable_name, variable in device.variables.items():
@@ -217,7 +227,54 @@ class Controller:
             for condition in rule.getConditions():
                 condition.toEquivalentCondition(self)
 
-        self.toNuSMVModel()
+    def pruning(self, policy):
+        graph = networkx.DiGraph()
+
+        for rule_name, rule in self.rules.items():
+            for trigger_variable, action_variable in rule.getDependencies():
+                if trigger_variable not in graph:
+                    graph.add_node(trigger_variable)
+
+                if action_variable not in graph:
+                    graph.add_node(action_variable)
+
+                if not graph.has_edge(trigger_variable, action_variable):
+                    graph.add_edge(trigger_variable, action_variable, rules=set())
+
+                graph[trigger_variable][action_variable]['rules'].add(rule_name)
+
+        target_nodes = set(policy.getRelatedVariables())
+        explored_nodes = set()
+        related_rules = set()
+        while len(target_nodes) != 0:
+            adjacent_nodes = set()
+            for trigger_variable, action_variable, data in graph.in_edges_iter(nbunch=target_nodes, data=True):
+                adjacent_nodes.add(trigger_variable)
+                related_rules |= data['rules']
+
+            explored_nodes |= target_nodes
+            target_nodes = adjacent_nodes - explored_nodes
+
+        for device_name, device in self.devices.items():
+            for variable_name, variable in device.variables.items():
+                if (device_name, variable_name) in explored_nodes:
+                    variable.setPruned(False)
+                else:
+                    variable.setPruned(True)
+
+
+    def check(self, policy, grouping=False, pruning=False):
+        for device_name, device in self.devices.items():
+            device.addCustomRules(self)
+
+        if grouping:
+            self.grouping(policy)
+
+        if pruning:
+            self.pruning(policy)
+
+        string = policy.dumpNumvModel(self)
+        print(string)
 
 
 #         string = ''
@@ -309,5 +366,7 @@ if __name__ == '__main__':
     action_inputs = controller.getFeasibleInputsForAction(action_channel_name, action_name)
     controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
 
-    controller.check(grouping=True)
+    policy = MyInvariantPolicy.InvariantPolicy('wemoinsightswitch.status != ON | wemoinsightswitch.status = ON')
+
+    controller.check(policy, grouping=False, pruning=False)
 

@@ -72,3 +72,11 @@ class Device:
                 trigger_channel_name, trigger_name, trigger_definition, trigger_inputs,
                 action_channel_name, action_name, action_definition, action_inputs)
 
+    @property
+    def pruned(self):
+        for variable_name, variable in self.variables.items():
+            if not variable.pruned:
+                return False
+
+        return True
+

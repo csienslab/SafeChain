@@ -8,8 +8,6 @@ import operator
 import pathlib
 import pickle
 
-import channel as mychannel
-
 def is_dir(dirname):
     """Check if a path is an actual directory"""
     path = pathlib.Path(dirname)
