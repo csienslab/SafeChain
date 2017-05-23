@@ -250,6 +250,14 @@
           "assignment": "{0}.status_previous ← {0}.status"
         }
       ]
+    },
+    {
+      "trigger": "TRUE",
+      "action": [
+        {
+          "assignment": "{0}.status_previous ← {0}.status"
+        }
+      ]
     }
   ]
 }

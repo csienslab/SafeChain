@@ -4,7 +4,9 @@
 # rules attached to variables and devices
 # divide using set
 # combine boolean into set
-# class sensor and actuator
+# class sensor and actuator if without rules all possible
+# use str.join instead of +
+# assign variable with variable using same constraints
 
 import pickle
 import collections
@@ -175,9 +177,6 @@ class Controller:
                 variable_range = variable.getPossibleGroupsInNuSMV()
                 string += '    {0}: {1};\n'.format(variable_name, variable_range)
 
-                if variable.previous:
-                    string += '    {0}: {1};\n'.format(variable_name+'_previous', variable_range)
-
             # initial conditions
             string += '  ASSIGN\n'
             if init:
@@ -189,8 +188,6 @@ class Controller:
                     value = variable.getEquivalentActionCondition(variable.value)
                     string += '    init({0}):= {1};\n'.format(variable_name, value)
 
-                    if variable.previous:
-                        string += '    init({0}):= {1};\n'.format(variable_name + '_previous', value)
                 string += '\n'
 
             # rules
@@ -198,9 +195,6 @@ class Controller:
                 variable = device.getVariable(variable_name)
                 if variable.pruned:
                     continue
-
-                if variable.previous:
-                    string += '    next({0}):= {1};\n'.format(variable_name + '_previous', variable_name)
 
                 device_variable = '{0}.{1}'.format(device_name, variable_name)
                 rules = transitions[device_variable]
@@ -233,7 +227,7 @@ class Controller:
         string += '\n'
         string += '    attack: boolean;\n'
         string += '\n'
-        string += '  ASSIGN init(attack) := TRUE;\n'
+        string += '  ASSIGN init(attack) := FALSE;\n'
 
         return string
 
@@ -243,18 +237,44 @@ class Controller:
                 for device_name, variable_name, operator, value in condition.getConstraints():
                     if operator == '←':
                         continue
+                    elif operator == '≡':
+                        # two variables and make their constraints equivalent
+                        device = self.devices[device_name]
+                        variable = device.getVariable(variable_name)
 
-                    device = self.devices[device_name]
-                    variable = device.getVariable(variable_name)
-                    variable.addConstraint(operator, value)
+                        device2_name, variable2_name = value.split('.')
+                        device2 = self.devices[device2_name]
+                        variable2 = device2.getVariable(variable_name)
+
+                        constraints = variable.constraints + variable2.constraints
+                        variable.constraints = constraints
+                        variable2.constraints = constraints
+
+                    else:
+                        device = self.devices[device_name]
+                        variable = device.getVariable(variable_name)
+                        variable.addConstraint(operator, value)
 
         for device_name, variable_name, operator, value in policy.getConstraints(self):
             if operator == '←':
                 continue
+            elif operator == '≡':
+                # two variables and make their constraints equivalent
+                device = self.devices[device_name]
+                variable = device.getVariable(variable_name)
 
-            device = self.devices[device_name]
-            variable = device.getVariable(variable_name)
-            variable.addConstraint(operator, value)
+                device2_name, variable2_name = value.split('.')
+                device2 = self.devices[device2_name]
+                variable2 = device2.getVariable(variable_name)
+
+                constraints = variable.constraints + variable2.constraints
+                variable.constraints = constraints
+                variable2.constraints = constraints
+
+            else:
+                device = self.devices[device_name]
+                variable = device.getVariable(variable_name)
+                variable.addConstraint(operator, value)
 
         for device_name, device in self.devices.items():
             for variable_name, variable in device.variables.items():

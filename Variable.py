@@ -56,7 +56,6 @@ class BooleanVariable(Variable):
         self.definition = definition
         self.name = name
         self.value = None
-        self.previous = ('previous' in definition and definition['previous'] == 'true')
         self.reset_value = definition['resetValue'] if 'resetValue' in definition else None
 
         self.setGrouping(False)
@@ -140,7 +139,6 @@ class SetVariable(Variable):
         self.definition = definition
         self.name = name
         self.value = None
-        self.previous = ('previous' in definition and definition['previous'] == 'true')
         self.reset_value = definition['resetValue'] if 'resetValue' in definition else None
 
         self.setGrouping(False)
@@ -225,7 +223,6 @@ class RangeVariable(Variable):
         self.definition = definition
         self.name = name
         self.value = None
-        self.previous = ('previous' in definition and definition['previous'] == 'true')
         self.reset_value = definition['resetValue'] if 'resetValue' in definition else None
 
         self.setGrouping(False)
