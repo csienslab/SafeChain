@@ -6,7 +6,7 @@
 # combine boolean into set
 # class sensor and actuator if without rules all possible
 # use str.join instead of +
-# assign variable with variable using same constraints
+# [80%] assign variable with variable using same constraints
 
 import pickle
 import collections
@@ -140,17 +140,30 @@ class Controller:
     def getTransitions(self):
         transitions = collections.defaultdict(list)
 
+        # add rule
+        for rule in self.rules:
+            for boolean, device_variable, value in rule.getTransitions():
+                device_name, variable_name = device_variable.split('.')
+                device = self.devices[device_name]
+                variable = device.getVariable(variable_name)
+                if variable.pruned:
+                    continue
+
+                transitions[device_variable].append((boolean, value))
+
+        # add attack
         for device_name, variable_name in self.vulnerables:
             device = self.devices[device_name]
             variable = device.getVariable(variable_name)
+            if variable.pruned:
+                continue
 
             device_variable = '{0}.{1}'.format(device_name, variable_name)
-            variable_range = variable.getPossibleGroupsInNuSMV()
-            transitions[device_variable].append(('next(attack)', variable_range))
+            if device_variable not in transitions:
+                continue
 
-        for rule in self.rules:
-            for boolean, device_variable, value in rule.getTransitions():
-                transitions[device_variable].append((boolean, value))
+            variable_range = variable.getPossibleGroupsInNuSMV()
+            transitions[device_variable].insert(0, ('next(attack)', variable_range))
 
         return transitions
 
@@ -244,7 +257,7 @@ class Controller:
 
                         device2_name, variable2_name = value.split('.')
                         device2 = self.devices[device2_name]
-                        variable2 = device2.getVariable(variable_name)
+                        variable2 = device2.getVariable(variable2_name)
 
                         constraints = variable.constraints + variable2.constraints
                         variable.constraints = constraints
@@ -265,7 +278,7 @@ class Controller:
 
                 device2_name, variable2_name = value.split('.')
                 device2 = self.devices[device2_name]
-                variable2 = device2.getVariable(variable_name)
+                variable2 = device2.getVariable(variable2_name)
 
                 constraints = variable.constraints + variable2.constraints
                 variable.constraints = constraints
