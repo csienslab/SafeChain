@@ -7,12 +7,15 @@
 # class sensor and actuator if without rules all possible
 # use str.join instead of +
 # [80%] assign variable with variable using same constraints
+# using subrule and rule for multicondition
 
 import pickle
 import collections
 import random
 import re
 import networkx
+import subprocess
+import datetime
 
 import Device as MyDevice
 import Trigger as MyTrigger
@@ -149,7 +152,23 @@ class Controller:
                 if variable.pruned:
                     continue
 
-                transitions[device_variable].append((boolean, value))
+                transitions[device_variable].append((boolean, value, rule.name))
+
+        # add reset value
+        for device_name, device in self.devices.items():
+            for variable_name, variable in device.variables.items():
+                if variable.pruned:
+                    continue
+                if variable.reset_value == None:
+                    continue
+
+                value = variable.getEquivalentActionCondition(variable.reset_value)
+                device_variable = '{0}.{1}'.format(device_name, variable_name)
+                if device_variable not in transitions:
+                    # because no rules
+                    continue
+
+                transitions[device_variable].append(('TRUE', str(value), 'RESET'))
 
         # add attack
         for device_name, variable_name in self.vulnerables:
@@ -160,10 +179,11 @@ class Controller:
 
             device_variable = '{0}.{1}'.format(device_name, variable_name)
             if device_variable not in transitions:
+                # because no rules
                 continue
 
             variable_range = variable.getPossibleGroupsInNuSMV()
-            transitions[device_variable].insert(0, ('next(attack)', variable_range))
+            transitions[device_variable].insert(0, ('next(attack)', variable_range, 'ATTACK'))
 
         return transitions
 
@@ -211,9 +231,6 @@ class Controller:
 
                 device_variable = '{0}.{1}'.format(device_name, variable_name)
                 rules = transitions[device_variable]
-                if variable.reset_value != None:
-                    value = variable.getEquivalentActionCondition(variable.reset_value)
-                    rules.append(('TRUE', value))
 
                 if len(rules) == 0:
                     continue
@@ -223,7 +240,7 @@ class Controller:
                 else:
                     string += '    next({0}):=\n'.format(variable_name)
                     string += '      case\n'
-                    for boolean, value in rules:
+                    for boolean, value, rule_name in rules:
                         string += '        {0}: {1};\n'.format(boolean, value)
                     if rules[-1][0] != 'TRUE':
                         string += '        {0}: {1};\n'.format('TRUE', variable_name)
@@ -269,9 +286,7 @@ class Controller:
                         variable.addConstraint(operator, value)
 
         for device_name, variable_name, operator, value in policy.getConstraints(self):
-            if operator == '←':
-                continue
-            elif operator == '≡':
+            if operator == '≡':
                 # two variables and make their constraints equivalent
                 device = self.devices[device_name]
                 variable = device.getVariable(variable_name)
@@ -314,7 +329,8 @@ class Controller:
 
                 graph[trigger_variable][action_variable]['rules'].add(rule_name)
 
-        target_nodes = set(policy.getRelatedVariables())
+        target_nodes = set(policy.getRelatedVariables(self))
+        print(target_nodes)
         explored_nodes = set()
         related_rules = set()
         while len(target_nodes) != 0:
@@ -325,6 +341,8 @@ class Controller:
 
             explored_nodes |= target_nodes
             target_nodes = adjacent_nodes - explored_nodes
+
+        print(explored_nodes)
 
         for device_name, device in self.devices.items():
             for variable_name, variable in device.variables.items():
@@ -344,8 +362,17 @@ class Controller:
         if pruning:
             self.pruning(policy)
 
-        string = policy.dumpNumvModel(self)
-        print(string)
+        model = policy.dumpNumvModel(self)
+        filename = '/tmp/model {}.smv'.format(datetime.datetime.now())
+        with open(filename, 'w') as f:
+            f.write(model)
+
+        p = subprocess.run(['NuSMV', '-keep_single_value_vars', filename], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        output = p.stdout.decode('UTF-8')
+        print(output)
+        # result = policy.parseOutput(output)
+
+
 
 if __name__ == '__main__':
     # load database
@@ -404,9 +431,11 @@ if __name__ == '__main__':
     action_inputs = controller.getFeasibleInputsForAction(action_channel_name, action_name)
     controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
 
-    controller.addVulnerableDevice('wemoinsightswitch')
+    controller.addVulnerableDevice('adafruit')
     # policy = MyInvariantPolicy.InvariantPolicy('adafruit.data != 1 | adafruit.data = 1')
-    policy = MyPrivacyPolicy.PrivacyPolicy(set([('adafruit', 'data')]))
+    # policy = MyInvariantPolicy.InvariantPolicy('adafruit.data != 1')
+    # policy = MyPrivacyPolicy.PrivacyPolicy(set([('adafruit', 'data')]))
+    policy = MyPrivacyPolicy.PrivacyPolicy(set([('androiddevice', 'wifi_connected_network')]))
 
-    controller.check(policy, grouping=False, pruning=False)
+    controller.check(policy, grouping=True, pruning=True)
 

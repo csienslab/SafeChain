@@ -10,7 +10,7 @@ class InvariantPolicy:
         for condition in self.boolean.getConditions():
             yield from condition.getConstraints()
 
-    def getRelatedVariables(self):
+    def getRelatedVariables(self, controller):
         for condition in self.boolean.getConditions():
             yield from condition.getVariables()
 
@@ -19,5 +19,8 @@ class InvariantPolicy:
         string += '\n'
         string += '  INVARSPEC {};\n'.format(self.boolean.getString())
         return string
+
+    def parseOutput(self, output):
+        pass
 
 

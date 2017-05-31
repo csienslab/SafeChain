@@ -16,13 +16,13 @@ class PrivacyPolicy:
                     if operator != '←':
                         continue
 
-                    if (device_name, variable_name) not in self.variables:
+                    if (device_name, variable_name) not in controller.vulnerables:
                         continue
 
                     yield (device_name, variable_name, operator, value)
 
-    def getRelatedVariables(self):
-        yield from self.variables
+    def getRelatedVariables(self, controller):
+        yield from controller.vulnerables
 
     def getBooleanPrepend(self, boolean, prepend):
         tokens = boolean.split(' ')
@@ -63,7 +63,7 @@ class PrivacyPolicy:
 
         for device_variable in transitions:
             previous = list()
-            for boolean, value in transitions[device_variable]:
+            for boolean, value, rule_name in transitions[device_variable]:
                 previous.append(boolean)
 
                 if not self.random_pattern.fullmatch(value):
@@ -83,9 +83,10 @@ class PrivacyPolicy:
         middle_and_lows = ['a.{0}.{1} = b.{0}.{1}'.format(device_name, variable_name)
                            for device_name, device in controller.devices.items()
                            for variable_name in device.getVariableNames()
-                           if '{0}.{1}'.format(device_name, variable_name) not in self.variables
+                           if (device_name, variable_name) not in self.variables
                            and not device.getVariable(variable_name).pruned]
-        string += '  INIT {};\n'.format(' & '.join(middle_and_lows))
+        if len(middle_and_lows) != 0:
+            string += '  INIT {};\n'.format(' & '.join(middle_and_lows))
 
         string += '  INVAR a.attack = b.attack;\n'
 
