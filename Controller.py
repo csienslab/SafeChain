@@ -33,6 +33,8 @@ class Controller:
         self.rules = list()
         self.vulnerables = set()
 
+        self.device_variables = set()
+
     def getFeasibleDevices(self):
         return self.database.items()
 
@@ -126,6 +128,9 @@ class Controller:
         rule = MyRule.Rule(rule_name, trigger, action)
         self.rules.append(rule)
 
+        for device_name, variable_name in rule.getVariables():
+            self.device_variables.add((device_name, variable_name))
+
     def addCustomRule(self, rule_name,
                       trigger_channel_name, trigger_name, trigger_definition, trigger_inputs,
                       action_channel_name, action_name, action_definition, action_inputs):
@@ -134,6 +139,9 @@ class Controller:
 
         rule = MyRule.Rule(rule_name, trigger, action)
         self.rules.append(rule)
+
+        for device_name, variable_name in rule.getVariables():
+            self.device_variables.add((device_name, variable_name))
 
     def getDevice(self, device_name):
         if device_name not in self.devices:
@@ -197,12 +205,16 @@ class Controller:
         for device_name in device_names:
             device = self.devices[device_name]
 
+            variable_names = sorted(variable_name
+                                    for variable_name in device.getVariableNames()
+                                    if (device_name, variable_name) in self.device_variables)
+
             module_name = device_name.upper()
             string_list.append('MODULE {0}({1})'.format(module_name, device_names_string))
 
             # define variables
             string_list.append('  FROZENVAR')
-            for variable_name in sorted(device.getVariableNames()):
+            for variable_name in variable_names:
                 variable = device.getVariable(variable_name)
                 if variable.pruned:
                     continue
@@ -212,7 +224,7 @@ class Controller:
 
             # initial conditions
             string_list.append('  ASSIGN')
-            for variable_name in sorted(device.getVariableNames()):
+            for variable_name in variable_names:
                 variable = device.getVariable(variable_name)
                 if variable.pruned:
                     continue
@@ -262,12 +274,16 @@ class Controller:
         for device_name in device_names:
             device = self.devices[device_name]
 
+            variable_names = sorted(variable_name
+                                    for variable_name in device.getVariableNames()
+                                    if (device_name, variable_name) in self.device_variables)
+
             module_name = device_name.upper()
             string += 'MODULE {0}({1})\n'.format(module_name, device_names_string)
 
             # define variables
             string += '  VAR\n'
-            for variable_name in sorted(device.getVariableNames()):
+            for variable_name in variable_names:
                 variable = device.getVariable(variable_name)
                 if variable.pruned:
                     continue
@@ -278,7 +294,7 @@ class Controller:
             # initial conditions
             string += '  ASSIGN\n'
             if init:
-                for variable_name in sorted(device.getVariableNames()):
+                for variable_name in variable_names:
                     variable = device.getVariable(variable_name)
                     if variable.pruned:
                         continue
@@ -289,7 +305,7 @@ class Controller:
                 string += '\n'
 
             # rules
-            for variable_name in sorted(device.getVariableNames()):
+            for variable_name in variable_names:
                 variable = device.getVariable(variable_name)
                 if variable.pruned:
                     continue
@@ -429,7 +445,6 @@ class Controller:
             self.pruning(policy)
 
         result = policy.check(self)
-        pprint.pprint(result)
         return result
 
 
@@ -455,42 +470,42 @@ if __name__ == '__main__':
 
 
     # add rules
-    # with open('dataset/coreresultsMay16.tsv', 'r') as f:
-    #     all_channels = controller.database.keys()
-    #     count = 1
-    #     for line in f:
-    #         line = line.strip()
-    #         columns = line.split('\t')
-    #         trigger_channel_name = columns[5]
-    #         trigger_name = columns[6]
-    #         action_channel_name = columns[8]
-    #         action_name = columns[9]
-    #         if trigger_channel_name in all_channels and action_channel_name in all_channels:
-    #             rule_name = 'RULE{}'.format(count)
-    #             trigger_inputs = controller.getFeasibleInputsForTrigger(trigger_channel_name, trigger_name)
-    #             action_inputs = controller.getFeasibleInputsForAction(action_channel_name, action_name)
-    #             controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
-    #             count += 1
+    with open('dataset/coreresultsMay16.tsv', 'r') as f:
+        all_channels = controller.database.keys()
+        count = 1
+        for line in f:
+            line = line.strip()
+            columns = line.split('\t')
+            trigger_channel_name = columns[5]
+            trigger_name = columns[6]
+            action_channel_name = columns[8]
+            action_name = columns[9]
+            if trigger_channel_name in all_channels and action_channel_name in all_channels:
+                rule_name = 'RULE{}'.format(count)
+                trigger_inputs = controller.getFeasibleInputsForTrigger(trigger_channel_name, trigger_name)
+                action_inputs = controller.getFeasibleInputsForAction(action_channel_name, action_name)
+                controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
+                count += 1
 
-    rule_name = 'RULE1'
-    trigger_channel_name = 'Android Device'
-    trigger_name = 'Connects or disconnects from a specific WiFi network'
-    action_channel_name = 'WeMo Insight Switch'
-    action_name = 'Toggle on/off'
+    # rule_name = 'RULE1'
+    # trigger_channel_name = 'Android Device'
+    # trigger_name = 'Connects or disconnects from a specific WiFi network'
+    # action_channel_name = 'WeMo Insight Switch'
+    # action_name = 'Toggle on/off'
 
-    trigger_inputs = controller.getFeasibleInputsForTrigger(trigger_channel_name, trigger_name)
-    action_inputs = controller.getFeasibleInputsForAction(action_channel_name, action_name)
-    controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
+    # trigger_inputs = controller.getFeasibleInputsForTrigger(trigger_channel_name, trigger_name)
+    # action_inputs = controller.getFeasibleInputsForAction(action_channel_name, action_name)
+    # controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
 
-    rule_name = 'RULE2'
-    trigger_channel_name = 'WeMo Insight Switch'
-    trigger_name = 'Switched on'
-    action_channel_name = 'Adafruit'
-    action_name = 'Send data to Adafruit IO'
+    # rule_name = 'RULE2'
+    # trigger_channel_name = 'WeMo Insight Switch'
+    # trigger_name = 'Switched on'
+    # action_channel_name = 'Adafruit'
+    # action_name = 'Send data to Adafruit IO'
 
-    trigger_inputs = controller.getFeasibleInputsForTrigger(trigger_channel_name, trigger_name)
-    action_inputs = controller.getFeasibleInputsForAction(action_channel_name, action_name)
-    controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
+    # trigger_inputs = controller.getFeasibleInputsForTrigger(trigger_channel_name, trigger_name)
+    # action_inputs = controller.getFeasibleInputsForAction(action_channel_name, action_name)
+    # controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
 
     controller.addVulnerableDevice('adafruit')
     # policy = MyInvariantPolicy.InvariantPolicy('adafruit.data != 1 | adafruit.data = 1')
@@ -498,5 +513,6 @@ if __name__ == '__main__':
     # policy = MyPrivacyPolicy.PrivacyPolicy(set([('adafruit', 'data')]))
     policy = MyPrivacyPolicy.PrivacyPolicy(set([('androiddevice', 'wifi_connected_network')]))
 
-    controller.check(policy, grouping=True, pruning=True)
+    result = controller.check(policy, grouping=True, pruning=True)
+    pprint.pprint(result)
 

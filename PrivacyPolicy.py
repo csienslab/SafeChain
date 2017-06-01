@@ -5,7 +5,9 @@ import copy
 import datetime
 import subprocess
 import pprint
+
 import Boolean as MyBoolean
+import InvariantPolicy as MyInvariantPolicy
 
 class PrivacyPolicy:
     def __init__(self, variables):
@@ -78,7 +80,7 @@ class PrivacyPolicy:
 
                 yield self.getRandomTransitionConstraint(previous, device_variable)
 
-    def dumpNumvModel(self, controller):
+    def dumpNumvModel(self, controller, invalid_states):
         string = controller.dumpNumvModel(name='home', init=False)
         string += '\n'
         string += 'MODULE main\n'
@@ -91,9 +93,16 @@ class PrivacyPolicy:
                            for device_name, device in controller.devices.items()
                            for variable_name in device.getVariableNames()
                            if (device_name, variable_name) not in self.variables
+                           and (device_name, variable_name) in controller.device_variables
                            and not device.getVariable(variable_name).pruned]
         if len(middle_and_lows) != 0:
             string += '  INIT {};\n'.format(' & '.join(middle_and_lows))
+
+        for state_A, state_B in invalid_states:
+            boolean = ' & '.join('a.{0} = {1} & b.{0} = {2}'.format(device_variable, state_A[device_variable], state_B[device_variable]) for device_variable in sorted(state_A) if device_variable != 'attack')
+            string += '  INIT ! ( {0} )\n'.format(boolean)
+            boolean = ' & '.join('a.{0} = {1} & b.{0} = {2}'.format(device_variable, state_B[device_variable], state_A[device_variable]) for device_variable in sorted(state_B) if device_variable != 'attack')
+            string += '  INIT ! ( {0} )\n'.format(boolean)
 
         string += '  INVAR a.attack = b.attack;\n'
 
@@ -102,6 +111,7 @@ class PrivacyPolicy:
                    for device_name, device in controller.devices.items()
                    for variable_name in device.getVariableNames()
                    if '{0}.{1}'.format(device_name, variable_name) not in transitions
+                   and (device_name, variable_name) in controller.device_variables
                    and not device.getVariable(variable_name).pruned]
         sensors = ['a.{0} = b.{0}'.format(sensor) for sensor in sensors]
         if len(sensors) != 0:
@@ -113,7 +123,8 @@ class PrivacyPolicy:
 
         vulnerables = ['a.{0}.{1} = b.{0}.{1}'.format(device_name, variable_name)
                        for device_name, variable_name in controller.vulnerables
-                       if not controller.getDevice(device_name).getVariable(variable_name).pruned]
+                       if not controller.getDevice(device_name).getVariable(variable_name).pruned
+                       and (device_name, variable_name) in controller.device_variables]
         if len(vulnerables) != 0:
             string += '  INVARSPEC {};\n'.format(' & '.join(vulnerables))
         else:
@@ -209,15 +220,41 @@ class PrivacyPolicy:
 
         return {'result': 'FAILED', 'states_A': states_A, 'rules_A': rules_A, 'states_B': states_B, 'rules_B': rules_B}
 
+    def checkReachable(self, controller, state):
+        boolean = ' & '.join('{0} = {1}'.format(device_variable, state[device_variable]) for device_variable in sorted(state) if device_variable != 'attack')
+        boolean = '! ( {0} )'.format(boolean)
+        policy = MyInvariantPolicy.InvariantPolicy(boolean)
+        result = controller.check(policy, custom=False, pruning=False, grouping=False)
+        if result['result'] == 'FAILED':
+            return result
+        else:
+            return False
+
     def check(self, controller):
-        model = self.dumpNumvModel(controller)
-        filename = '/tmp/model {}.smv'.format(datetime.datetime.now())
-        with open(filename, 'w') as f:
-            f.write(model)
+        invalid_states = list()
+        while True:
+            model = self.dumpNumvModel(controller, invalid_states)
+            filename = '/tmp/model {}.smv'.format(datetime.datetime.now())
+            with open(filename, 'w') as f:
+                f.write(model)
 
-        p = subprocess.run(['NuSMV', '-keep_single_value_vars', filename], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        output = p.stdout.decode('UTF-8')
-        result = self.parseOutput(output, controller)
-        return result
+            p = subprocess.run(['NuSMV', '-keep_single_value_vars', filename], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            output = p.stdout.decode('UTF-8')
+            result = self.parseOutput(output, controller)
+            if result['result'] == 'SUCCESS':
+                return result
 
+            path = self.checkReachable(controller, result['states_A'][0])
+            if path:
+                result['states'] = path['states']
+                result['rules'] = path['rules']
+                return result
+
+            path = self.checkReachable(controller, result['states_B'][0])
+            if path:
+                result['states'] = path['states']
+                result['rules'] = path['rules']
+                return result
+
+            invalid_states.append((result['states_A'][0], result['states_B'][0]))
 
