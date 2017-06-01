@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 import copy
+import datetime
+import subprocess
 import pprint
 
 import Boolean as MyBoolean
@@ -96,6 +98,17 @@ class InvariantPolicy:
             rules.append(rule)
 
         return {'result': 'FAILED', 'states': states, 'rules': rules}
+
+    def check(self, controller):
+        model = self.dumpNumvModel(controller)
+        filename = '/tmp/model {}.smv'.format(datetime.datetime.now())
+        with open(filename, 'w') as f:
+            f.write(model)
+
+        p = subprocess.run(['NuSMV', '-keep_single_value_vars', filename], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        output = p.stdout.decode('UTF-8')
+        result = self.parseOutput(output, controller)
+        return result
 
 
 

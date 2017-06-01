@@ -417,9 +417,10 @@ class Controller:
                     variable.setPruned(True)
 
 
-    def check(self, policy, grouping=False, pruning=False):
-        for device_name, device in self.devices.items():
-            device.addCustomRules(self)
+    def check(self, policy, custom=True, grouping=False, pruning=False):
+        if custom:
+            for device_name, device in self.devices.items():
+                device.addCustomRules(self)
 
         if grouping:
             self.grouping(policy)
@@ -427,16 +428,9 @@ class Controller:
         if pruning:
             self.pruning(policy)
 
-        model = policy.dumpNumvModel(self)
-        filename = '/tmp/model {}.smv'.format(datetime.datetime.now())
-        with open(filename, 'w') as f:
-            f.write(model)
-
-        p = subprocess.run(['NuSMV', '-keep_single_value_vars', filename], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        output = p.stdout.decode('UTF-8')
-        print(output)
-        result = policy.parseOutput(output, self)
+        result = policy.check(self)
         pprint.pprint(result)
+        return result
 
 
 
@@ -497,11 +491,11 @@ if __name__ == '__main__':
     action_inputs = controller.getFeasibleInputsForAction(action_channel_name, action_name)
     controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
 
-    controller.addVulnerableDevice('wemoinsightswitch')
+    controller.addVulnerableDevice('adafruit')
     # policy = MyInvariantPolicy.InvariantPolicy('adafruit.data != 1 | adafruit.data = 1')
-    policy = MyInvariantPolicy.InvariantPolicy('adafruit.data >= 1 | adafruit.data < 10')
+    # policy = MyInvariantPolicy.InvariantPolicy('adafruit.data >= 1 | adafruit.data < 10')
     # policy = MyPrivacyPolicy.PrivacyPolicy(set([('adafruit', 'data')]))
-    # policy = MyPrivacyPolicy.PrivacyPolicy(set([('androiddevice', 'wifi_connected_network')]))
+    policy = MyPrivacyPolicy.PrivacyPolicy(set([('androiddevice', 'wifi_connected_network')]))
 
     controller.check(policy, grouping=True, pruning=True)
 

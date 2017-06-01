@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 
 import re
+import copy
+import datetime
+import subprocess
+import pprint
 import Boolean as MyBoolean
 
 class PrivacyPolicy:
@@ -10,7 +14,7 @@ class PrivacyPolicy:
         self.random_pattern = re.compile('{.+}|-?\d+\.\.-?\d+')
 
     def getConditions(self):
-        raise StopIteration
+        return iter([])
 
     def getConstraints(self, controller):
         for rule in controller.rules:
@@ -100,7 +104,8 @@ class PrivacyPolicy:
                    if '{0}.{1}'.format(device_name, variable_name) not in transitions
                    and not device.getVariable(variable_name).pruned]
         sensors = ['a.{0} = b.{0}'.format(sensor) for sensor in sensors]
-        string += '  INVAR {0};\n'.format(' & '.join(sensors))
+        if len(sensors) != 0:
+            string += '  INVAR {0};\n'.format(' & '.join(sensors))
 
         for constraint in self.getRandomTransitions(controller):
             string += '  TRANS {0};\n'.format(constraint)
@@ -109,9 +114,110 @@ class PrivacyPolicy:
         vulnerables = ['a.{0}.{1} = b.{0}.{1}'.format(device_name, variable_name)
                        for device_name, variable_name in controller.vulnerables
                        if not controller.getDevice(device_name).getVariable(variable_name).pruned]
-        string += '  INVARSPEC {};\n'.format(' & '.join(vulnerables))
+        if len(vulnerables) != 0:
+            string += '  INVARSPEC {};\n'.format(' & '.join(vulnerables))
+        else:
+            string += '  INVARSPEC TRUE;\n'
         return string
 
-    def parseOutput(self, output):
-        pass
+    def findWhichRules(self, previous_state, current_state, transitions, controller):
+        rules = set()
+
+        for device_variable in current_state:
+            current_value = current_state[device_variable]
+            previous_value = previous_state[device_variable]
+
+            if current_value == previous_value:
+                continue
+
+            if device_variable not in transitions:
+                rules.add('ENV')
+                continue
+
+            for boolean, value, rule_name in transitions[device_variable]:
+                if boolean == 'next(attack)' and current_state['attack'] == 'TRUE':
+                    rules.add('ATTACK')
+                    break
+
+                if controller.checkRuleSatisfied(previous_state, boolean):
+                    rules.add(rule_name)
+                    break
+
+        return rules
+
+    def parseOutput(self, output, controller):
+        index = output.index('-- invariant')
+        output = output[index:]
+
+        lines = output.splitlines()
+        if lines[0].endswith('true'):
+            return {'result': 'SUCCESS'}
+
+        transitions = controller.getTransitions()
+
+        states_A = list()
+        rules_A = list()
+        current_state_A = dict()
+
+        states_B = list()
+        rules_B = list()
+        current_state_B = dict()
+
+        # get initial state
+        index = 4
+        while index + 1 < len(lines):
+            index += 1
+            line = lines[index].strip()
+
+            if line.startswith('-> State: 1.2 <-'):
+                break
+
+            device_variable, value = line.split(' = ')
+            if device_variable.startswith('a.'):
+                current_state_A[device_variable[2:]] = value
+            else:
+                current_state_B[device_variable[2:]] = value
+        states_A.append(current_state_A)
+        states_B.append(current_state_B)
+
+        while index + 1 < len(lines):
+            previous_state_A = current_state_A
+            current_state_A = copy.copy(previous_state_A)
+            previous_state_B = current_state_B
+            current_state_B = copy.copy(previous_state_B)
+
+            while index + 1 < len(lines):
+                index += 1
+                line = lines[index].strip()
+
+                if line.startswith('-> State: '):
+                    break
+
+                device_variable, value = line.split(' = ')
+                if device_variable.startswith('a.'):
+                    current_state_A[device_variable[2:]] = value
+                else:
+                    current_state_B[device_variable[2:]] = value
+
+            rule_A = self.findWhichRules(previous_state_A, current_state_A, transitions, controller)
+            states_A.append(current_state_A)
+            rules_A.append(rule_A)
+
+            rule_B = self.findWhichRules(previous_state_B, current_state_B, transitions, controller)
+            states_B.append(current_state_B)
+            rules_B.append(rule_B)
+
+        return {'result': 'FAILED', 'states_A': states_A, 'rules_A': rules_A, 'states_B': states_B, 'rules_B': rules_B}
+
+    def check(self, controller):
+        model = self.dumpNumvModel(controller)
+        filename = '/tmp/model {}.smv'.format(datetime.datetime.now())
+        with open(filename, 'w') as f:
+            f.write(model)
+
+        p = subprocess.run(['NuSMV', '-keep_single_value_vars', filename], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        output = p.stdout.decode('UTF-8')
+        result = self.parseOutput(output, controller)
+        return result
+
 

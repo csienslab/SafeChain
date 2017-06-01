@@ -49,11 +49,11 @@ class Device:
         if 'customs' not in self.definition:
             return
 
-        for index, custom_rule in enumerate(self.definition['customs']):
-            rule_name = 'CUSTOM_{0}_{1}'.format(self.name, index)
+        for custom_rule in self.definition['customs']:
+            rule_name = custom_rule['name']
 
             trigger_channel_name = self.channel_name
-            trigger_name = 'CUSTOM_{0}_{1}_trigger'.format(self.name, index)
+            trigger_name = '{}_trigger'.format(rule_name)
             trigger_definition = {
                 'input': [{'type': 'device', 'device':[self.channel_name]}],
                 'definition': {'boolean': custom_rule['trigger']}
@@ -61,7 +61,7 @@ class Device:
             trigger_inputs = [self.name]
 
             action_channel_name = self.channel_name
-            action_name = 'CUSTOM_{0}_{1}_action'.format(self.name, index)
+            action_name = '{}_action'.format(rule_name)
             action_definition = {
                 'input': [{'type': 'device', 'device': [self.channel_name]}],
                 'definition': custom_rule['action']

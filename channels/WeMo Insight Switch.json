@@ -252,6 +252,7 @@
       ]
     },
     {
+      "name": "CUSTOM_WEMOINSIGHTSWITCH_STATUSPREVIOUS",
       "trigger": "TRUE",
       "action": [
         {
