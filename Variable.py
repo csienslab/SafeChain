@@ -59,7 +59,7 @@ class BooleanVariable(Variable):
         self.reset_value = definition['resetValue'] if 'resetValue' in definition else None
 
         self.setGrouping(False)
-        self.constraints = list()
+        self.constraints = set()
 
         self.compromised = False
         self.pruned = False
@@ -84,9 +84,9 @@ class BooleanVariable(Variable):
             value = value.replace('{', '').replace('}', '').replace(' ', '')
             values = value.split(',')
             for value in values:
-                self.constraints.append((operator, value))
+                self.constraints.add((operator, value))
         else:
-            self.constraints.append((operator, value))
+            self.constraints.add((operator, value))
 
     def setGrouping(self, status):
         self.grouping = status == True
@@ -142,7 +142,7 @@ class SetVariable(Variable):
         self.reset_value = definition['resetValue'] if 'resetValue' in definition else None
 
         self.setGrouping(False)
-        self.constraints = list()
+        self.constraints = set()
 
         self.compromised = False
         self.pruned = False
@@ -166,9 +166,9 @@ class SetVariable(Variable):
             value = value.replace('{', '').replace('}', '').replace(' ', '')
             values = value.split(',')
             for value in values:
-                self.constraints.append((operator, value))
+                self.constraints.add((operator, value))
         else:
-            self.constraints.append((operator, value))
+            self.constraints.add((operator, value))
 
     def setGrouping(self, status):
         self.grouping = status == True
@@ -226,7 +226,7 @@ class RangeVariable(Variable):
         self.reset_value = definition['resetValue'] if 'resetValue' in definition else None
 
         self.setGrouping(False)
-        self.constraints = list()
+        self.constraints = set()
 
         self.compromised = False
         self.pruned = False
@@ -253,13 +253,13 @@ class RangeVariable(Variable):
             value = value.replace('{', '').replace('}', '').replace(' ', '')
             values = value.split(',')
             for value in values:
-                self.constraints.append((operator, value))
+                self.constraints.add((operator, value))
         elif isinstance(value, str) and '..' in value:
             minValue, maxValue = value.split('..')
-            self.constraints.append(('>=', minValue))
-            self.constraints.append(('<=', maxValue))
+            self.constraints.add(('>=', minValue))
+            self.constraints.add(('<=', maxValue))
         else:
-            self.constraints.append((operator, value))
+            self.constraints.add((operator, value))
 
     def setGrouping(self, status):
         self.grouping = status == True

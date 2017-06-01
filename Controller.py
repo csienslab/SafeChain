@@ -341,7 +341,7 @@ class Controller:
                         device2 = self.devices[device2_name]
                         variable2 = device2.getVariable(variable2_name)
 
-                        constraints = variable.constraints + variable2.constraints
+                        constraints = variable.constraints | variable2.constraints
                         variable.constraints = constraints
                         variable2.constraints = constraints
 
@@ -452,6 +452,7 @@ if __name__ == '__main__':
         device.setState(state)
 
         controller.addDevice(device)
+
 
     # add rules
     # with open('dataset/coreresultsMay16.tsv', 'r') as f:
