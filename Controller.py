@@ -16,6 +16,7 @@ import re
 import networkx
 import subprocess
 import datetime
+import pprint
 
 import Device as MyDevice
 import Trigger as MyTrigger
@@ -187,6 +188,70 @@ class Controller:
 
         return transitions
 
+    def checkRuleSatisfied(self, state, rule_condition):
+        string_list = list()
+
+        device_names = sorted(device_name for device_name, device in self.devices.items() if not device.pruned)
+        device_names_string = ', '.join(['attack'] + device_names)
+
+        for device_name in device_names:
+            device = self.devices[device_name]
+
+            module_name = device_name.upper()
+            string_list.append('MODULE {0}({1})'.format(module_name, device_names_string))
+
+            # define variables
+            string_list.append('  FROZENVAR')
+            for variable_name in sorted(device.getVariableNames()):
+                variable = device.getVariable(variable_name)
+                if variable.pruned:
+                    continue
+
+                variable_range = variable.getPossibleGroupsInNuSMV()
+                string_list.append('    {0}: {1};'.format(variable_name, variable_range))
+
+            # initial conditions
+            string_list.append('  ASSIGN')
+            for variable_name in sorted(device.getVariableNames()):
+                variable = device.getVariable(variable_name)
+                if variable.pruned:
+                    continue
+
+                value = state['{0}.{1}'.format(device_name, variable_name)]
+                string_list.append('    init({0}):= {1};'.format(variable_name, value))
+            string_list.append('')
+
+        string_list.append('MODULE main')
+        string_list.append('  VAR')
+        for device_name in device_names:
+            module_name = device_name.upper()
+            string_list.append('    {0}: {1}({2});'.format(device_name, module_name, device_names_string))
+
+        string_list.append('')
+        string_list.append('    attack: boolean;')
+        string_list.append('')
+        string_list.append('  ASSIGN attack := FALSE;')
+        string_list.append('')
+        string_list.append('  INVARSPEC {};'.format(rule_condition))
+
+        model = '\n'.join(string_list)
+
+        filename = '/tmp/state {}.smv'.format(datetime.datetime.now())
+        with open(filename, 'w') as f:
+            f.write(model)
+
+        p = subprocess.run(['NuSMV', '-keep_single_value_vars', filename], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        output = p.stdout.decode('UTF-8')
+
+        index = output.index('-- invariant')
+        output = output[index:]
+
+        lines = output.splitlines()
+        if lines[0].endswith('true'):
+            return True
+        else:
+            return False
+
     def dumpNumvModel(self, name='main', init=True):
         string = ''
 
@@ -215,7 +280,7 @@ class Controller:
             if init:
                 for variable_name in sorted(device.getVariableNames()):
                     variable = device.getVariable(variable_name)
-                    if variable.pruned and not init:
+                    if variable.pruned:
                         continue
 
                     value = variable.getEquivalentActionCondition(variable.value)
@@ -312,6 +377,9 @@ class Controller:
             for condition in rule.getConditions():
                 condition.toEquivalentCondition(self)
 
+        for condition in policy.getConditions():
+            condition.toEquivalentCondition(self)
+
     def pruning(self, policy):
         graph = networkx.DiGraph()
 
@@ -330,7 +398,6 @@ class Controller:
                 graph[trigger_variable][action_variable]['rules'].add(rule_name)
 
         target_nodes = set(policy.getRelatedVariables(self))
-        print(target_nodes)
         explored_nodes = set()
         related_rules = set()
         while len(target_nodes) != 0:
@@ -341,8 +408,6 @@ class Controller:
 
             explored_nodes |= target_nodes
             target_nodes = adjacent_nodes - explored_nodes
-
-        print(explored_nodes)
 
         for device_name, device in self.devices.items():
             for variable_name, variable in device.variables.items():
@@ -370,7 +435,8 @@ class Controller:
         p = subprocess.run(['NuSMV', '-keep_single_value_vars', filename], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         output = p.stdout.decode('UTF-8')
         print(output)
-        # result = policy.parseOutput(output)
+        result = policy.parseOutput(output, self)
+        pprint.pprint(result)
 
 
 
@@ -431,11 +497,11 @@ if __name__ == '__main__':
     action_inputs = controller.getFeasibleInputsForAction(action_channel_name, action_name)
     controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
 
-    controller.addVulnerableDevice('adafruit')
+    controller.addVulnerableDevice('wemoinsightswitch')
     # policy = MyInvariantPolicy.InvariantPolicy('adafruit.data != 1 | adafruit.data = 1')
-    # policy = MyInvariantPolicy.InvariantPolicy('adafruit.data != 1')
+    policy = MyInvariantPolicy.InvariantPolicy('adafruit.data >= 1 | adafruit.data < 10')
     # policy = MyPrivacyPolicy.PrivacyPolicy(set([('adafruit', 'data')]))
-    policy = MyPrivacyPolicy.PrivacyPolicy(set([('androiddevice', 'wifi_connected_network')]))
+    # policy = MyPrivacyPolicy.PrivacyPolicy(set([('androiddevice', 'wifi_connected_network')]))
 
     controller.check(policy, grouping=True, pruning=True)
 

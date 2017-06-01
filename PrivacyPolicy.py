@@ -9,6 +9,9 @@ class PrivacyPolicy:
         self.variable_pattern = re.compile('\w+\.\w+')
         self.random_pattern = re.compile('{.+}|-?\d+\.\.-?\d+')
 
+    def getConditions(self):
+        raise StopIteration
+
     def getConstraints(self, controller):
         for rule in controller.rules:
             for condition in rule.getConditions():
@@ -109,4 +112,6 @@ class PrivacyPolicy:
         string += '  INVARSPEC {};\n'.format(' & '.join(vulnerables))
         return string
 
+    def parseOutput(self, output):
+        pass
 
