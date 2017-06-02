@@ -89,9 +89,8 @@ class BooleanVariable(Variable):
             self.constraints.add((operator, value))
 
     def setGrouping(self, status):
-        self.grouping = status == True
         self.grouped = False
-        if not self.grouping:
+        if status != True:
             self.mapping = dict((value, value) for value in self.getPossibleValues())
             return
 
@@ -171,9 +170,8 @@ class SetVariable(Variable):
             self.constraints.add((operator, value))
 
     def setGrouping(self, status):
-        self.grouping = status == True
         self.grouped = False
-        if not self.grouping:
+        if status != True:
             self.mapping = dict((value, value) for value in self.getPossibleValues())
             return
 
@@ -235,6 +233,11 @@ class RangeVariable(Variable):
         return set(range(self.definition['minValue'], self.definition['maxValue'] + 1))
 
     def getPossibleGroups(self):
+        if 'window' in self.definition:
+            minValue = max(self.definition['minValue'], self.value - self.definition['window'])
+            maxValue = min(self.definition['maxValue'], self.value + self.definition['window'])
+            return set(self.mapping[i] for i in range(minValue, maxValue+1))
+
         return set(self.mapping.values())
 
     def getPossibleGroupsInNuSMV(self):
@@ -242,29 +245,46 @@ class RangeVariable(Variable):
             groups = sorted(self.getPossibleGroups())
             string = ', '.join(groups)
             return '{{{0}}}'.format(string)
+        elif 'window' in self.definition:
+            minValue = max(self.definition['minValue'], self.value - self.definition['window'])
+            maxValue = min(self.definition['maxValue'], self.value + self.definition['window'])
+            return '{0}..{1}'.format(minValue, maxValue)
         else:
             return '{0}..{1}'.format(self.definition['minValue'], self.definition['maxValue'])
 
     def setValue(self, value):
         self.value = value
 
+        if 'window' in self.definition:
+            minValue = max(self.definition['minValue'], self.value - self.definition['window'])
+            maxValue = min(self.definition['maxValue'], self.value + self.definition['window'])
+            self.addConstraint('>=', minValue)
+            self.addConstraint('<=', maxValue)
+
     def addConstraint(self, operator, value):
         if isinstance(value, str) and '{' in value:
             value = value.replace('{', '').replace('}', '').replace(' ', '')
             values = value.split(',')
             for value in values:
-                self.constraints.add((operator, value))
+                self.addConstraint(operator, value)
         elif isinstance(value, str) and '..' in value:
             minValue, maxValue = value.split('..')
-            self.constraints.add(('>=', minValue))
-            self.constraints.add(('<=', maxValue))
+            self.addConstraint('>=', minValue)
+            self.addConstraint('<=', maxValue)
+        elif operator == '>=':
+            value = int(value)
+            if value > self.definition['minValue']:
+                self.constraints.add(('>', value - 1))
+        elif operator == '<=':
+            value = int(value)
+            if value < self.definition['maxValue']:
+                self.constraints.add(('<', value + 1))
         else:
             self.constraints.add((operator, value))
 
     def setGrouping(self, status):
-        self.grouping = status == True
         self.grouped = False
-        if not self.grouping:
+        if status != True:
             self.mapping = dict((value, value) for value in self.getPossibleValues())
             return
 
@@ -284,15 +304,15 @@ class RangeVariable(Variable):
             if '>' in operator or '<' in operator:
                 continuous = True
 
+        values = set(int(value) for value in values)
         if not continuous:
-            values = set(int(value) for operator, value in self.constraints)
             if len(values) >= len(self.getPossibleValues()) - 1:
                 self.mapping = dict((value, str(value)) for value in self.getPossibleValues())
             else:
                 self.mapping = dict((value, str(value)) if value in values else (value, 'OTHERS') for value in self.getPossibleValues())
         else:
             self.mapping = dict()
-            values = sorted(int(value) for value in values)
+            values = sorted(values)
             if self.definition['minValue'] not in values:
                 for value in range(self.definition['minValue'], values[0]):
                     self.mapping[value] = 'between_min_{}'.format(values[0])
@@ -312,21 +332,30 @@ class RangeVariable(Variable):
         if not self.grouped:
             return (operator, value)
 
+        if 'window' in self.definition:
+            minValue = max(self.definition['minValue'], self.value - self.definition['window'])
+            maxValue = min(self.definition['maxValue'], self.value + self.definition['window'])
+        else:
+            minValue = self.definition['minValue']
+            maxValue = self.definition['maxValue']
+
         if operator in ('=', '!='):
-            return (operator, value)
+            if 'window' in self.definition:
+                if int(value) >= minValue and int(value) <= maxValue:
+                    return (operator, value)
+                else:
+                    return ('in', '{}')
+            else:
+                return (operator, value)
 
         if operator == '>':
-            minValue = int(value) + 1
-            maxValue = self.definition['maxValue']
+            minValue = max(int(value) + 1, minValue)
         elif operator == '>=':
-            minValue = int(value)
-            maxValue = self.definition['maxValue']
+            minValue = max(int(value), minValue)
         elif operator == '<':
-            minValue = self.definition['minValue']
-            maxValue = int(value) - 1
+            maxValue = min(int(value) - 1, maxValue)
         elif operator == '<=':
-            minValue = self.definition['minValue']
-            maxValue = int(value)
+            maxValue = min(int(value), maxValue)
         else:
             return (operator, value)
 
