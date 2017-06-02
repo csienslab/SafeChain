@@ -396,6 +396,18 @@ class Controller:
         for condition in policy.getConditions():
             condition.toEquivalentCondition(self)
 
+    def ungrouping(self, policy):
+        for device_name, device in self.devices.items():
+            for variable_name, variable in device.variables.items():
+                variable.setGrouping(False)
+
+        for rule in self.rules:
+            for condition in rule.getConditions():
+                condition.toOriginal()
+
+        for condition in policy.getConditions():
+            condition.toOriginal()
+
     def pruning(self, policy):
         graph = networkx.DiGraph()
 
@@ -432,17 +444,26 @@ class Controller:
                 else:
                     variable.setPruned(True)
 
+    def unpruning(self, policy):
+        for device_name, device in self.devices.items():
+            for variable_name, variable in device.variables.items():
+                variable.setPruned(False)
 
     def check(self, policy, custom=True, grouping=False, pruning=False):
         if custom:
             for device_name, device in self.devices.items():
                 device.addCustomRules(self)
 
-        if grouping:
+        if grouping == True:
+            self.ungrouping(policy)
             self.grouping(policy)
+        elif grouping == False:
+            self.ungrouping(policy)
 
-        if pruning:
+        if pruning == True:
             self.pruning(policy)
+        elif pruning == False:
+            self.unpruning(policy)
 
         result = policy.check(self)
         return result
@@ -470,49 +491,72 @@ if __name__ == '__main__':
 
 
     # add rules
-    with open('dataset/coreresultsMay16.tsv', 'r') as f:
-        all_channels = controller.database.keys()
-        count = 1
-        for line in f:
-            line = line.strip()
-            columns = line.split('\t')
-            trigger_channel_name = columns[5]
-            trigger_name = columns[6]
-            action_channel_name = columns[8]
-            action_name = columns[9]
-            if trigger_channel_name in all_channels and action_channel_name in all_channels:
-                rule_name = 'RULE{}'.format(count)
-                trigger_inputs = controller.getFeasibleInputsForTrigger(trigger_channel_name, trigger_name)
-                action_inputs = controller.getFeasibleInputsForAction(action_channel_name, action_name)
-                controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
-                count += 1
+    # with open('dataset/coreresultsMay16.tsv', 'r') as f:
+    #     all_channels = controller.database.keys()
+    #     count = 1
+    #     for line in f:
+    #         line = line.strip()
+    #         columns = line.split('\t')
+    #         trigger_channel_name = columns[5]
+    #         trigger_name = columns[6]
+    #         action_channel_name = columns[8]
+    #         action_name = columns[9]
+    #         if trigger_channel_name in all_channels and action_channel_name in all_channels:
+    #             rule_name = 'RULE{}'.format(count)
+    #             trigger_inputs = controller.getFeasibleInputsForTrigger(trigger_channel_name, trigger_name)
+    #             action_inputs = controller.getFeasibleInputsForAction(action_channel_name, action_name)
+    #             controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
+    #             count += 1
 
-    # rule_name = 'RULE1'
-    # trigger_channel_name = 'Android Device'
-    # trigger_name = 'Connects or disconnects from a specific WiFi network'
-    # action_channel_name = 'WeMo Insight Switch'
-    # action_name = 'Toggle on/off'
+    rule_name = 'RULE1'
+    trigger_channel_name = 'Android Device'
+    trigger_name = 'Connects or disconnects from a specific WiFi network'
+    action_channel_name = 'WeMo Insight Switch'
+    action_name = 'Toggle on/off'
 
-    # trigger_inputs = controller.getFeasibleInputsForTrigger(trigger_channel_name, trigger_name)
-    # action_inputs = controller.getFeasibleInputsForAction(action_channel_name, action_name)
-    # controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
+    trigger_inputs = controller.getFeasibleInputsForTrigger(trigger_channel_name, trigger_name)
+    action_inputs = controller.getFeasibleInputsForAction(action_channel_name, action_name)
+    controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
 
-    # rule_name = 'RULE2'
-    # trigger_channel_name = 'WeMo Insight Switch'
-    # trigger_name = 'Switched on'
-    # action_channel_name = 'Adafruit'
-    # action_name = 'Send data to Adafruit IO'
+    rule_name = 'RULE2'
+    trigger_channel_name = 'WeMo Insight Switch'
+    trigger_name = 'Switched on'
+    action_channel_name = 'Adafruit'
+    action_name = 'Send data to Adafruit IO'
 
-    # trigger_inputs = controller.getFeasibleInputsForTrigger(trigger_channel_name, trigger_name)
-    # action_inputs = controller.getFeasibleInputsForAction(action_channel_name, action_name)
-    # controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
+    trigger_inputs = controller.getFeasibleInputsForTrigger(trigger_channel_name, trigger_name)
+    action_inputs = controller.getFeasibleInputsForAction(action_channel_name, action_name)
+    controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
+
+    rule_name = 'RULE3'
+    trigger_channel_name = 'WeMo Insight Switch'
+    trigger_name = 'Monthly estimated cost rises above'
+    action_channel_name = 'Adafruit'
+    action_name = 'Send data to Adafruit IO'
+
+    trigger_inputs = controller.getFeasibleInputsForTrigger(trigger_channel_name, trigger_name)
+    action_inputs = controller.getFeasibleInputsForAction(action_channel_name, action_name)
+    controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
+
+    rule_name = 'RULE4'
+    trigger_channel_name = 'WeMo Insight Switch'
+    trigger_name = 'Daily cost rises above'
+    action_channel_name = 'Adafruit'
+    action_name = 'Send data to Adafruit IO'
+
+    trigger_inputs = controller.getFeasibleInputsForTrigger(trigger_channel_name, trigger_name)
+    action_inputs = controller.getFeasibleInputsForAction(action_channel_name, action_name)
+    controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
 
     controller.addVulnerableDevice('adafruit')
-    # policy = MyInvariantPolicy.InvariantPolicy('adafruit.data != 1 | adafruit.data = 1')
+    policy = MyInvariantPolicy.InvariantPolicy('adafruit.data != 1 | adafruit.data = 1')
     # policy = MyInvariantPolicy.InvariantPolicy('adafruit.data >= 1 | adafruit.data < 10')
     # policy = MyPrivacyPolicy.PrivacyPolicy(set([('adafruit', 'data')]))
-    policy = MyPrivacyPolicy.PrivacyPolicy(set([('androiddevice', 'wifi_connected_network')]))
+    # policy = MyPrivacyPolicy.PrivacyPolicy(set([('androiddevice', 'wifi_connected_network')]))
 
     result = controller.check(policy, grouping=True, pruning=True)
+    result = controller.check(policy, custom=False, grouping=True, pruning=False)
+    result = controller.check(policy, custom=False, grouping=False, pruning=True)
+    result = controller.check(policy, custom=False, grouping=False, pruning=False)
     pprint.pprint(result)
 

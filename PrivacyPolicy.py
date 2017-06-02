@@ -224,7 +224,7 @@ class PrivacyPolicy:
         boolean = ' & '.join('{0} = {1}'.format(device_variable, state[device_variable]) for device_variable in sorted(state) if device_variable != 'attack')
         boolean = '! ( {0} )'.format(boolean)
         policy = MyInvariantPolicy.InvariantPolicy(boolean)
-        result = controller.check(policy, custom=False, pruning=False, grouping=False)
+        result = controller.check(policy, custom=False, pruning=None, grouping=None)
         if result['result'] == 'FAILED':
             return result
         else:

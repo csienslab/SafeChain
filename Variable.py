@@ -58,8 +58,8 @@ class BooleanVariable(Variable):
         self.value = None
         self.reset_value = definition['resetValue'] if 'resetValue' in definition else None
 
-        self.setGrouping(False)
         self.constraints = set()
+        self.setGrouping(False)
 
         self.compromised = False
         self.pruned = False
@@ -92,6 +92,7 @@ class BooleanVariable(Variable):
         self.grouped = False
         if status != True:
             self.mapping = dict((value, value) for value in self.getPossibleValues())
+            self.constraints.clear()
             return
 
         values = set(value for operator, value in self.constraints)
@@ -140,8 +141,8 @@ class SetVariable(Variable):
         self.value = None
         self.reset_value = definition['resetValue'] if 'resetValue' in definition else None
 
-        self.setGrouping(False)
         self.constraints = set()
+        self.setGrouping(False)
 
         self.compromised = False
         self.pruned = False
@@ -173,6 +174,7 @@ class SetVariable(Variable):
         self.grouped = False
         if status != True:
             self.mapping = dict((value, value) for value in self.getPossibleValues())
+            self.constraints.clear()
             return
 
         values = set(value for operator, value in self.constraints)
@@ -223,8 +225,8 @@ class RangeVariable(Variable):
         self.value = None
         self.reset_value = definition['resetValue'] if 'resetValue' in definition else None
 
-        self.setGrouping(False)
         self.constraints = set()
+        self.setGrouping(False)
 
         self.compromised = False
         self.pruned = False
@@ -286,6 +288,7 @@ class RangeVariable(Variable):
         self.grouped = False
         if status != True:
             self.mapping = dict((value, value) for value in self.getPossibleValues())
+            self.constraints.clear()
             return
 
         values = set(value for operator, value in self.constraints)

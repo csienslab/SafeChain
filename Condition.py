@@ -55,6 +55,9 @@ class Condition:
         else:
             self.tupple = ('FALSE', )
 
+    def toOriginal(self):
+        self.tupple = copy.copy(self.original)
+
     def getString(self):
         return ' '.join(self.tupple)
 
