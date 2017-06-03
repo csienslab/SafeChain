@@ -15,6 +15,7 @@ class PrivacyPolicy:
         self.variables = variables
         self.variable_pattern = re.compile('\w+\.\w+')
         self.random_pattern = re.compile('{.+}|-?\d+\.\.-?\d+')
+        self.test = 0
 
     def getConditions(self):
         return iter([])
@@ -82,13 +83,13 @@ class PrivacyPolicy:
                 yield self.getRandomTransitionConstraint(previous, device_variable)
 
     def dumpNumvModel(self, controller, invalid_states):
-        string = controller.dumpNumvModel(name='home', init=False)
-        string += '\n'
-        string += 'MODULE main\n'
-        string += '  VAR\n'
-        string += '    a: home;\n'
-        string += '    b: home;\n'
-        string += '\n'
+        string_list = [controller.dumpNumvModel(name='home', init=False)]
+        string_list.append('')
+        string_list.append('MODULE main')
+        string_list.append('  VAR')
+        string_list.append('    a: home;')
+        string_list.append('    b: home;')
+        string_list.append('')
 
         middle_and_lows = ['a.{0}.{1} = b.{0}.{1}'.format(device_name, variable_name)
                            for device_name, device in controller.devices.items()
@@ -97,14 +98,14 @@ class PrivacyPolicy:
                            and (device_name, variable_name) in controller.device_variables
                            and not device.getVariable(variable_name).pruned]
         if len(middle_and_lows) != 0:
-            string += '  INIT {};\n'.format(' & '.join(middle_and_lows))
+            string_list.append('  INIT {};'.format(' & '.join(middle_and_lows)))
 
         for state_A, state_B in invalid_states:
             boolean = ' & '.join('a.{0} = {1} & b.{0} = {2}'.format(device_variable, state_A[device_variable], state_B[device_variable]) for device_variable in sorted(state_A) if device_variable != 'attack')
             boolean2 = ' & '.join('a.{0} = {1} & b.{0} = {2}'.format(device_variable, state_B[device_variable], state_A[device_variable]) for device_variable in sorted(state_B) if device_variable != 'attack')
-            string += '  INIT ! ( {0} ) & ! ( {1} )\n'.format(boolean, boolean2)
+            string_list.append('  INIT ! ( {0} ) & ! ( {1} )'.format(boolean, boolean2))
 
-        string += '  INVAR a.attack = b.attack;\n'
+        string_list.append('  INVAR a.attack = b.attack;')
 
         transitions = controller.getTransitions()
         sensors = ['{0}.{1}'.format(device_name, variable_name)
@@ -115,70 +116,75 @@ class PrivacyPolicy:
                    and not device.getVariable(variable_name).pruned]
         sensors = ['a.{0} = b.{0}'.format(sensor) for sensor in sensors]
         if len(sensors) != 0:
-            string += '  INVAR {0};\n'.format(' & '.join(sensors))
+            string_list.append('  INVAR {0};'.format(' & '.join(sensors)))
 
         for constraint in self.getRandomTransitions(controller):
-            string += '  TRANS {0};\n'.format(constraint)
-        string += '\n'
+            string_list.append('  TRANS {0};'.format(constraint))
+        string_list.append('')
 
         vulnerables = ['a.{0}.{1} = b.{0}.{1}'.format(device_name, variable_name)
                        for device_name, variable_name in controller.vulnerables
                        if not controller.getDevice(device_name).getVariable(variable_name).pruned
                        and (device_name, variable_name) in controller.device_variables]
         if len(vulnerables) != 0:
-            string += '  INVARSPEC {};\n'.format(' & '.join(vulnerables))
+            string_list.append('  INVARSPEC {};'.format(' & '.join(vulnerables)))
         else:
-            string += '  INVARSPEC TRUE;\n'
-        return string
+            string_list.append('  INVARSPEC TRUE;')
 
-    def findWhichRules(self, previous_state, current_state, transitions, controller):
-        rules = set()
+        return '\n'.join(string_list)
 
-        for device_variable in current_state:
-            current_value = current_state[device_variable]
-            previous_value = previous_state[device_variable]
+    def findWhichRules(self, states, transitions, controller):
+        rule_list = list()
 
-            if current_value == previous_value:
-                continue
+        for previous_state, current_state in zip(states, states[1:]):
+            rules = set()
 
-            if device_variable not in transitions:
-                rules.add('ENV')
-                continue
+            for device_variable in current_state:
+                current_value = current_state[device_variable]
+                previous_value = previous_state[device_variable]
 
-            for boolean, value, rule_name in transitions[device_variable]:
-                if boolean == 'next(attack)' and current_state['attack'] == 'TRUE':
-                    rules.add('ATTACK')
-                    break
+                if current_value == previous_value:
+                    continue
 
-                if controller.checkRuleSatisfied(previous_state, boolean):
-                    rules.add(rule_name)
-                    break
+                if device_variable not in transitions:
+                    rules.add('ENV')
+                    continue
 
-        return rules
+                for boolean, value, rule_name in transitions[device_variable]:
+                    if boolean == 'next(attack)' and current_state['attack'] == 'TRUE':
+                        rules.add('ATTACK')
+                        break
+
+                    if controller.checkRuleSatisfied(previous_state, boolean):
+                        rules.add(rule_name)
+                        break
+
+            rule_list.append(rules)
+
+        return rule_list
 
     def parseOutput(self, output, controller):
         index = output.index('-- invariant')
         output = output[index:]
 
         lines = output.splitlines()
+        lines = [line.strip() for line in lines]
+
         if lines[0].endswith('true'):
             return {'result': 'SUCCESS'}
 
-        transitions = controller.getTransitions()
 
         states_A = list()
-        rules_A = list()
         current_state_A = dict()
 
         states_B = list()
-        rules_B = list()
         current_state_B = dict()
 
         # get initial state
         index = 4
         while index + 1 < len(lines):
             index += 1
-            line = lines[index].strip()
+            line = lines[index]
 
             if line.startswith('-> State: 1.2 <-'):
                 break
@@ -199,7 +205,7 @@ class PrivacyPolicy:
 
             while index + 1 < len(lines):
                 index += 1
-                line = lines[index].strip()
+                line = lines[index]
 
                 if line.startswith('-> State: '):
                     break
@@ -210,15 +216,10 @@ class PrivacyPolicy:
                 else:
                     current_state_B[device_variable[2:]] = value
 
-            rule_A = self.findWhichRules(previous_state_A, current_state_A, transitions, controller)
             states_A.append(current_state_A)
-            rules_A.append(rule_A)
-
-            rule_B = self.findWhichRules(previous_state_B, current_state_B, transitions, controller)
             states_B.append(current_state_B)
-            rules_B.append(rule_B)
 
-        return {'result': 'FAILED', 'states_A': states_A, 'rules_A': rules_A, 'states_B': states_B, 'rules_B': rules_B}
+        return {'result': 'FAILED', 'states_A': states_A, 'states_B': states_B}
 
     def checkReachable(self, controller, state):
         boolean = ' & '.join('{0} = {1}'.format(device_variable, state[device_variable]) for device_variable in sorted(state) if device_variable != 'attack')
@@ -229,12 +230,16 @@ class PrivacyPolicy:
     def check(self, controller):
         invalid_states = list()
         total_checking_time = 0
+        transitions = controller.getTransitions()
 
         while True:
+            print(self.test)
+            parse_start = time.perf_counter()
             model = self.dumpNumvModel(controller, invalid_states)
             filename = '/tmp/model {}.smv'.format(datetime.datetime.now())
             with open(filename, 'w') as f:
                 f.write(model)
+            self.test += time.perf_counter() - parse_start
 
             checking_start = time.perf_counter()
             p = subprocess.run(['NuSMV', '-keep_single_value_vars', filename], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -250,6 +255,8 @@ class PrivacyPolicy:
             if path['result'] == 'FAILED':
                 result['states'] = path['states']
                 result['rules'] = path['rules']
+                result['rules_A'] = self.findWhichRules(result['states_A'], transitions, controller)
+                result['rules_B'] = self.findWhichRules(result['states_B'], transitions, controller)
                 return result, total_checking_time
 
             path, grouping_time, pruning_time, parsing_time, checking_time = self.checkReachable(controller, result['states_B'][0])
@@ -257,6 +264,8 @@ class PrivacyPolicy:
             if path['result'] == 'FAILED':
                 result['states'] = path['states']
                 result['rules'] = path['rules']
+                result['rules_A'] = self.findWhichRules(result['states_A'], transitions, controller)
+                result['rules_B'] = self.findWhichRules(result['states_B'], transitions, controller)
                 return result, total_checking_time
 
             invalid_states.append((result['states_A'][0], result['states_B'][0]))
