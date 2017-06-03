@@ -17,6 +17,7 @@ import networkx
 import subprocess
 import datetime
 import pprint
+import time
 
 import Device as MyDevice
 import Trigger as MyTrigger
@@ -343,6 +344,7 @@ class Controller:
         return string
 
     def grouping(self, policy):
+        self.ungrouping(policy)
         for rule in self.rules:
             for condition in rule.getConditions():
                 for device_name, variable_name, operator, value in condition.getConstraints():
@@ -455,18 +457,30 @@ class Controller:
                 device.addCustomRules(self)
 
         if grouping == True:
-            self.ungrouping(policy)
+            grouping_start = time.perf_counter()
             self.grouping(policy)
+            grouping_time = time.perf_counter() - grouping_start
         elif grouping == False:
             self.ungrouping(policy)
+            grouping_time = 0
+        else:
+            grouping_time = 0
 
         if pruning == True:
+            pruning_start = time.perf_counter()
             self.pruning(policy)
+            pruning_time = time.perf_counter() - pruning_start
         elif pruning == False:
             self.unpruning(policy)
+            pruning_time = 0
+        else:
+            pruning_time = 0
 
-        result = policy.check(self)
-        return result
+        total_start = time.perf_counter()
+        result, checking_time = policy.check(self)
+        total_time = time.perf_counter() - total_start
+
+        return result, grouping_time, pruning_time, total_time - checking_time, checking_time
 
 
 
@@ -549,14 +563,15 @@ if __name__ == '__main__':
     controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
 
     controller.addVulnerableDevice('adafruit')
-    policy = MyInvariantPolicy.InvariantPolicy('adafruit.data != 1 | adafruit.data = 1')
+    # policy = MyInvariantPolicy.InvariantPolicy('adafruit.data != 1 | adafruit.data = 1')
     # policy = MyInvariantPolicy.InvariantPolicy('adafruit.data >= 1 | adafruit.data < 10')
     # policy = MyPrivacyPolicy.PrivacyPolicy(set([('adafruit', 'data')]))
-    # policy = MyPrivacyPolicy.PrivacyPolicy(set([('androiddevice', 'wifi_connected_network')]))
+    policy = MyPrivacyPolicy.PrivacyPolicy(set([('androiddevice', 'wifi_connected_network')]))
 
-    result = controller.check(policy, grouping=True, pruning=True)
-    result = controller.check(policy, custom=False, grouping=True, pruning=False)
-    result = controller.check(policy, custom=False, grouping=False, pruning=True)
-    result = controller.check(policy, custom=False, grouping=False, pruning=False)
+    result, grouping_time, pruning_time, parsing_time, checking_time = controller.check(policy, grouping=True, pruning=True)
+    # result = controller.check(policy, custom=False, grouping=True, pruning=False)
+    # result = controller.check(policy, custom=False, grouping=False, pruning=True)
+    # result = controller.check(policy, custom=True, grouping=False, pruning=False)
     pprint.pprint(result)
+    pprint.pprint((grouping_time, pruning_time, parsing_time, checking_time))
 

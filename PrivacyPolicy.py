@@ -5,6 +5,7 @@ import copy
 import datetime
 import subprocess
 import pprint
+import time
 
 import Boolean as MyBoolean
 import InvariantPolicy as MyInvariantPolicy
@@ -100,9 +101,8 @@ class PrivacyPolicy:
 
         for state_A, state_B in invalid_states:
             boolean = ' & '.join('a.{0} = {1} & b.{0} = {2}'.format(device_variable, state_A[device_variable], state_B[device_variable]) for device_variable in sorted(state_A) if device_variable != 'attack')
-            string += '  INIT ! ( {0} )\n'.format(boolean)
-            boolean = ' & '.join('a.{0} = {1} & b.{0} = {2}'.format(device_variable, state_B[device_variable], state_A[device_variable]) for device_variable in sorted(state_B) if device_variable != 'attack')
-            string += '  INIT ! ( {0} )\n'.format(boolean)
+            boolean2 = ' & '.join('a.{0} = {1} & b.{0} = {2}'.format(device_variable, state_B[device_variable], state_A[device_variable]) for device_variable in sorted(state_B) if device_variable != 'attack')
+            string += '  INIT ! ( {0} ) & ! ( {1} )\n'.format(boolean, boolean2)
 
         string += '  INVAR a.attack = b.attack;\n'
 
@@ -224,37 +224,40 @@ class PrivacyPolicy:
         boolean = ' & '.join('{0} = {1}'.format(device_variable, state[device_variable]) for device_variable in sorted(state) if device_variable != 'attack')
         boolean = '! ( {0} )'.format(boolean)
         policy = MyInvariantPolicy.InvariantPolicy(boolean)
-        result = controller.check(policy, custom=False, pruning=None, grouping=None)
-        if result['result'] == 'FAILED':
-            return result
-        else:
-            return False
+        return controller.check(policy, custom=False, pruning=None, grouping=None)
 
     def check(self, controller):
         invalid_states = list()
+        total_checking_time = 0
+
         while True:
             model = self.dumpNumvModel(controller, invalid_states)
             filename = '/tmp/model {}.smv'.format(datetime.datetime.now())
             with open(filename, 'w') as f:
                 f.write(model)
 
+            checking_start = time.perf_counter()
             p = subprocess.run(['NuSMV', '-keep_single_value_vars', filename], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            total_checking_time += time.perf_counter() - checking_start
+
             output = p.stdout.decode('UTF-8')
             result = self.parseOutput(output, controller)
             if result['result'] == 'SUCCESS':
-                return result
+                return result, total_checking_time
 
-            path = self.checkReachable(controller, result['states_A'][0])
-            if path:
+            path, grouping_time, pruning_time, parsing_time, checking_time = self.checkReachable(controller, result['states_A'][0])
+            total_checking_time += checking_time
+            if path['result'] == 'FAILED':
                 result['states'] = path['states']
                 result['rules'] = path['rules']
-                return result
+                return result, total_checking_time
 
-            path = self.checkReachable(controller, result['states_B'][0])
-            if path:
+            path, grouping_time, pruning_time, parsing_time, checking_time = self.checkReachable(controller, result['states_B'][0])
+            total_checking_time += checking_time
+            if path['result'] == 'FAILED':
                 result['states'] = path['states']
                 result['rules'] = path['rules']
-                return result
+                return result, total_checking_time
 
             invalid_states.append((result['states_A'][0], result['states_B'][0]))
 

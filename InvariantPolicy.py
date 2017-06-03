@@ -4,6 +4,7 @@ import copy
 import datetime
 import subprocess
 import pprint
+import time
 
 import Boolean as MyBoolean
 
@@ -105,10 +106,14 @@ class InvariantPolicy:
         with open(filename, 'w') as f:
             f.write(model)
 
+        checking_start = time.perf_counter()
         p = subprocess.run(['NuSMV', '-keep_single_value_vars', filename], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        checking_time = time.perf_counter() - checking_start
+
         output = p.stdout.decode('UTF-8')
         result = self.parseOutput(output, controller)
-        return result
+
+        return result, checking_time
 
 
 
