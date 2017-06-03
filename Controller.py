@@ -266,7 +266,7 @@ class Controller:
             return False
 
     def dumpNumvModel(self, name='main', init=True):
-        string = ''
+        string_list = []
 
         device_names = sorted(device_name for device_name, device in self.devices.items() if not device.pruned)
         device_names_string = ', '.join(['attack'] + device_names)
@@ -280,20 +280,20 @@ class Controller:
                                     if (device_name, variable_name) in self.device_variables)
 
             module_name = device_name.upper()
-            string += 'MODULE {0}({1})\n'.format(module_name, device_names_string)
+            string_list.append('MODULE {0}({1})'.format(module_name, device_names_string))
 
             # define variables
-            string += '  VAR\n'
+            string_list.append('  VAR')
             for variable_name in variable_names:
                 variable = device.getVariable(variable_name)
                 if variable.pruned:
                     continue
 
                 variable_range = variable.getPossibleGroupsInNuSMV()
-                string += '    {0}: {1};\n'.format(variable_name, variable_range)
+                string_list.append('    {0}: {1};'.format(variable_name, variable_range))
 
             # initial conditions
-            string += '  ASSIGN\n'
+            string_list.append('  ASSIGN')
             if init:
                 for variable_name in variable_names:
                     variable = device.getVariable(variable_name)
@@ -301,9 +301,9 @@ class Controller:
                         continue
 
                     value = variable.getEquivalentActionCondition(variable.value)
-                    string += '    init({0}):= {1};\n'.format(variable_name, value)
+                    string_list.append('    init({0}):= {1};'.format(variable_name, value))
 
-                string += '\n'
+                string_list.append('')
 
             # rules
             for variable_name in variable_names:
@@ -318,30 +318,30 @@ class Controller:
                     continue
 
                 if len(rules) == 1 and rules[0][0] == 'TRUE':
-                    string += '    next({0}):= {1};\n'.format(variable_name, rules[0][1])
+                    string_list.append('    next({0}):= {1};'.format(variable_name, rules[0][1]))
                 else:
-                    string += '    next({0}):=\n'.format(variable_name)
-                    string += '      case\n'
+                    string_list.append('    next({0}):='.format(variable_name))
+                    string_list.append('      case')
                     for boolean, value, rule_name in rules:
-                        string += '        {0}: {1};\n'.format(boolean, value)
+                        string_list.append('        {0}: {1};'.format(boolean, value))
                     if rules[-1][0] != 'TRUE':
-                        string += '        {0}: {1};\n'.format('TRUE', variable_name)
-                    string += '      esac;\n'
+                        string_list.append('        {0}: {1};'.format('TRUE', variable_name))
+                    string_list.append('      esac;')
 
-            string += '\n'
+            string_list.append('')
 
-        string += 'MODULE {}\n'.format(name)
-        string += '  VAR\n'
+        string_list.append('MODULE {}'.format(name))
+        string_list.append('  VAR')
         for device_name in device_names:
             module_name = device_name.upper()
-            string += '    {0}: {1}({2});\n'.format(device_name, module_name, device_names_string)
+            string_list.append('    {0}: {1}({2});'.format(device_name, module_name, device_names_string))
 
-        string += '\n'
-        string += '    attack: boolean;\n'
-        string += '\n'
-        string += '  ASSIGN init(attack) := FALSE;\n'
+        string_list.append('')
+        string_list.append('    attack: boolean;')
+        string_list.append('')
+        string_list.append('  ASSIGN init(attack) := FALSE;')
 
-        return string
+        return '\n'.join(string_list)
 
     def grouping(self, policy):
         self.ungrouping(policy)
