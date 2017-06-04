@@ -82,7 +82,7 @@ class PrivacyPolicy:
 
                 yield self.getRandomTransitionConstraint(previous, device_variable)
 
-    def dumpNumvModel(self, controller, invalid_states):
+    def dumpNumvModel(self, controller):
         string_list = [controller.dumpNumvModel(name='home', init=False)]
         string_list.append('')
         string_list.append('MODULE main')
@@ -99,11 +99,6 @@ class PrivacyPolicy:
                            and not device.getVariable(variable_name).pruned]
         if len(middle_and_lows) != 0:
             string_list.append('  INIT {};'.format(' & '.join(middle_and_lows)))
-
-        for state_A, state_B in invalid_states:
-            boolean = ' & '.join('a.{0} = {1} & b.{0} = {2}'.format(device_variable, state_A[device_variable], state_B[device_variable]) for device_variable in sorted(state_A) if device_variable != 'attack')
-            boolean2 = ' & '.join('a.{0} = {1} & b.{0} = {2}'.format(device_variable, state_B[device_variable], state_A[device_variable]) for device_variable in sorted(state_B) if device_variable != 'attack')
-            string_list.append('  INIT ! ( {0} ) & ! ( {1} )'.format(boolean, boolean2))
 
         string_list.append('  INVAR a.attack = b.attack;')
 
@@ -228,18 +223,14 @@ class PrivacyPolicy:
         return controller.check(policy, custom=False, pruning=None, grouping=None)
 
     def check(self, controller):
-        invalid_states = list()
         total_checking_time = 0
         transitions = controller.getTransitions()
+        model = self.dumpNumvModel(controller) + '\n'
 
         while True:
-            print(self.test)
-            parse_start = time.perf_counter()
-            model = self.dumpNumvModel(controller, invalid_states)
             filename = '/tmp/model {}.smv'.format(datetime.datetime.now())
             with open(filename, 'w') as f:
                 f.write(model)
-            self.test += time.perf_counter() - parse_start
 
             checking_start = time.perf_counter()
             p = subprocess.run(['NuSMV', '-keep_single_value_vars', filename], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -250,7 +241,11 @@ class PrivacyPolicy:
             if result['result'] == 'SUCCESS':
                 return result, total_checking_time
 
-            path, grouping_time, pruning_time, parsing_time, checking_time = self.checkReachable(controller, result['states_A'][0])
+            # check this two states can be reachable
+            state_A = result['states_A'][0]
+            state_B = result['states_B'][0]
+
+            path, grouping_time, pruning_time, parsing_time, checking_time = self.checkReachable(controller, state_A)
             total_checking_time += checking_time
             if path['result'] == 'FAILED':
                 result['states'] = path['states']
@@ -259,7 +254,7 @@ class PrivacyPolicy:
                 result['rules_B'] = self.findWhichRules(result['states_B'], transitions, controller)
                 return result, total_checking_time
 
-            path, grouping_time, pruning_time, parsing_time, checking_time = self.checkReachable(controller, result['states_B'][0])
+            path, grouping_time, pruning_time, parsing_time, checking_time = self.checkReachable(controller, state_B)
             total_checking_time += checking_time
             if path['result'] == 'FAILED':
                 result['states'] = path['states']
@@ -268,5 +263,8 @@ class PrivacyPolicy:
                 result['rules_B'] = self.findWhichRules(result['states_B'], transitions, controller)
                 return result, total_checking_time
 
-            invalid_states.append((result['states_A'][0], result['states_B'][0]))
+            # add constraints to find new states
+            boolean = ' & '.join('a.{0} = {1} & b.{0} = {2}'.format(device_variable, state_A[device_variable], state_B[device_variable]) for device_variable in sorted(state_A) if device_variable != 'attack')
+            boolean2 = ' & '.join('a.{0} = {1} & b.{0} = {2}'.format(device_variable, state_B[device_variable], state_A[device_variable]) for device_variable in sorted(state_B) if device_variable != 'attack')
+            model += '  INIT ! ( {0} ) & ! ( {1} )\n'.format(boolean, boolean2)
 

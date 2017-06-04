@@ -104,7 +104,7 @@ class BooleanVariable(Variable):
         if len(values) == 0:
             self.mapping = dict((value, 'ALL') for value in self.getPossibleValues())
         else:
-            self.mapping = dict((value, value) if value in values else (value, 'OTHERS') for value in self.getPossibleValues())
+            self.mapping = dict((value, value) for value in self.getPossibleValues())
 
     def getEquivalentTriggerCondition(self, operator, value):
         return (operator, value)

@@ -45,5 +45,9 @@ class Action:
             for variable_name, value in assignment.getVariableAndValue():
                 yield (boolean_string, variable_name, value)
 
+    def getDependencies(self):
+        for boolean, assignment in self.situations:
+            yield from assignment.getDependencies()
+
 
 

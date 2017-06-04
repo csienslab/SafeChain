@@ -43,3 +43,4 @@ class Rule:
         action_variables = set(variable for condition in self.getActionConditions() for variable in condition.getVariables())
 
         yield from itertools.product(trigger_variables, action_variables)
+        yield from self.action.getDependencies()

@@ -30,3 +30,15 @@ class Assignment:
             variable = tupple[0]
             value = ' '.join(tupple[2:])
             yield (variable, value)
+
+    def getDependencies(self):
+        for condition in self.conditions:
+            device_variables = list(condition.getVariables())
+            if len(device_variables) <= 1:
+                continue
+
+            target_device_variable = device_variables.pop(0)
+            for device_variable in device_variables:
+                yield (device_variable, target_device_variable)
+
+
