@@ -19,6 +19,7 @@ import subprocess
 import datetime
 import pprint
 import time
+import os
 
 import Device as MyDevice
 import Trigger as MyTrigger
@@ -194,6 +195,8 @@ class Controller:
                 continue
 
             variable_range = variable.getPossibleGroupsInNuSMV()
+            if variable_range == 'boolean':
+                variable_range = '{TRUE, FALSE}'
             transitions[device_variable].insert(0, ('next(attack)', variable_range, 'ATTACK'))
 
         return transitions
@@ -201,26 +204,42 @@ class Controller:
     def checkRuleSatisfied(self, state, rule_condition):
         string_list = list()
 
-        device_names = sorted(device_name for device_name, device in self.devices.items() if not device.pruned)
+        device_names = list()
+        for device_name, device in self.devices.items():
+            if device.pruned:
+                continue
+
+            variable_names = [variable_name
+                              for variable_name in device.getVariableNames()
+                              if (device_name, variable_name) in self.device_variables
+                              and not device.getVariable(variable_name).pruned]
+
+            if len(variable_names) == 0:
+                continue
+
+            device_names.append(device_name)
+        device_names = sorted(device_names)
         device_names_string = ', '.join(['attack'] + device_names)
 
         for device_name in device_names:
             device = self.devices[device_name]
 
-            variable_names = sorted(variable_name
-                                    for variable_name in device.getVariableNames()
-                                    if (device_name, variable_name) in self.device_variables)
+            variable_names = [variable_name
+                              for variable_name in device.getVariableNames()
+                              if (device_name, variable_name) in self.device_variables
+                              and not device.getVariable(variable_name).pruned]
+
+            if len(variable_names) == 0:
+                continue
 
             module_name = device_name.upper()
             string_list.append('MODULE {0}({1})'.format(module_name, device_names_string))
 
             # define variables
+            variable_names = sorted(variable_names)
             string_list.append('  FROZENVAR')
             for variable_name in variable_names:
                 variable = device.getVariable(variable_name)
-                if variable.pruned:
-                    continue
-
                 variable_range = variable.getPossibleGroupsInNuSMV()
                 string_list.append('    {0}: {1};'.format(variable_name, variable_range))
 
@@ -228,9 +247,6 @@ class Controller:
             string_list.append('  ASSIGN')
             for variable_name in variable_names:
                 variable = device.getVariable(variable_name)
-                if variable.pruned:
-                    continue
-
                 value = state['{0}.{1}'.format(device_name, variable_name)]
                 string_list.append('    init({0}):= {1};'.format(variable_name, value))
             string_list.append('')
@@ -250,7 +266,7 @@ class Controller:
 
         model = '\n'.join(string_list)
 
-        filename = '/tmp/state {}.smv'.format(datetime.datetime.now())
+        filename = '/tmp/state {} {}.smv'.format(os.getpid(), datetime.datetime.now())
         with open(filename, 'w') as f:
             f.write(model)
 
@@ -269,27 +285,44 @@ class Controller:
     def dumpNumvModel(self, name='main', init=True):
         string_list = []
 
-        device_names = sorted(device_name for device_name, device in self.devices.items() if not device.pruned)
+        device_names = list()
+        for device_name, device in self.devices.items():
+            if device.pruned:
+                continue
+
+            variable_names = [variable_name
+                              for variable_name in device.getVariableNames()
+                              if (device_name, variable_name) in self.device_variables
+                              and not device.getVariable(variable_name).pruned]
+
+            if len(variable_names) == 0:
+                continue
+
+            device_names.append(device_name)
+        device_names = sorted(device_names)
+
         device_names_string = ', '.join(['attack'] + device_names)
         transitions = self.getTransitions()
 
         for device_name in device_names:
             device = self.devices[device_name]
 
-            variable_names = sorted(variable_name
-                                    for variable_name in device.getVariableNames()
-                                    if (device_name, variable_name) in self.device_variables)
+            variable_names = [variable_name
+                              for variable_name in device.getVariableNames()
+                              if (device_name, variable_name) in self.device_variables
+                              and not device.getVariable(variable_name).pruned]
+
+            if len(variable_names) == 0:
+                continue
 
             module_name = device_name.upper()
             string_list.append('MODULE {0}({1})'.format(module_name, device_names_string))
 
             # define variables
+            variable_names = sorted(variable_names)
             string_list.append('  VAR')
             for variable_name in variable_names:
                 variable = device.getVariable(variable_name)
-                if variable.pruned:
-                    continue
-
                 variable_range = variable.getPossibleGroupsInNuSMV()
                 string_list.append('    {0}: {1};'.format(variable_name, variable_range))
 
@@ -298,9 +331,6 @@ class Controller:
             if init:
                 for variable_name in variable_names:
                     variable = device.getVariable(variable_name)
-                    if variable.pruned:
-                        continue
-
                     value = variable.getEquivalentActionCondition(variable.value)
                     string_list.append('    init({0}):= {1};'.format(variable_name, value))
 
@@ -309,9 +339,6 @@ class Controller:
             # rules
             for variable_name in variable_names:
                 variable = device.getVariable(variable_name)
-                if variable.pruned:
-                    continue
-
                 device_variable = '{0}.{1}'.format(device_name, variable_name)
                 rules = transitions[device_variable]
 

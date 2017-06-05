@@ -6,6 +6,7 @@ import datetime
 import subprocess
 import pprint
 import time
+import os
 
 import Boolean as MyBoolean
 import InvariantPolicy as MyInvariantPolicy
@@ -228,7 +229,7 @@ class PrivacyPolicy:
         model = self.dumpNumvModel(controller) + '\n'
 
         while True:
-            filename = '/tmp/model {}.smv'.format(datetime.datetime.now())
+            filename = '/tmp/model {} {}.smv'.format(os.getpid(), datetime.datetime.now())
             with open(filename, 'w') as f:
                 f.write(model)
 

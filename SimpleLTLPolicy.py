@@ -5,6 +5,7 @@ import datetime
 import subprocess
 import pprint
 import time
+import os
 
 import Boolean as MyBoolean
 
@@ -59,10 +60,11 @@ class LTLPolicy:
         output = output[index:]
 
         lines = output.splitlines()
+        lines = [line.strip() for line in lines]
         if lines[0].endswith('true'):
             return {'result': 'SUCCESS'}
 
-        transitions = controller.getTransitions()
+        # transitions = controller.getTransitions()
         states = list()
         rules = list()
         current_state = dict()
@@ -74,7 +76,7 @@ class LTLPolicy:
 
         while index + 1 < len(lines):
             index += 1
-            line = lines[index].strip()
+            line = lines[index]
 
             if line.startswith('-> State: 1.2 <-'):
                 break
@@ -92,7 +94,7 @@ class LTLPolicy:
 
             while index + 1 < len(lines):
                 index += 1
-                line = lines[index].strip()
+                line = lines[index]
 
                 if line.startswith('-> State: '):
                     break
@@ -111,7 +113,7 @@ class LTLPolicy:
 
     def check(self, controller):
         model = self.dumpNumvModel(controller)
-        filename = '/tmp/model {}.smv'.format(datetime.datetime.now())
+        filename = '/tmp/model {} {}.smv'.format(os.getpid(), datetime.datetime.now())
         with open(filename, 'w') as f:
             f.write(model)
 
