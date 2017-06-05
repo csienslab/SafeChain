@@ -342,7 +342,7 @@ class RangeVariable(Variable):
             minValue = self.definition['minValue']
             maxValue = self.definition['maxValue']
 
-        if operator in ('=', '!='):
+        if operator == '=':
             if 'window' in self.definition:
                 if int(value) >= minValue and int(value) <= maxValue:
                     return (operator, value)
@@ -353,16 +353,23 @@ class RangeVariable(Variable):
 
         if operator == '>':
             minValue = max(int(value) + 1, minValue)
+            possible_values = range(minValue, maxValue+1)
         elif operator == '>=':
             minValue = max(int(value), minValue)
+            possible_values = range(minValue, maxValue+1)
         elif operator == '<':
             maxValue = min(int(value) - 1, maxValue)
+            possible_values = range(minValue, maxValue+1)
         elif operator == '<=':
             maxValue = min(int(value), maxValue)
+            possible_values = range(minValue, maxValue+1)
+        elif operator == '!=':
+            int_value = int(value)
+            possible_values = set(value for value in range(minValue, maxValue+1) if value != int_value)
         else:
             return (operator, value)
 
-        values = set(self.mapping[value] for value in range(minValue, maxValue+1))
+        values = set(self.mapping[value] for value in possible_values)
         if len(values) == 1:
             value = values.pop()
             return ('=', value)

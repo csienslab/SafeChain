@@ -49,6 +49,10 @@ class Device:
         if 'customs' not in self.definition:
             return
 
+        device_names = set(device_name for device_name, variable_name in controller.device_variables)
+        if self.name not in device_names:
+            return
+
         for custom_rule in self.definition['customs']:
             rule_name = custom_rule['name']
 

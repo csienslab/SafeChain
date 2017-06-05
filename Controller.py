@@ -8,6 +8,7 @@
 # use str.join instead of +
 # [80%] assign variable with variable using same constraints
 # using subrule and rule for multicondition
+# incorporate array
 
 import pickle
 import collections
