@@ -25,6 +25,7 @@ import Device as MyDevice
 import Trigger as MyTrigger
 import Action as MyAction
 import Rule as MyRule
+import SimpleLTLPolicy as MySimpleLTLPolicy
 import InvariantPolicy as MyInvariantPolicy
 import PrivacyPolicy as MyPrivacyPolicy
 
@@ -266,7 +267,7 @@ class Controller:
 
         model = '\n'.join(string_list)
 
-        filename = '/tmp/state {} {}.smv'.format(os.getpid(), datetime.datetime.now())
+        filename = '/tmp/state {} {} {}.smv'.format(os.getppid(), os.getpid(), datetime.datetime.now())
         with open(filename, 'w') as f:
             f.write(model)
 
@@ -533,73 +534,87 @@ if __name__ == '__main__':
 
 
     # add rules
-    # with open('dataset/coreresultsMay16.tsv', 'r') as f:
-    #     all_channels = controller.database.keys()
-    #     count = 1
-    #     for line in f:
-    #         line = line.strip()
-    #         columns = line.split('\t')
-    #         trigger_channel_name = columns[5]
-    #         trigger_name = columns[6]
-    #         action_channel_name = columns[8]
-    #         action_name = columns[9]
-    #         if trigger_channel_name in all_channels and action_channel_name in all_channels:
-    #             rule_name = 'RULE{}'.format(count)
-    #             trigger_inputs = controller.getFeasibleInputsForTrigger(trigger_channel_name, trigger_name)
-    #             action_inputs = controller.getFeasibleInputsForAction(action_channel_name, action_name)
-    #             controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
-    #             count += 1
+    with open('dataset/coreresultsMay16.tsv', 'r') as f:
+        all_channels = controller.database.keys()
+        count = 1
+        for line in f:
+            line = line.strip()
+            columns = line.split('\t')
+            trigger_channel_name = columns[5]
+            trigger_name = columns[6]
+            action_channel_name = columns[8]
+            action_name = columns[9]
+            if trigger_channel_name in all_channels and action_channel_name in all_channels:
+                rule_name = 'RULE{}'.format(count)
+                trigger_inputs = controller.getFeasibleInputsForTrigger(trigger_channel_name, trigger_name)
+                action_inputs = controller.getFeasibleInputsForAction(action_channel_name, action_name)
+                controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
+                count += 1
+    print(count)
 
-    rule_name = 'RULE1'
-    trigger_channel_name = 'Android Device'
-    trigger_name = 'Connects or disconnects from a specific WiFi network'
-    action_channel_name = 'WeMo Insight Switch'
-    action_name = 'Toggle on/off'
+    # rule_name = 'RULE1'
+    # trigger_channel_name = 'Android Device'
+    # trigger_name = 'Connects or disconnects from a specific WiFi network'
+    # action_channel_name = 'WeMo Insight Switch'
+    # action_name = 'Toggle on/off'
 
-    trigger_inputs = controller.getFeasibleInputsForTrigger(trigger_channel_name, trigger_name)
-    action_inputs = controller.getFeasibleInputsForAction(action_channel_name, action_name)
-    controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
+    # trigger_inputs = controller.getFeasibleInputsForTrigger(trigger_channel_name, trigger_name)
+    # action_inputs = controller.getFeasibleInputsForAction(action_channel_name, action_name)
+    # controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
 
-    rule_name = 'RULE2'
-    trigger_channel_name = 'WeMo Insight Switch'
-    trigger_name = 'Switched on'
-    action_channel_name = 'Adafruit'
-    action_name = 'Send data to Adafruit IO'
+    # rule_name = 'RULE2'
+    # trigger_channel_name = 'WeMo Insight Switch'
+    # trigger_name = 'Switched on'
+    # action_channel_name = 'Adafruit'
+    # action_name = 'Send data to Adafruit IO'
 
-    trigger_inputs = controller.getFeasibleInputsForTrigger(trigger_channel_name, trigger_name)
-    action_inputs = controller.getFeasibleInputsForAction(action_channel_name, action_name)
-    controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
+    # trigger_inputs = controller.getFeasibleInputsForTrigger(trigger_channel_name, trigger_name)
+    # action_inputs = controller.getFeasibleInputsForAction(action_channel_name, action_name)
+    # controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
 
-    rule_name = 'RULE3'
-    trigger_channel_name = 'WeMo Insight Switch'
-    trigger_name = 'Monthly estimated cost rises above'
-    action_channel_name = 'Adafruit'
-    action_name = 'Send data to Adafruit IO'
+    # rule_name = 'RULE3'
+    # trigger_channel_name = 'WeMo Insight Switch'
+    # trigger_name = 'Monthly estimated cost rises above'
+    # action_channel_name = 'Adafruit'
+    # action_name = 'Send data to Adafruit IO'
 
-    trigger_inputs = controller.getFeasibleInputsForTrigger(trigger_channel_name, trigger_name)
-    action_inputs = controller.getFeasibleInputsForAction(action_channel_name, action_name)
-    controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
+    # trigger_inputs = controller.getFeasibleInputsForTrigger(trigger_channel_name, trigger_name)
+    # action_inputs = controller.getFeasibleInputsForAction(action_channel_name, action_name)
+    # controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
 
-    rule_name = 'RULE4'
-    trigger_channel_name = 'WeMo Insight Switch'
-    trigger_name = 'Daily cost rises above'
-    action_channel_name = 'Adafruit'
-    action_name = 'Send data to Adafruit IO'
+    # rule_name = 'RULE4'
+    # trigger_channel_name = 'WeMo Insight Switch'
+    # trigger_name = 'Daily cost rises above'
+    # action_channel_name = 'Adafruit'
+    # action_name = 'Send data to Adafruit IO'
 
-    trigger_inputs = controller.getFeasibleInputsForTrigger(trigger_channel_name, trigger_name)
-    action_inputs = controller.getFeasibleInputsForAction(action_channel_name, action_name)
-    controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
+    # trigger_inputs = controller.getFeasibleInputsForTrigger(trigger_channel_name, trigger_name)
+    # action_inputs = controller.getFeasibleInputsForAction(action_channel_name, action_name)
+    # controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
 
     controller.addVulnerableDevice('adafruit')
-    # policy = MyInvariantPolicy.InvariantPolicy('adafruit.data != 1 | adafruit.data = 1')
+    policy = MyInvariantPolicy.InvariantPolicy('adafruit.data != 1 | adafruit.data = 1')
     # policy = MyInvariantPolicy.InvariantPolicy('adafruit.data >= 1 | adafruit.data < 10')
     # policy = MyPrivacyPolicy.PrivacyPolicy(set([('adafruit', 'data')]))
-    policy = MyPrivacyPolicy.PrivacyPolicy(set([('androiddevice', 'wifi_connected_network')]))
+    # policy = MyPrivacyPolicy.PrivacyPolicy(set([('androiddevice', 'wifi_connected_network')]))
 
-    result, grouping_time, pruning_time, parsing_time, checking_time = controller.check(policy, grouping=True, pruning=True)
+    result, grouping_time, pruning_time, parsing_time, checking_time = controller.check(policy, grouping=False, pruning=False)
     # result = controller.check(policy, custom=False, grouping=True, pruning=False)
     # result = controller.check(policy, custom=False, grouping=False, pruning=True)
     # result = controller.check(policy, custom=True, grouping=False, pruning=False)
+
+    # random choose vulnerable
+    # device_name = random.choice(tuple(controller.devices))
+    # controller.addVulnerableDevice(device_name)
+
+    # # random build invariant policy
+    # device_name, variable_name = random.choice(tuple(controller.device_variables))
+    # device = controller.getDevice(device_name)
+    # variable = device.getVariable(variable_name)
+    # value = random.choice(tuple(variable.getPossibleValues()))
+    # policy = MySimpleLTLPolicy.LTLPolicy('{0}.{1} != {2} | {0}.{1} = {2}'.format(device_name, variable_name, value))
+
+    # result, grouping_time, pruning_time, parsing_time, checking_time = controller.check(policy, grouping=True, pruning=True)
     pprint.pprint(result)
     pprint.pprint((grouping_time, pruning_time, parsing_time, checking_time))
 

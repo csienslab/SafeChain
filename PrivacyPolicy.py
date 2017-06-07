@@ -229,13 +229,19 @@ class PrivacyPolicy:
         model = self.dumpNumvModel(controller) + '\n'
 
         while True:
-            filename = '/tmp/model {} {}.smv'.format(os.getpid(), datetime.datetime.now())
+            filename = '/tmp/model {} {} {}.smv'.format(os.getppid(), os.getpid(), datetime.datetime.now())
             with open(filename, 'w') as f:
                 f.write(model)
 
             checking_start = time.perf_counter()
-            p = subprocess.run(['NuSMV', '-keep_single_value_vars', filename], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            try:
+                p = subprocess.run(['NuSMV', '-keep_single_value_vars', filename], stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=3600)
+            except subprocess.TimeoutExpired:
+                return None, 3600
             total_checking_time += time.perf_counter() - checking_start
+
+            if total_checking_time >= 3600:
+                return None, 3600
 
             output = p.stdout.decode('UTF-8')
             result = self.parseOutput(output, controller)
