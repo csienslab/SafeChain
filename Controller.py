@@ -267,7 +267,7 @@ class Controller:
 
         model = '\n'.join(string_list)
 
-        filename = '/tmp/state {} {} {}.smv'.format(os.getppid(), os.getpid(), datetime.datetime.now())
+        filename = '/tmp/r04922156/state {0} {2} {1}.smv'.format(os.getppid(), os.getpid(), datetime.datetime.now())
         with open(filename, 'w') as f:
             f.write(model)
 

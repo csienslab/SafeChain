@@ -3,10 +3,15 @@
 import pickle
 import random
 import re
-import pprint
 import operator
 import os
+import collections
+import datetime
+import copy
+import statistics
+import argparse
 import concurrent.futures
+import matplotlib.pyplot as plt
 
 import Controller as MyController
 import Device as MyDevice
@@ -50,18 +55,28 @@ def buildRandomLTLSetting(database, available_rules, number_of_rules):
     value = random.choice(tuple(variable.getPossibleValues()))
     policy = MySimpleLTLPolicy.LTLPolicy('{0}.{1} != {2} | {0}.{1} = {2}'.format(device_name, variable_name, value))
 
-    return {'controller': controller, 'policy': policy}
+    return controller, policy
 
 def checkModel(setting):
-    controller = setting['controller']
-    policy = setting['policy']
-    grouping = setting['grouping']
-    pruning = setting['pruning']
-    return controller.check(policy, grouping=grouping, pruning=pruning)
+    database = setting['database']
+    available_rules = setting['available_rules']
+    number_of_rules = setting['number_of_rules']
+
+    controller, policy = buildRandomLTLSetting(database, available_rules, number_of_rules)
+    result, *original_time  = controller.check(policy, grouping=False, pruning=False)
+    result, *optimized_time = controller.check(policy, grouping=True, pruning=True, custom=False)
+
+    return number_of_rules, result, original_time, optimized_time
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-prefix', type=str, required=True, help='the prefix name of result files')
+    args = parser.parse_args()
+
     # show information
-    print('Current PID: {0}'.format(os.getpid()))
+    print('Current PID : {0}'.format(os.getpid()))
+    print('Current Time: {0}'.format(datetime.datetime.now()))
+    print('')
 
     # load database
     with open('database.dat', 'rb') as f:
@@ -80,33 +95,61 @@ if __name__ == '__main__':
             if trigger_channel_name in all_channels and action_channel_name in all_channels:
                 available_rules.append((trigger_channel_name, trigger_name, action_channel_name, action_name))
 
-    number_of_trials = 100
-    for number_of_rules in range(25, 1001, 25):
-        print('{0:>6} {1:>15} {2:>15} {3:>15} {4:>15}'.format(number_of_rules, 'grouping', 'pruning', 'parsing', 'checking'))
-        settings = [buildRandomLTLSetting(database, available_rules, number_of_rules) for i in range(number_of_trials)]
+    original_times = collections.defaultdict(list)
+    optimized_times = collections.defaultdict(list)
 
-        for grouping, pruning in [(False, False), (True, True)]:
-            grouping_times = list()
-            pruning_times = list()
-            parsing_times = list()
-            checking_times = list()
+    number_of_trials = 10
+    step_size = 50
+    max_number_of_rules = 50
 
-            for setting in settings:
-                setting['grouping'] = grouping
-                setting['pruning'] = pruning
+    for step in range(1, max_number_of_rules+1, step_size):
+        settings = [{'database': copy.deepcopy(database), 'available_rules': copy.deepcopy(available_rules), 'number_of_rules': number_of_rules}
+                    for number_of_rules in range(step, step+step_size) for i in range(number_of_trials)]
 
-            with concurrent.futures.ProcessPoolExecutor(max_workers=4) as executor:
-                for result, grouping_time, pruning_time, parsing_time, checking_time in executor.map(checkModel, settings):
-                    grouping_times.append(grouping_time)
-                    pruning_times.append(pruning_time)
-                    parsing_times.append(parsing_time)
-                    checking_times.append(checking_time)
+        with concurrent.futures.ProcessPoolExecutor(max_workers=4) as executor:
+            for number_of_rules, result, original_time, optimized_time in executor.map(checkModel, settings):
+                original_times[number_of_rules].append(original_time)
+                optimized_times[number_of_rules].append(optimized_time)
 
-            grouping_time = sum(grouping_times) / number_of_trials
-            pruning_time = sum(pruning_times) / number_of_trials
-            parsing_time = sum(parsing_times) / number_of_trials
-            checking_time = sum(checking_times) / number_of_trials
-            overtime = sum(checking_time > 3600 for checking_time in checking_times)
 
-            print('{0:^6} {1:15f} {2:15f} {3:15f} {4:15f} ({5})'.format('', grouping_time, pruning_time, parsing_time, checking_time, overtime))
+        for number_of_rules in range(step, step+step_size):
+            print('{0:>6} {1:>15} {2:>15} {3:>15} {4:>15}'.format(number_of_rules, 'grouping', 'pruning', 'parsing', 'checking'))
+            time = tuple(map(statistics.mean, zip(*original_times[number_of_rules])))
+            overtime = sum(v[3] >= 3600 for v in original_times[number_of_rules])
+            print('{0:^6} {1:15f} {2:15f} {3:15f} {4:15f} ({5})'.format('', *time, overtime))
+
+            time = tuple(map(statistics.mean, zip(*optimized_times[number_of_rules])))
+            overtime = sum(v[3] >= 3600 for v in optimized_times[number_of_rules])
+            print('{0:^6} {1:15f} {2:15f} {3:15f} {4:15f} ({5})'.format('', *time, overtime))
+
+    print('End Time: {0}'.format(datetime.datetime.now()))
+
+    filename = '{}.pickle'.format(args.prefix)
+    with open(filename, 'wb') as f:
+        obj = {'original_times': original_times, 'optimized_times': optimized_times}
+        pickle.dump(obj, f, pickle.HIGHEST_PROTOCOL)
+
+    plt.figure()
+    x = tuple(number_of_rules for number_of_rules in range(1, max_number_of_rules) for i in range(number_of_trials))
+    y = tuple(original_times[number_of_rules][i][3] for number_of_rules in range(1, max_number_of_rules) for i in range(number_of_trials))
+    plt.scatter(x, y, color='r', marker='+', alpha=0.5)
+
+    y = tuple(optimized_times[number_of_rules][i][3] for number_of_rules in range(1, max_number_of_rules) for i in range(number_of_trials))
+    plt.scatter(x, y, color='g', marker='o', s=(3,)*len(y), alpha=0.5)
+
+    plt.xlabel('Number of rules')
+    plt.ylabel('Time of checking (s)')
+    plt.savefig('{}_scatter.png'.format(args.prefix))
+
+    plt.figure()
+    x = tuple(number_of_rules for number_of_rules in range(1, max_number_of_rules))
+    y = tuple(statistics.mean(original_times[number_of_rules][i][3] for i in range(number_of_trials)) for number_of_rules in range(1, max_number_of_rules))
+    plt.plot(x, y, 'r--')
+
+    y = tuple(statistics.mean(optimized_times[number_of_rules][i][3] for i in range(number_of_trials)) for number_of_rules in range(1, max_number_of_rules))
+    plt.plot(x, y, 'g:')
+
+    plt.xlabel('Number of rules')
+    plt.ylabel('Average time of checking (s)')
+    plt.savefig('{}_average.png'.format(args.prefix))
 

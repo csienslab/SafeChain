@@ -113,7 +113,7 @@ class LTLPolicy:
 
     def check(self, controller):
         model = self.dumpNumvModel(controller)
-        filename = '/tmp/model {} {} {}.smv'.format(os.getppid(), os.getpid(), datetime.datetime.now())
+        filename = '/tmp/r04922156/model {0} {2} {1}.smv'.format(os.getppid(), os.getpid(), datetime.datetime.now())
         with open(filename, 'w') as f:
             f.write(model)
 
