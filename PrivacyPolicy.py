@@ -92,6 +92,22 @@ class PrivacyPolicy:
         string_list.append('    b: home;')
         string_list.append('')
 
+        string_list.append('  ASSIGN')
+        for device_name in sorted(controller.devices):
+            device = controller.devices[device_name]
+            for variable_name in sorted(device.variables):
+                if (device_name, variable_name) not in controller.device_variables:
+                    continue
+
+                variable = device.variables[variable_name]
+                if variable.pruned:
+                    continue
+
+                value = variable.getEquivalentActionCondition(variable.value)
+                string_list.append('    init(a.{0}.{1}):= {2};'.format(device_name, variable_name, value))
+        string_list.append(' -- {}'.format(self.variables))
+        string_list.append('')
+
         middle_and_lows = ['a.{0}.{1} = b.{0}.{1}'.format(device_name, variable_name)
                            for device_name, device in controller.devices.items()
                            for variable_name in device.getVariableNames()
@@ -245,33 +261,37 @@ class PrivacyPolicy:
 
             output = p.stdout.decode('UTF-8')
             result = self.parseOutput(output, controller)
-            if result['result'] == 'SUCCESS':
-                return result, total_checking_time
-
-            # check this two states can be reachable
-            state_A = result['states_A'][0]
-            state_B = result['states_B'][0]
-
-            path, grouping_time, pruning_time, parsing_time, checking_time = self.checkReachable(controller, state_A)
-            total_checking_time += checking_time
-            if path['result'] == 'FAILED':
-                result['states'] = path['states']
-                result['rules'] = path['rules']
+            if result['result'] != 'SUCCESS':
                 result['rules_A'] = self.findWhichRules(result['states_A'], transitions, controller)
                 result['rules_B'] = self.findWhichRules(result['states_B'], transitions, controller)
-                return result, total_checking_time
+            return result, total_checking_time
+            # if result['result'] == 'SUCCESS':
+            #     return result, total_checking_time
 
-            path, grouping_time, pruning_time, parsing_time, checking_time = self.checkReachable(controller, state_B)
-            total_checking_time += checking_time
-            if path['result'] == 'FAILED':
-                result['states'] = path['states']
-                result['rules'] = path['rules']
-                result['rules_A'] = self.findWhichRules(result['states_A'], transitions, controller)
-                result['rules_B'] = self.findWhichRules(result['states_B'], transitions, controller)
-                return result, total_checking_time
+            # # check this two states can be reachable
+            # state_A = result['states_A'][0]
+            # state_B = result['states_B'][0]
 
-            # add constraints to find new states
-            boolean = ' & '.join('a.{0} = {1} & b.{0} = {2}'.format(device_variable, state_A[device_variable], state_B[device_variable]) for device_variable in sorted(state_A) if device_variable != 'attack')
-            boolean2 = ' & '.join('a.{0} = {1} & b.{0} = {2}'.format(device_variable, state_B[device_variable], state_A[device_variable]) for device_variable in sorted(state_B) if device_variable != 'attack')
-            model += '  INIT ! ( {0} ) & ! ( {1} )\n'.format(boolean, boolean2)
+            # path, grouping_time, pruning_time, parsing_time, checking_time = self.checkReachable(controller, state_A)
+            # total_checking_time += checking_time
+            # if path['result'] == 'FAILED':
+            #     result['states'] = path['states']
+            #     result['rules'] = path['rules']
+            #     result['rules_A'] = self.findWhichRules(result['states_A'], transitions, controller)
+            #     result['rules_B'] = self.findWhichRules(result['states_B'], transitions, controller)
+            #     return result, total_checking_time
+
+            # path, grouping_time, pruning_time, parsing_time, checking_time = self.checkReachable(controller, state_B)
+            # total_checking_time += checking_time
+            # if path['result'] == 'FAILED':
+            #     result['states'] = path['states']
+            #     result['rules'] = path['rules']
+            #     result['rules_A'] = self.findWhichRules(result['states_A'], transitions, controller)
+            #     result['rules_B'] = self.findWhichRules(result['states_B'], transitions, controller)
+            #     return result, total_checking_time
+
+            # # add constraints to find new states
+            # boolean = ' & '.join('a.{0} = {1} & b.{0} = {2}'.format(device_variable, state_A[device_variable], state_B[device_variable]) for device_variable in sorted(state_A) if device_variable != 'attack')
+            # boolean2 = ' & '.join('a.{0} = {1} & b.{0} = {2}'.format(device_variable, state_B[device_variable], state_A[device_variable]) for device_variable in sorted(state_B) if device_variable != 'attack')
+            # model += '  INIT ! ( {0} ) & ! ( {1} )\n'.format(boolean, boolean2)
 

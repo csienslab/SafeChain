@@ -18,8 +18,9 @@ import Device as MyDevice
 
 import SimpleLTLPolicy as MySimpleLTLPolicy
 import InvariantPolicy as MyInvariantPolicy
+import PrivacyPolicy as MyPrivacyPolicy
 
-def buildRandomLTLSetting(database, available_rules, number_of_rules):
+def buildRandomSetting(database, available_rules, number_of_rules):
     # initial controller
     controller = MyController.Controller(database)
 
@@ -45,15 +46,19 @@ def buildRandomLTLSetting(database, available_rules, number_of_rules):
         controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
 
     # random choose vulnerables
-    device_name = random.choice(tuple(controller.devices))
-    controller.addVulnerableDevice(device_name)
+    vulnerable_device_name = random.choice(tuple(controller.devices))
+    controller.addVulnerableDevice(vulnerable_device_name)
 
     # random build invariant policy
-    device_name, variable_name = random.choice(tuple(controller.device_variables))
-    device = controller.getDevice(device_name)
-    variable = device.getVariable(variable_name)
-    value = random.choice(tuple(variable.getPossibleValues()))
-    policy = MySimpleLTLPolicy.LTLPolicy('{0}.{1} != {2} | {0}.{1} = {2}'.format(device_name, variable_name, value))
+    # device_name, variable_name = random.choice(tuple(controller.device_variables))
+    # device = controller.getDevice(device_name)
+    # variable = device.getVariable(variable_name)
+    # value = random.choice(tuple(variable.getPossibleValues()))
+    # policy = MySimpleLTLPolicy.LTLPolicy('{0}.{1} != {2} | {0}.{1} = {2}'.format(device_name, variable_name, value))
+
+    # random build privacy policy
+    device_name, variable_name = random.choice(tuple((device_name, variable_name) for device_name, variable_name in controller.device_variables if device_name != vulnerable_device_name))
+    policy = MyPrivacyPolicy.PrivacyPolicy(set([(device_name, variable_name)]))
 
     return controller, policy
 
@@ -62,7 +67,7 @@ def checkModel(setting):
     available_rules = setting['available_rules']
     number_of_rules = setting['number_of_rules']
 
-    controller, policy = buildRandomLTLSetting(database, available_rules, number_of_rules)
+    controller, policy = buildRandomSetting(database, available_rules, number_of_rules)
     result, *original_time  = controller.check(policy, grouping=False, pruning=False)
     result, *optimized_time = controller.check(policy, grouping=True, pruning=True, custom=False)
 
@@ -76,7 +81,6 @@ if __name__ == '__main__':
     # show information
     print('Current PID : {0}'.format(os.getpid()))
     print('Current Time: {0}'.format(datetime.datetime.now()))
-    print('')
 
     # load database
     with open('database.dat', 'rb') as f:
@@ -99,7 +103,7 @@ if __name__ == '__main__':
     optimized_times = collections.defaultdict(list)
 
     number_of_trials = 10
-    step_size = 50
+    step_size = 10
     max_number_of_rules = 50
 
     for step in range(1, max_number_of_rules+1, step_size):
@@ -110,7 +114,6 @@ if __name__ == '__main__':
             for number_of_rules, result, original_time, optimized_time in executor.map(checkModel, settings):
                 original_times[number_of_rules].append(original_time)
                 optimized_times[number_of_rules].append(optimized_time)
-
 
         for number_of_rules in range(step, step+step_size):
             print('{0:>6} {1:>15} {2:>15} {3:>15} {4:>15}'.format(number_of_rules, 'grouping', 'pruning', 'parsing', 'checking'))
