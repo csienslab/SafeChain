@@ -81,7 +81,10 @@ def checkModel(setting):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-prefix', type=str, required=True, help='the prefix name of result files')
+    parser.add_argument('--prefix', type=str, required=True, help='the prefix name of result files')
+    parser.add_argument('--number_of_trials', type=int, required=True, help='the number of trials')
+    parser.add_argument('--min_number_of_rules', type=int, required=True, help='the number of minimum rules')
+    parser.add_argument('--max_number_of_rules', type=int, required=True, help='the number of maximum rules')
     args = parser.parse_args()
 
     # show information
@@ -108,22 +111,19 @@ if __name__ == '__main__':
     original_times = collections.defaultdict(list)
     optimized_times = collections.defaultdict(list)
 
-    number_of_trials = 10
     step_size = 150
-    min_number_of_rules = 10
-    max_number_of_rules = 20
 
-    for step in range(min_number_of_rules, max_number_of_rules+1, step_size):
+    for step in range(args.min_number_of_rules, args.max_number_of_rules+1, step_size):
         settings = [{'database': database, 'available_rules': available_rules, 'number_of_rules': number_of_rules}
-                    for number_of_rules in range(step, min(step+step_size, max_number_of_rules+1))
-                    for i in range(number_of_trials)]
+                    for number_of_rules in range(step, min(step+step_size, args.max_number_of_rules+1))
+                    for i in range(args.number_of_trials)]
 
         with concurrent.futures.ProcessPoolExecutor(max_workers=6) as executor:
             for number_of_rules, result, original_time, optimized_time in executor.map(checkModel, reversed(settings)):
                 original_times[number_of_rules].append(original_time)
                 optimized_times[number_of_rules].append(optimized_time)
 
-        for number_of_rules in range(step, min(step+step_size, max_number_of_rules+1)):
+        for number_of_rules in range(step, min(step+step_size, args.max_number_of_rules+1)):
             print('{0:>6} {1:>15} {2:>15} {3:>15} {4:>15}'.format(number_of_rules, 'grouping', 'pruning', 'parsing', 'checking'))
             time = tuple(map(statistics.mean, zip(*original_times[number_of_rules])))
             overtime = sum(v[3] >= 3600 for v in original_times[number_of_rules])
@@ -141,11 +141,11 @@ if __name__ == '__main__':
         pickle.dump(obj, f, pickle.HIGHEST_PROTOCOL)
 
     plt.figure()
-    x = tuple(number_of_rules for number_of_rules in range(min_number_of_rules, max_number_of_rules) for i in range(number_of_trials))
-    y = tuple(original_times[number_of_rules][i][3] for number_of_rules in range(min_number_of_rules, max_number_of_rules) for i in range(number_of_trials))
+    x = tuple(number_of_rules for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules) for i in range(args.number_of_trials))
+    y = tuple(original_times[number_of_rules][i][3] for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules) for i in range(args.number_of_trials))
     plt.scatter(x, y, color='r', marker='+', alpha=0.5)
 
-    y = tuple(optimized_times[number_of_rules][i][3] for number_of_rules in range(min_number_of_rules, max_number_of_rules) for i in range(number_of_trials))
+    y = tuple(optimized_times[number_of_rules][i][3] for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules) for i in range(args.number_of_trials))
     plt.scatter(x, y, color='g', marker='o', s=(3,)*len(y), alpha=0.5)
 
     plt.xlabel('Number of rules')
@@ -153,11 +153,11 @@ if __name__ == '__main__':
     plt.savefig('{}_scatter.png'.format(args.prefix))
 
     plt.figure()
-    x = tuple(number_of_rules for number_of_rules in range(min_number_of_rules, max_number_of_rules))
-    y = tuple(statistics.mean(original_times[number_of_rules][i][3] for i in range(number_of_trials)) for number_of_rules in range(min_number_of_rules, max_number_of_rules))
+    x = tuple(number_of_rules for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules))
+    y = tuple(statistics.mean(original_times[number_of_rules][i][3] for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules))
     plt.plot(x, y, 'r--')
 
-    y = tuple(statistics.mean(optimized_times[number_of_rules][i][3] for i in range(number_of_trials)) for number_of_rules in range(min_number_of_rules, max_number_of_rules))
+    y = tuple(statistics.mean(optimized_times[number_of_rules][i][3] for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules))
     plt.plot(x, y, 'g:')
 
     plt.xlabel('Number of rules')
