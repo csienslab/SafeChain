@@ -49,7 +49,7 @@ def buildRandomSetting(database, available_rules, number_of_rules):
     vulnerable_device_name = random.choice(tuple(controller.devices))
     controller.addVulnerableDevice(vulnerable_device_name)
 
-    # random build invariant policy
+    # random build linear temporal logic policy
     # device_name, variable_name = random.choice(tuple(controller.device_variables))
     # device = controller.getDevice(device_name)
     # variable = device.getVariable(variable_name)
@@ -103,15 +103,16 @@ if __name__ == '__main__':
     optimized_times = collections.defaultdict(list)
 
     number_of_trials = 10
-    step_size = 10
-    max_number_of_rules = 50
+    step_size = 50
+    max_number_of_rules = 500
 
     for step in range(1, max_number_of_rules+1, step_size):
         settings = [{'database': copy.deepcopy(database), 'available_rules': copy.deepcopy(available_rules), 'number_of_rules': number_of_rules}
-                    for number_of_rules in range(step, step+step_size) for i in range(number_of_trials)]
+                    for number_of_rules in range(step, max(step+step_size, max_number_of_rules+1))
+                    for i in range(number_of_trials)]
 
         with concurrent.futures.ProcessPoolExecutor(max_workers=4) as executor:
-            for number_of_rules, result, original_time, optimized_time in executor.map(checkModel, settings):
+            for number_of_rules, result, original_time, optimized_time in executor.map(checkModel, reversed(settings)):
                 original_times[number_of_rules].append(original_time)
                 optimized_times[number_of_rules].append(optimized_time)
 
