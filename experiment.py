@@ -11,6 +11,8 @@ import copy
 import statistics
 import argparse
 import concurrent.futures
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 import Controller as MyController
