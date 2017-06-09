@@ -48,7 +48,7 @@ def buildRandomSetting(database, available_rules, number_of_rules):
         controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
 
     # random choose vulnerables
-    vulnerable_device_name = random.choice(tuple(controller.devices))
+    vulnerable_device_name = random.choice(tuple(device_name for device_name, variable_name in controller.device_variables))
     controller.addVulnerableDevice(vulnerable_device_name)
 
     # random build linear temporal logic policy
@@ -59,14 +59,17 @@ def buildRandomSetting(database, available_rules, number_of_rules):
     # policy = MySimpleLTLPolicy.LTLPolicy('{0}.{1} != {2} | {0}.{1} = {2}'.format(device_name, variable_name, value))
 
     # random build privacy policy
-    device_name, variable_name = random.choice(tuple((device_name, variable_name) for device_name, variable_name in controller.device_variables if device_name != vulnerable_device_name))
+    device_variables = tuple((device_name, variable_name) for device_name, variable_name in controller.device_variables if device_name != vulnerable_device_name)
+    if len(device_variables) == 0:
+        device_variables = tuple((device_name, variable_name) for device_name, variable_name in controller.device_variables)
+    device_name, variable_name = random.choice(device_variables)
     policy = MyPrivacyPolicy.PrivacyPolicy(set([(device_name, variable_name)]))
 
     return controller, policy
 
 def checkModel(setting):
-    database = setting['database']
-    available_rules = setting['available_rules']
+    database = copy.deepcopy(setting['database'])
+    available_rules = copy.deepcopy(setting['available_rules'])
     number_of_rules = setting['number_of_rules']
 
     controller, policy = buildRandomSetting(database, available_rules, number_of_rules)
@@ -105,18 +108,22 @@ if __name__ == '__main__':
     optimized_times = collections.defaultdict(list)
 
     number_of_trials = 10
-    step_size = 50
-    max_number_of_rules = 500
+    step_size = 150
+    max_number_of_rules = 150
 
     for step in range(1, max_number_of_rules+1, step_size):
-        settings = [{'database': copy.deepcopy(database), 'available_rules': copy.deepcopy(available_rules), 'number_of_rules': number_of_rules}
+        settings = [{'database': database, 'available_rules': available_rules, 'number_of_rules': number_of_rules}
                     for number_of_rules in range(step, max(step+step_size, max_number_of_rules+1))
                     for i in range(number_of_trials)]
 
-        with concurrent.futures.ProcessPoolExecutor(max_workers=4) as executor:
+        with concurrent.futures.ProcessPoolExecutor(max_workers=6) as executor:
+            count = 0
+            print(count, end='\r')
             for number_of_rules, result, original_time, optimized_time in executor.map(checkModel, reversed(settings)):
+                count += 1
                 original_times[number_of_rules].append(original_time)
                 optimized_times[number_of_rules].append(optimized_time)
+                print(count, end='\r')
 
         for number_of_rules in range(step, step+step_size):
             print('{0:>6} {1:>15} {2:>15} {3:>15} {4:>15}'.format(number_of_rules, 'grouping', 'pruning', 'parsing', 'checking'))

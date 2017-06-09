@@ -105,7 +105,7 @@ class PrivacyPolicy:
 
                 value = variable.getEquivalentActionCondition(variable.value)
                 string_list.append('    init(a.{0}.{1}):= {2};'.format(device_name, variable_name, value))
-        string_list.append(' -- {}'.format(self.variables))
+        string_list.append('    -- {}'.format(self.variables))
         string_list.append('')
 
         middle_and_lows = ['a.{0}.{1} = b.{0}.{1}'.format(device_name, variable_name)
