@@ -131,15 +131,17 @@ if __name__ == '__main__':
             original_times[number_of_rules].append(original_time)
             optimized_times[number_of_rules].append(optimized_time)
 
-    for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules+1, args.step_size):
-        print('{0:>6} {1:>15} {2:>15} {3:>15} {4:>15}'.format(number_of_rules, 'grouping', 'pruning', 'parsing', 'checking'))
-        time = tuple(map(statistics.mean, zip(*original_times[number_of_rules])))
-        overtime = sum(v[3] >= args.timeout for v in original_times[number_of_rules])
-        print('{0:^6} {1:15f} {2:15f} {3:15f} {4:15f} ({5})'.format('', *time, overtime))
+            if len(original_times[number_of_rules]) != args.number_of_trials:
+                continue
 
-        time = tuple(map(statistics.mean, zip(*optimized_times[number_of_rules])))
-        overtime = sum(v[3] >= args.timeout for v in optimized_times[number_of_rules])
-        print('{0:^6} {1:15f} {2:15f} {3:15f} {4:15f} ({5})'.format('', *time, overtime))
+            print('{0:>6} {1:>15} {2:>15} {3:>15} {4:>15}'.format(number_of_rules, 'grouping', 'pruning', 'parsing', 'checking'))
+            time = tuple(map(statistics.mean, zip(*original_times[number_of_rules])))
+            overtime = sum(v[3] >= args.timeout for v in original_times[number_of_rules])
+            print('{0:^6} {1:15f} {2:15f} {3:15f} {4:15f} ({5})'.format('', *time, overtime))
+
+            time = tuple(map(statistics.mean, zip(*optimized_times[number_of_rules])))
+            overtime = sum(v[3] >= args.timeout for v in optimized_times[number_of_rules])
+            print('{0:^6} {1:15f} {2:15f} {3:15f} {4:15f} ({5})'.format('', *time, overtime))
 
     print('End Time    : {0}'.format(datetime.datetime.now()))
 
