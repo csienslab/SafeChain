@@ -19,6 +19,7 @@ import Controller as MyController
 import Device as MyDevice
 
 import SimpleLTLPolicy as MySimpleLTLPolicy
+import SimpleCTLPolicy as MySimpleCTLPolicy
 import InvariantPolicy as MyInvariantPolicy
 import PrivacyPolicy as MyPrivacyPolicy
 
@@ -56,11 +57,18 @@ def buildRandomSetting(database, available_rules, number_of_rules):
         device_variables = tuple((device_name, variable_name) for device_name, variable_name in controller.device_variables)
 
     # random build linear temporal logic policy
+    # device_name, variable_name = random.choice(device_variables)
+    # device = controller.getDevice(device_name)
+    # variable = device.getVariable(variable_name)
+    # value = random.choice(tuple(variable.getPossibleValues()))
+    # policy = MySimpleLTLPolicy.LTLPolicy('{0}.{1} != {2} | {0}.{1} = {2}'.format(device_name, variable_name, value))
+
+    # random build computational tree logic
     device_name, variable_name = random.choice(device_variables)
     device = controller.getDevice(device_name)
     variable = device.getVariable(variable_name)
     value = random.choice(tuple(variable.getPossibleValues()))
-    policy = MySimpleLTLPolicy.LTLPolicy('{0}.{1} != {2} | {0}.{1} = {2}'.format(device_name, variable_name, value))
+    policy = MySimpleCTLPolicy.CTLPolicy('{0}.{1} != {2} | {0}.{1} = {2}'.format(device_name, variable_name, value))
 
     # random build privacy policy
     # device_name, variable_name = random.choice(device_variables)
@@ -74,10 +82,10 @@ def checkModel(setting):
     number_of_rules = setting['number_of_rules']
 
     controller, policy = buildRandomSetting(database, available_rules, number_of_rules)
-    result, *original_time  = controller.check(policy, grouping=False, pruning=False)
-    result, *optimized_time = controller.check(policy, grouping=True, pruning=True, custom=False)
+    original_result, *original_time  = controller.check(policy, grouping=False, pruning=False)
+    optimized_result, *optimized_time = controller.check(policy, grouping=True, pruning=True, custom=False)
 
-    return number_of_rules, result, original_time, optimized_time
+    return number_of_rules, original_result, original_time, optimized_result, optimized_time
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -116,8 +124,8 @@ if __name__ == '__main__':
                 for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules+1, args.step_size)
                 for i in range(args.number_of_trials)]
 
-    with concurrent.futures.ProcessPoolExecutor(max_workers=24) as executor:
-        for number_of_rules, result, original_time, optimized_time in executor.map(checkModel, reversed(settings)):
+    with concurrent.futures.ProcessPoolExecutor(max_workers=6) as executor:
+        for number_of_rules, original_result, original_time, optimized_result, optimized_time in executor.map(checkModel, reversed(settings)):
             original_times[number_of_rules].append(original_time)
             optimized_times[number_of_rules].append(optimized_time)
 
