@@ -111,7 +111,7 @@ class CTLPolicy:
 
         return {'result': 'FAILED', 'states': states, 'rules': rules}
 
-    def check(self, controller):
+    def check(self, controller, timeout):
         model = self.dumpNumvModel(controller)
         filename = '/tmp/r04922156/model {0} {2} {1}.smv'.format(os.getppid(), os.getpid(), datetime.datetime.now())
         with open(filename, 'w') as f:
@@ -119,9 +119,9 @@ class CTLPolicy:
 
         checking_start = time.perf_counter()
         try:
-            p = subprocess.run(['NuSMV', '-keep_single_value_vars', filename], stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=3600)
+            p = subprocess.run(['NuSMV', '-keep_single_value_vars', filename], stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=timeout)
         except subprocess.TimeoutExpired:
-            return None, 3600
+            return None, timeout
         checking_time = time.perf_counter() - checking_start
 
         output = p.stdout.decode('UTF-8')

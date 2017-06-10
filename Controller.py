@@ -480,7 +480,7 @@ class Controller:
             for variable_name, variable in device.variables.items():
                 variable.setPruned(False)
 
-    def check(self, policy, custom=True, grouping=False, pruning=False):
+    def check(self, policy, custom=True, grouping=False, pruning=False, timeout=1800):
         if custom:
             for device_name, device in self.devices.items():
                 device.addCustomRules(self)
@@ -506,7 +506,7 @@ class Controller:
             pruning_time = 0
 
         total_start = time.perf_counter()
-        result, checking_time = policy.check(self)
+        result, checking_time = policy.check(self, timeout)
         total_time = time.perf_counter() - total_start
 
         return result, grouping_time, pruning_time, total_time - checking_time, checking_time

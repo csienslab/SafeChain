@@ -239,7 +239,7 @@ class PrivacyPolicy:
         policy = MyInvariantPolicy.InvariantPolicy(boolean)
         return controller.check(policy, custom=False, pruning=None, grouping=None)
 
-    def check(self, controller):
+    def check(self, controller, timeout):
         total_checking_time = 0
         transitions = controller.getTransitions()
         model = self.dumpNumvModel(controller) + '\n'
@@ -251,13 +251,13 @@ class PrivacyPolicy:
 
             checking_start = time.perf_counter()
             try:
-                p = subprocess.run(['NuSMV', '-keep_single_value_vars', filename], stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=3600)
+                p = subprocess.run(['NuSMV', '-keep_single_value_vars', filename], stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=timeout)
             except subprocess.TimeoutExpired:
-                return None, 3600
+                return None, timeout
             total_checking_time += time.perf_counter() - checking_start
 
-            if total_checking_time >= 3600:
-                return None, 3600
+            if total_checking_time >= timeout:
+                return None, timeout
 
             output = p.stdout.decode('UTF-8')
             result = self.parseOutput(output, controller)

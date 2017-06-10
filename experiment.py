@@ -80,10 +80,11 @@ def checkModel(setting):
     database = copy.deepcopy(setting['database'])
     available_rules = copy.deepcopy(setting['available_rules'])
     number_of_rules = setting['number_of_rules']
+    timeout = setting['timeout']
 
     controller, policy = buildRandomSetting(database, available_rules, number_of_rules)
-    original_result, *original_time  = controller.check(policy, grouping=False, pruning=False)
-    optimized_result, *optimized_time = controller.check(policy, grouping=True, pruning=True, custom=False)
+    original_result, *original_time  = controller.check(policy, grouping=False, pruning=False, timeout=timeout)
+    optimized_result, *optimized_time = controller.check(policy, grouping=True, pruning=True, custom=False, timeout=timeout)
 
     return number_of_rules, original_result, original_time, optimized_result, optimized_time
 
@@ -94,6 +95,7 @@ if __name__ == '__main__':
     parser.add_argument('--min_number_of_rules', type=int, required=True, help='the number of minimum rules')
     parser.add_argument('--max_number_of_rules', type=int, required=True, help='the number of maximum rules')
     parser.add_argument('--step_size', type=int, required=True, help='the step size')
+    parser.add_argument('--timeout', type=int, required=True, help='the number of timeout')
     args = parser.parse_args()
 
     # show information
@@ -120,7 +122,7 @@ if __name__ == '__main__':
     original_times = collections.defaultdict(list)
     optimized_times = collections.defaultdict(list)
 
-    settings = [{'database': database, 'available_rules': available_rules, 'number_of_rules': number_of_rules}
+    settings = [{'database': database, 'available_rules': available_rules, 'number_of_rules': number_of_rules, 'timeout': args.timeout}
                 for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules+1, args.step_size)
                 for i in range(args.number_of_trials)]
 
@@ -132,14 +134,14 @@ if __name__ == '__main__':
     for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules+1, args.step_size):
         print('{0:>6} {1:>15} {2:>15} {3:>15} {4:>15}'.format(number_of_rules, 'grouping', 'pruning', 'parsing', 'checking'))
         time = tuple(map(statistics.mean, zip(*original_times[number_of_rules])))
-        overtime = sum(v[3] >= 3600 for v in original_times[number_of_rules])
+        overtime = sum(v[3] >= args.timeout for v in original_times[number_of_rules])
         print('{0:^6} {1:15f} {2:15f} {3:15f} {4:15f} ({5})'.format('', *time, overtime))
 
         time = tuple(map(statistics.mean, zip(*optimized_times[number_of_rules])))
-        overtime = sum(v[3] >= 3600 for v in optimized_times[number_of_rules])
+        overtime = sum(v[3] >= args.timeout for v in optimized_times[number_of_rules])
         print('{0:^6} {1:15f} {2:15f} {3:15f} {4:15f} ({5})'.format('', *time, overtime))
 
-    print('End Time: {0}'.format(datetime.datetime.now()))
+    print('End Time    : {0}'.format(datetime.datetime.now()))
 
     filename = '{}.pickle'.format(args.prefix)
     with open(filename, 'wb') as f:
