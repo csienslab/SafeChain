@@ -139,11 +139,11 @@ if __name__ == '__main__':
         pickle.dump(obj, f, pickle.HIGHEST_PROTOCOL)
 
     plt.figure()
-    x = tuple(number_of_rules for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules, args.step_size) for i in range(args.number_of_trials))
-    y = tuple(original_times[number_of_rules][i][3] for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules, args.step_size) for i in range(args.number_of_trials))
+    x = tuple(number_of_rules for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size) for i in range(args.number_of_trials))
+    y = tuple(original_times[number_of_rules][i][3] for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size) for i in range(args.number_of_trials))
     plt.scatter(x, y, color='r', marker='+', alpha=0.5)
 
-    y = tuple(optimized_times[number_of_rules][i][3] for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules, args.step_size) for i in range(args.number_of_trials))
+    y = tuple(optimized_times[number_of_rules][i][3] for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size) for i in range(args.number_of_trials))
     plt.scatter(x, y, color='g', marker='o', s=(3,)*len(y), alpha=0.5)
 
     plt.xlabel('Number of rules')
@@ -151,11 +151,11 @@ if __name__ == '__main__':
     plt.savefig('{}_scatter.png'.format(args.prefix))
 
     plt.figure()
-    x = tuple(number_of_rules for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules, args.step_size))
-    y = tuple(statistics.mean(original_times[number_of_rules][i][3] for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules, args.step_size))
+    x = tuple(number_of_rules for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
+    y = tuple(statistics.mean(original_times[number_of_rules][i][3] for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
     plt.plot(x, y, 'r--')
 
-    y = tuple(statistics.mean(optimized_times[number_of_rules][i][3] for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules, args.step_size))
+    y = tuple(statistics.mean(optimized_times[number_of_rules][i][3] for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
     plt.plot(x, y, 'g:')
 
     plt.xlabel('Number of rules')
