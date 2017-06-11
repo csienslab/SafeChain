@@ -20,7 +20,7 @@ class LTLPolicy:
         for condition in self.boolean.getConditions():
             yield from condition.getConstraints()
 
-    def getRelatedVariables(self, controller):
+    def getRelatedVariables(self, controller, graph):
         for condition in self.boolean.getConditions():
             yield from condition.getVariables()
 

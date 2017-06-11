@@ -64,15 +64,15 @@ def buildRandomSetting(database, available_rules, number_of_rules):
     # policy = MySimpleLTLPolicy.LTLPolicy('{0}.{1} != {2} | {0}.{1} = {2}'.format(device_name, variable_name, value))
 
     # random build computational tree logic
-    device_name, variable_name = random.choice(device_variables)
-    device = controller.getDevice(device_name)
-    variable = device.getVariable(variable_name)
-    value = random.choice(tuple(variable.getPossibleValues()))
-    policy = MySimpleCTLPolicy.CTLPolicy('{0}.{1} != {2} | {0}.{1} = {2}'.format(device_name, variable_name, value))
+    # device_name, variable_name = random.choice(device_variables)
+    # device = controller.getDevice(device_name)
+    # variable = device.getVariable(variable_name)
+    # value = random.choice(tuple(variable.getPossibleValues()))
+    # policy = MySimpleCTLPolicy.CTLPolicy('{0}.{1} != {2} | {0}.{1} = {2}'.format(device_name, variable_name, value))
 
     # random build privacy policy
-    # device_name, variable_name = random.choice(device_variables)
-    # policy = MyPrivacyPolicy.PrivacyPolicy(set([(device_name, variable_name)]))
+    device_name, variable_name = random.choice(device_variables)
+    policy = MyPrivacyPolicy.PrivacyPolicy(set([(device_name, variable_name)]))
 
     return controller, policy
 

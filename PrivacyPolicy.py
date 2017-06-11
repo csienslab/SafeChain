@@ -7,6 +7,7 @@ import subprocess
 import pprint
 import time
 import os
+import networkx
 
 import Boolean as MyBoolean
 import InvariantPolicy as MyInvariantPolicy
@@ -33,8 +34,14 @@ class PrivacyPolicy:
 
                     yield (device_name, variable_name, operator, value)
 
-    def getRelatedVariables(self, controller):
-        yield from controller.vulnerables
+    def getRelatedVariables(self, controller, graph):
+        affected = set()
+        for device_variable in self.variables:
+            if device_variable in graph:
+                affected.add(device_variable)
+                affected.update(networkx.descendants(graph, device_variable))
+
+        yield from controller.vulnerables & affected
 
     def getBooleanPrepend(self, boolean, prepend):
         tokens = boolean.split(' ')
@@ -72,8 +79,13 @@ class PrivacyPolicy:
 
     def getRandomTransitions(self, controller):
         transitions = controller.getTransitions()
+        high_variables = set('{}.{}'.format(device_name, variable_name) for device_name, variable_name in self.variables)
 
         for device_variable in transitions:
+            if device_variable in high_variables:
+                # H value variables
+                continue
+
             previous = list()
             for boolean, value, rule_name in transitions[device_variable]:
                 previous.append(boolean)
