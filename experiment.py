@@ -14,6 +14,7 @@ import concurrent.futures
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import numpy
 
 import Controller as MyController
 import Device as MyDevice
@@ -141,12 +142,12 @@ if __name__ == '__main__':
             print('{0:>6} {1:>15} {2:>15} {3:>15} {4:>15}'.format(number_of_rules, 'grouping', 'pruning', 'parsing', 'checking'))
             time = [timegetter(data) for data in original_times[number_of_rules]]
             time = tuple(map(statistics.mean, zip(*time)))
-            overtime = sum(v[3] >= args.timeout for v in original_times[number_of_rules])
+            overtime = sum(v[4] >= args.timeout for v in original_times[number_of_rules])
             print('{0:^6} {1:15f} {2:15f} {3:15f} {4:15f} ({5})'.format('', *time, overtime))
 
             time = [timegetter(data) for data in optimized_times[number_of_rules]]
             time = tuple(map(statistics.mean, zip(*time)))
-            overtime = sum(v[3] >= args.timeout for v in optimized_times[number_of_rules])
+            overtime = sum(v[4] >= args.timeout for v in optimized_times[number_of_rules])
             print('{0:^6} {1:15f} {2:15f} {3:15f} {4:15f} ({5})'.format('', *time, overtime))
 
     print('End Time    : {0}'.format(datetime.datetime.now()))
@@ -156,19 +157,21 @@ if __name__ == '__main__':
         obj = {'original_times': original_times, 'optimized_times': optimized_times}
         pickle.dump(obj, f, pickle.HIGHEST_PROTOCOL)
 
-    plt.figure()
     timegetter = operator.itemgetter(1, 2, 3, 4)
+    # scatter plot
+    plt.figure()
     x = tuple(number_of_rules for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size) for i in range(args.number_of_trials))
     y = tuple(sum(timegetter(original_times[number_of_rules][i])) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size) for i in range(args.number_of_trials))
     plt.scatter(x, y, color='r', marker='+', alpha=0.5)
 
     y = tuple(sum(timegetter(optimized_times[number_of_rules][i])) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size) for i in range(args.number_of_trials))
-    plt.scatter(x, y, color='g', marker='o', s=(3,)*len(y), alpha=0.5)
+    plt.scatter(x, y, color='g', marker='x', alpha=0.5)
 
     plt.xlabel('Number of rules')
     plt.ylabel('Time of checking (s)')
     plt.savefig('{}_scatter.png'.format(args.prefix))
 
+    # average plot
     plt.figure()
     x = tuple(number_of_rules for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
     y = tuple(statistics.mean(sum(timegetter(original_times[number_of_rules][i])) for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
@@ -180,4 +183,54 @@ if __name__ == '__main__':
     plt.xlabel('Number of rules')
     plt.ylabel('Average time of checking (s)')
     plt.savefig('{}_average.png'.format(args.prefix))
+
+    # bar plot
+    plt.figure()
+    fig, ax = plt.subplots()
+
+    width = 0.35
+    N = len(range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
+    ind = numpy.arange(N)
+    medians = tuple(statistics.median(sum(timegetter(original_times[number_of_rules][i])) for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
+    low_quartile = tuple(numpy.percentile([sum(timegetter(original_times[number_of_rules][i])) for i in range(args.number_of_trials)], 25) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
+    low_quartile = tuple(m - l for m, l in zip(medians, low_quartile))
+    high_quartile = tuple(numpy.percentile([sum(timegetter(original_times[number_of_rules][i])) for i in range(args.number_of_trials)], 75) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
+    high_quartile = tuple(h - m for m, h in zip(medians, high_quartile))
+    rects1 = ax.bar(ind, medians, width, color='r', yerr=[low_quartile, high_quartile], capsize=5, log=True)
+
+    medians = tuple(statistics.median(sum(timegetter(optimized_times[number_of_rules][i])) for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
+    low_quartile = tuple(numpy.percentile([sum(timegetter(optimized_times[number_of_rules][i])) for i in range(args.number_of_trials)], 25) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
+    low_quartile = tuple(m - l for m, l in zip(medians, low_quartile))
+    high_quartile = tuple(numpy.percentile([sum(timegetter(optimized_times[number_of_rules][i])) for i in range(args.number_of_trials)], 75) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
+    high_quartile = tuple(h - m for m, h in zip(medians, high_quartile))
+    rects2 = ax.bar(ind + width, medians, width, color='g', yerr=[low_quartile, high_quartile], capsize=5, log=True)
+
+    ax.set_ylabel('Time of checking (s)')
+    ax.set_xlabel('Number of rules')
+    ax.set_xticks(ind + width / 2)
+    ax.set_xticklabels(tuple(number_of_rules for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size)))
+    ax.legend((rects1[0], rects2[0]), ('Without optimization', 'With optimization'))
+
+    plt.savefig('{}_bar.png'.format(args.prefix))
+
+    # optimized bar chart
+    plt.figure()
+
+    x = tuple(number_of_rules for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
+    y = tuple(statistics.mean(optimized_times[number_of_rules][i][1] for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
+    line_grouping, = plt.plot(x, y, 'g--')
+
+    y = tuple(statistics.mean(optimized_times[number_of_rules][i][2] for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
+    line_pruning, = plt.plot(x, y, 'r-.')
+
+    y = tuple(statistics.mean(optimized_times[number_of_rules][i][3] for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
+    line_parsing, = plt.plot(x, y, 'b:')
+
+    y = tuple(statistics.mean(optimized_times[number_of_rules][i][4] for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
+    line_checking, = plt.plot(x, y)
+
+    plt.legend([line_grouping, line_pruning, line_parsing, line_checking], ['Grouping', 'Pruning', 'Parsing', 'Checking'])
+    plt.xlabel('Number of rules')
+    plt.ylabel('Time (s)')
+    plt.savefig('{}_optimize.png'.format(args.prefix))
 
