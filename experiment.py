@@ -57,11 +57,11 @@ def buildRandomSetting(database, available_rules, number_of_rules):
         device_variables = tuple((device_name, variable_name) for device_name, variable_name in controller.device_variables)
 
     # random build linear temporal logic policy
-    # device_name, variable_name = random.choice(device_variables)
-    # device = controller.getDevice(device_name)
-    # variable = device.getVariable(variable_name)
-    # value = random.choice(tuple(variable.getPossibleValues()))
-    # policy = MySimpleLTLPolicy.LTLPolicy('{0}.{1} != {2} | {0}.{1} = {2}'.format(device_name, variable_name, value))
+    device_name, variable_name = random.choice(device_variables)
+    device = controller.getDevice(device_name)
+    variable = device.getVariable(variable_name)
+    value = random.choice(tuple(variable.getPossibleValues()))
+    policy = MySimpleLTLPolicy.LTLPolicy('{0}.{1} != {2} | {0}.{1} = {2}'.format(device_name, variable_name, value))
 
     # random build computational tree logic
     # device_name, variable_name = random.choice(device_variables)
@@ -71,8 +71,8 @@ def buildRandomSetting(database, available_rules, number_of_rules):
     # policy = MySimpleCTLPolicy.CTLPolicy('{0}.{1} != {2} | {0}.{1} = {2}'.format(device_name, variable_name, value))
 
     # random build privacy policy
-    device_name, variable_name = random.choice(device_variables)
-    policy = MyPrivacyPolicy.PrivacyPolicy(set([(device_name, variable_name)]))
+    # device_name, variable_name = random.choice(device_variables)
+    # policy = MyPrivacyPolicy.PrivacyPolicy(set([(device_name, variable_name)]))
 
     return controller, policy
 
@@ -83,10 +83,13 @@ def checkModel(setting):
     timeout = setting['timeout']
 
     controller, policy = buildRandomSetting(database, available_rules, number_of_rules)
-    original_result, *original_time  = controller.check(policy, grouping=False, pruning=False, timeout=timeout)
-    optimized_result, *optimized_time = controller.check(policy, grouping=True, pruning=True, custom=False, timeout=timeout)
+    original_filename, original_result, *original_time  = controller.check(policy, grouping=False, pruning=False, timeout=timeout)
+    optimized_filename, optimized_result, *optimized_time = controller.check(policy, grouping=True, pruning=True, custom=False, timeout=timeout)
 
-    return number_of_rules, original_result, original_time, optimized_result, optimized_time
+    if original_result != None and optimized_result != None and original_result['result'] != optimized_result['result']:
+        print(original_filename, optimized_filename)
+
+    return number_of_rules, original_filename, original_result, original_time, optimized_filename, optimized_result, optimized_time
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -127,19 +130,22 @@ if __name__ == '__main__':
                 for i in range(args.number_of_trials)]
 
     with concurrent.futures.ProcessPoolExecutor(max_workers=6) as executor:
-        for number_of_rules, original_result, original_time, optimized_result, optimized_time in executor.map(checkModel, reversed(settings)):
-            original_times[number_of_rules].append(original_time)
-            optimized_times[number_of_rules].append(optimized_time)
+        for number_of_rules, original_filename, original_result, original_time, optimized_filename, optimized_result, optimized_time in executor.map(checkModel, reversed(settings)):
+            original_times[number_of_rules].append(tuple([original_filename, *original_time]))
+            optimized_times[number_of_rules].append(tuple([optimized_filename, *optimized_time]))
 
             if len(original_times[number_of_rules]) != args.number_of_trials:
                 continue
 
+            timegetter = operator.itemgetter(1, 2, 3, 4)
             print('{0:>6} {1:>15} {2:>15} {3:>15} {4:>15}'.format(number_of_rules, 'grouping', 'pruning', 'parsing', 'checking'))
-            time = tuple(map(statistics.mean, zip(*original_times[number_of_rules])))
+            time = [timegetter(data) for data in original_times[number_of_rules]]
+            time = tuple(map(statistics.mean, zip(*time)))
             overtime = sum(v[3] >= args.timeout for v in original_times[number_of_rules])
             print('{0:^6} {1:15f} {2:15f} {3:15f} {4:15f} ({5})'.format('', *time, overtime))
 
-            time = tuple(map(statistics.mean, zip(*optimized_times[number_of_rules])))
+            time = [timegetter(data) for data in optimized_times[number_of_rules]]
+            time = tuple(map(statistics.mean, zip(*time)))
             overtime = sum(v[3] >= args.timeout for v in optimized_times[number_of_rules])
             print('{0:^6} {1:15f} {2:15f} {3:15f} {4:15f} ({5})'.format('', *time, overtime))
 
@@ -151,11 +157,12 @@ if __name__ == '__main__':
         pickle.dump(obj, f, pickle.HIGHEST_PROTOCOL)
 
     plt.figure()
+    timegetter = operator.itemgetter(1, 2, 3, 4)
     x = tuple(number_of_rules for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size) for i in range(args.number_of_trials))
-    y = tuple(original_times[number_of_rules][i][3] for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size) for i in range(args.number_of_trials))
+    y = tuple(sum(timegetter(original_times[number_of_rules][i])) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size) for i in range(args.number_of_trials))
     plt.scatter(x, y, color='r', marker='+', alpha=0.5)
 
-    y = tuple(optimized_times[number_of_rules][i][3] for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size) for i in range(args.number_of_trials))
+    y = tuple(sum(timegetter(optimized_times[number_of_rules][i])) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size) for i in range(args.number_of_trials))
     plt.scatter(x, y, color='g', marker='o', s=(3,)*len(y), alpha=0.5)
 
     plt.xlabel('Number of rules')
@@ -164,10 +171,10 @@ if __name__ == '__main__':
 
     plt.figure()
     x = tuple(number_of_rules for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
-    y = tuple(statistics.mean(original_times[number_of_rules][i][3] for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
+    y = tuple(statistics.mean(sum(timegetter(original_times[number_of_rules][i])) for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
     plt.plot(x, y, 'r--')
 
-    y = tuple(statistics.mean(optimized_times[number_of_rules][i][3] for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
+    y = tuple(statistics.mean(sum(timegetter(optimized_times[number_of_rules][i])) for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
     plt.plot(x, y, 'g:')
 
     plt.xlabel('Number of rules')

@@ -112,13 +112,13 @@ class InvariantPolicy:
         try:
             p = subprocess.run(['NuSMV', '-keep_single_value_vars', filename], stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=timeout)
         except subprocess.TimeoutExpired:
-            return None, timeout
+            return filename, None, timeout
         checking_time = time.perf_counter() - checking_start
 
         output = p.stdout.decode('UTF-8')
         result = self.parseOutput(output, controller)
 
-        return result, checking_time
+        return filename, result, checking_time
 
 
 

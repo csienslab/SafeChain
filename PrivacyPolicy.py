@@ -265,18 +265,18 @@ class PrivacyPolicy:
             try:
                 p = subprocess.run(['NuSMV', '-keep_single_value_vars', filename], stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=timeout)
             except subprocess.TimeoutExpired:
-                return None, timeout
+                return filename, None, timeout
             total_checking_time += time.perf_counter() - checking_start
 
             if total_checking_time >= timeout:
-                return None, timeout
+                return filename, None, timeout
 
             output = p.stdout.decode('UTF-8')
             result = self.parseOutput(output, controller)
             if result['result'] != 'SUCCESS':
                 result['rules_A'] = self.findWhichRules(result['states_A'], transitions, controller)
                 result['rules_B'] = self.findWhichRules(result['states_B'], transitions, controller)
-            return result, total_checking_time
+            return filename, result, total_checking_time
             # if result['result'] == 'SUCCESS':
             #     return result, total_checking_time
 
