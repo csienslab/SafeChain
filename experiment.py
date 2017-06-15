@@ -169,7 +169,7 @@ if __name__ == '__main__':
 
     plt.xlabel('Number of rules')
     plt.ylabel('Time of checking (s)')
-    plt.savefig('{}_scatter.png'.format(args.prefix))
+    plt.savefig('{}_scatter.pdf'.format(args.prefix))
 
     # average plot
     plt.figure()
@@ -182,7 +182,7 @@ if __name__ == '__main__':
 
     plt.xlabel('Number of rules')
     plt.ylabel('Average time of checking (s)')
-    plt.savefig('{}_average.png'.format(args.prefix))
+    plt.savefig('{}_average.pdf'.format(args.prefix))
 
     # bar plot
     plt.figure()
@@ -211,7 +211,7 @@ if __name__ == '__main__':
     ax.set_xticklabels(tuple(number_of_rules for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size)))
     ax.legend((rects1[0], rects2[0]), ('Without optimization', 'With optimization'))
 
-    plt.savefig('{}_bar.png'.format(args.prefix))
+    plt.savefig('{}_bar.pdf'.format(args.prefix))
 
     # optimized bar chart
     plt.figure()
@@ -232,5 +232,5 @@ if __name__ == '__main__':
     plt.legend([line_grouping, line_pruning, line_parsing, line_checking], ['Grouping', 'Pruning', 'Parsing', 'Checking'])
     plt.xlabel('Number of rules')
     plt.ylabel('Time (s)')
-    plt.savefig('{}_optimize.png'.format(args.prefix))
+    plt.savefig('{}_optimize.pdf'.format(args.prefix))
 
