@@ -168,7 +168,7 @@ if __name__ == '__main__':
     plt.scatter(x, y, color='g', marker='x', alpha=0.5)
 
     plt.xlabel('Number of rules')
-    plt.ylabel('Time of checking (s)')
+    plt.ylabel('Time (s)')
     plt.savefig('{}_scatter.pdf'.format(args.prefix))
 
     # average plot
@@ -191,25 +191,17 @@ if __name__ == '__main__':
     width = 0.35
     N = len(range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
     ind = numpy.arange(N)
-    medians = tuple(statistics.median(sum(timegetter(original_times[number_of_rules][i])) for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
-    low_quartile = tuple(numpy.percentile([sum(timegetter(original_times[number_of_rules][i])) for i in range(args.number_of_trials)], 25) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
-    low_quartile = tuple(m - l for m, l in zip(medians, low_quartile))
-    high_quartile = tuple(numpy.percentile([sum(timegetter(original_times[number_of_rules][i])) for i in range(args.number_of_trials)], 75) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
-    high_quartile = tuple(h - m for m, h in zip(medians, high_quartile))
-    rects1 = ax.bar(ind, medians, width, color='r', yerr=[low_quartile, high_quartile], capsize=5, log=True)
+    means = tuple(statistics.mean(sum(timegetter(original_times[number_of_rules][i])) for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
+    rects1 = ax.bar(ind, means, width, color='r', log=True)
 
-    medians = tuple(statistics.median(sum(timegetter(optimized_times[number_of_rules][i])) for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
-    low_quartile = tuple(numpy.percentile([sum(timegetter(optimized_times[number_of_rules][i])) for i in range(args.number_of_trials)], 25) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
-    low_quartile = tuple(m - l for m, l in zip(medians, low_quartile))
-    high_quartile = tuple(numpy.percentile([sum(timegetter(optimized_times[number_of_rules][i])) for i in range(args.number_of_trials)], 75) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
-    high_quartile = tuple(h - m for m, h in zip(medians, high_quartile))
-    rects2 = ax.bar(ind + width, medians, width, color='g', yerr=[low_quartile, high_quartile], capsize=5, log=True)
+    means = tuple(statistics.mean(sum(timegetter(optimized_times[number_of_rules][i])) for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
+    rects2 = ax.bar(ind + width, means, width, color='g', log=True)
 
-    ax.set_ylabel('Time of checking (s)')
+    ax.set_ylabel('Time (s)')
     ax.set_xlabel('Number of rules')
     ax.set_xticks(ind + width / 2)
     ax.set_xticklabels(tuple(number_of_rules for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size)))
-    ax.legend((rects1[0], rects2[0]), ('Without optimization', 'With optimization'))
+    ax.legend((rects1[0], rects2[0]), ('Without optimization', 'With optimization'), bbox_to_anchor=(0, 1.02, 1, 0.2), loc='lower left', mode='expand', ncol=2, frameon=False)
 
     plt.savefig('{}_bar.pdf'.format(args.prefix))
 
@@ -217,16 +209,16 @@ if __name__ == '__main__':
     plt.figure()
 
     x = tuple(number_of_rules for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
-    y = tuple(statistics.mean(optimized_times[number_of_rules][i][1] for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
+    y = tuple(statistics.mean(timegetter(optimized_times[number_of_rules][i])[0] for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
     line_grouping, = plt.plot(x, y, 'g--')
 
-    y = tuple(statistics.mean(optimized_times[number_of_rules][i][2] for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
+    y = tuple(statistics.mean(timegetter(optimized_times[number_of_rules][i])[1] for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
     line_pruning, = plt.plot(x, y, 'r-.')
 
-    y = tuple(statistics.mean(optimized_times[number_of_rules][i][3] for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
+    y = tuple(statistics.mean(timegetter(optimized_times[number_of_rules][i])[2] for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
     line_parsing, = plt.plot(x, y, 'b:')
 
-    y = tuple(statistics.mean(optimized_times[number_of_rules][i][4] for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
+    y = tuple(statistics.mean(timegetter(optimized_times[number_of_rules][i])[3] for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
     line_checking, = plt.plot(x, y)
 
     plt.legend([line_grouping, line_pruning, line_parsing, line_checking], ['Grouping', 'Pruning', 'Parsing', 'Checking'])
@@ -234,3 +226,29 @@ if __name__ == '__main__':
     plt.ylabel('Time (s)')
     plt.savefig('{}_optimize.pdf'.format(args.prefix))
 
+    # optimized stack bar chart
+    plt.figure()
+    width = 0.35
+    N = len(range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
+    ind = numpy.arange(N)
+
+    grouping_means = tuple(statistics.mean(timegetter(optimized_times[number_of_rules][i])[0] for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
+    rects1 = plt.bar(ind, grouping_means, width)
+
+    bottom = tuple(map(sum, zip(grouping_means)))
+    pruning_means = tuple(statistics.mean(timegetter(optimized_times[number_of_rules][i])[1] for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
+    rects2 = plt.bar(ind, pruning_means, width, color='lawngreen', bottom=bottom)
+
+    bottom = tuple(map(sum, zip(grouping_means, pruning_means)))
+    parsing_means = tuple(statistics.mean(timegetter(optimized_times[number_of_rules][i])[2] for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
+    rects3 = plt.bar(ind, parsing_means, width, color='magenta', bottom=bottom)
+
+    bottom = tuple(map(sum, zip(grouping_means, pruning_means, parsing_means)))
+    checking_means = tuple(statistics.mean(timegetter(optimized_times[number_of_rules][i])[3] for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
+    rects4 = plt.bar(ind, checking_means, width, color='gray', bottom=bottom)
+
+    plt.ylabel('Time (s)')
+    plt.xlabel('Number of rules')
+    plt.xticks(ind, range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
+    plt.legend((rects1[0], rects2[0], rects3[0], rects4[0]), ('Grouping', 'Pruning', 'Parsing', 'Checking'), bbox_to_anchor=(0, 1.02, 1, 0.2), loc='lower left', mode='expand', ncol=4, frameon=False)
+    plt.savefig('{}_optimize_stack.pdf'.format(args.prefix))
