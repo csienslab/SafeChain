@@ -50,12 +50,13 @@ def buildRandomSetting(database, available_rules, number_of_rules):
         controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
 
     # random choose vulnerables
-    vulnerable_device_name = random.choice(tuple(set(device_name for device_name, variable_name in controller.device_variables)))
-    controller.addVulnerableDevice(vulnerable_device_name)
+    vulnerable_device_variables = random.sample(controller.device_variables, 1)
+    for vulnerable_device_variable in vulnerable_device_variables:
+        controller.addVulnerableDeviceVariable(*vulnerable_device_variable)
 
-    device_variables = tuple((device_name, variable_name) for device_name, variable_name in controller.device_variables if device_name != vulnerable_device_name)
+    device_variables = tuple(controller.device_variables - set(vulnerable_device_variables))
     if len(device_variables) == 0:
-        device_variables = tuple((device_name, variable_name) for device_name, variable_name in controller.device_variables)
+        device_variables = tuple(controller.device_variables)
 
     # random build linear temporal logic policy
     device_name, variable_name = random.choice(device_variables)
@@ -192,10 +193,10 @@ if __name__ == '__main__':
     N = len(range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
     ind = numpy.arange(N)
     means = tuple(statistics.mean(sum(timegetter(original_times[number_of_rules][i])) for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
-    rects1 = ax.bar(ind, means, width, color='r', log=True)
+    rects1 = ax.bar(ind, means, width, color='red', log=True, hatch='///')
 
     means = tuple(statistics.mean(sum(timegetter(optimized_times[number_of_rules][i])) for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
-    rects2 = ax.bar(ind + width, means, width, color='g', log=True)
+    rects2 = ax.bar(ind + width, means, width, color='green', log=True, hatch='..')
 
     ax.set_ylabel('Time (s)')
     ax.set_xlabel('Number of rules')
