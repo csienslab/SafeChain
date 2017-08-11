@@ -7,6 +7,7 @@ import functools
 import operator
 import pathlib
 import pickle
+import math
 
 def is_dir(dirname):
     """Check if a path is an actual directory"""
@@ -67,6 +68,37 @@ def generate(args):
     with args.output as f:
         pickle.dump(channels, f, protocol=pickle.HIGHEST_PROTOCOL)
 
+def count(args):
+    channels = dict()
+
+    # find all possible defined channels
+    path = pathlib.Path(args.input_directory)
+    filepaths = path.glob('*.json')
+
+    channels_count = 0
+    variables_count = 0
+    variables_size = 1
+
+    for filepath in filepaths:
+        channels_count += 1
+        channel_name = filepath.stem
+        with filepath.open() as f:
+            channel_content = json.load(f)
+
+        variables_count += len(channel_content['variables'])
+        for variable_name, variable in channel_content['variables'].items():
+            if variable['type'] == 'boolean':
+                variables_size *= 2
+            elif variable['type'] == 'set':
+                variables_size *= len(variable['setValue'])
+            elif variable['type'] == 'range':
+                variables_size *= variable['maxValue'] - variable['minValue'] + 1
+            else:
+                raise ValueError('Unknown type: {}'.format(variable['type']))
+
+    print('Number of channels: {}'.format(channels_count))
+    print('Number of variables: {}'.format(variables_count))
+    print('Number of possible states: 2^{}'.format(math.log2(variables_size)))
 
 if __name__ == '__main__':
     # set up the top level parser
@@ -83,6 +115,10 @@ if __name__ == '__main__':
     parser_generator.add_argument('-i', '--input_directory', required=True, type=is_dir, help='the directory of defined channels')
     parser_generator.add_argument('-o', '--output', required=True, type=argparse.FileType('wb'), help='the file to save custom dataset')
     parser_generator.set_defaults(func=generate)
+
+    parser_count = subparsers.add_parser('count', help='analyze the channels from dataset')
+    parser_count.add_argument('-i', '--input_directory', required=True, type=is_dir, help='the directory of defined channels')
+    parser_count.set_defaults(func=count)
 
     # parse the command line and call the associated function
     args = parser.parse_args()

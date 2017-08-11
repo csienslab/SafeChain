@@ -63,10 +63,10 @@ if __name__ == '__main__':
     N = len(range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
     ind = numpy.arange(N)
     means = tuple(statistics.mean(sum(timegetter(original_times[number_of_rules][i])) for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
-    rects1 = ax.bar(ind, means, width, color='red', log=True, hatch='///')
+    rects1 = ax.bar(ind, means, width, color='gray', edgecolor='black', log=True)
 
     means = tuple(statistics.mean(sum(timegetter(optimized_times[number_of_rules][i])) for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
-    rects2 = ax.bar(ind + width, means, width, color='green', log=True, hatch='..')
+    rects2 = ax.bar(ind + width, means, width, color='white', edgecolor='black', log=True)
 
     ax.set_ylabel('Time (s)')
     ax.set_xlabel('Number of rules')
@@ -126,7 +126,7 @@ if __name__ == '__main__':
 
     # optimized stack bar chart
     # https://stackoverflow.com/questions/17976103/matplotlib-broken-axis-example-uneven-subplot-size
-    ylim = [0.06, 0.125]
+    ylim = [0.07, 0.13]
     ylim2 = [0, 0.01]
     ylimratio = (ylim[1]-ylim[0])/(ylim2[1]-ylim2[0]+ylim[1]-ylim[0])
     ylim2ratio = (ylim2[1]-ylim2[0])/(ylim2[1]-ylim2[0]+ylim[1]-ylim[0])
@@ -141,23 +141,23 @@ if __name__ == '__main__':
     ind = numpy.arange(N)
 
     grouping_means = tuple(statistics.mean(timegetter(optimized_times[number_of_rules][i])[0] for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
-    rects1 = ax.bar(ind, grouping_means, width, hatch='..')
-    ax2.bar(ind, grouping_means, width, hatch='..')
+    rects1 = ax.bar(ind, grouping_means, width, color='white', edgecolor='black')
+    ax2.bar(ind, grouping_means, width, color='white', edgecolor='black')
 
     bottom = tuple(map(sum, zip(grouping_means)))
     pruning_means = tuple(statistics.mean(timegetter(optimized_times[number_of_rules][i])[1] for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
-    rects2 = ax.bar(ind, pruning_means, width, bottom=bottom, hatch='////')
-    ax2.bar(ind, pruning_means, width, bottom=bottom, hatch='////')
+    rects2 = ax.bar(ind, pruning_means, width, bottom=bottom, color='white', edgecolor='black', hatch='+++')
+    ax2.bar(ind, pruning_means, width, bottom=bottom, color='white', edgecolor='black', hatch='+++')
 
     bottom = tuple(map(sum, zip(grouping_means, pruning_means)))
     parsing_means = tuple(statistics.mean(timegetter(optimized_times[number_of_rules][i])[2] for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
-    rects3 = ax.bar(ind, parsing_means, width, bottom=bottom, hatch='++')
-    ax2.bar(ind, parsing_means, width, bottom=bottom, hatch='++')
+    rects3 = ax.bar(ind, parsing_means, width, bottom=bottom, color='gray', edgecolor='black')
+    ax2.bar(ind, parsing_means, width, bottom=bottom, color='gray', edgecolor='black')
 
     bottom = tuple(map(sum, zip(grouping_means, pruning_means, parsing_means)))
     checking_means = tuple(statistics.mean(timegetter(optimized_times[number_of_rules][i])[3] for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
-    rects4 = ax.bar(ind, checking_means, width, bottom=bottom, hatch='xx')
-    ax2.bar(ind, checking_means, width, bottom=bottom, hatch='xx')
+    rects4 = ax.bar(ind, checking_means, width, bottom=bottom, color='white', edgecolor='black', hatch='...')
+    ax2.bar(ind, checking_means, width, bottom=bottom, color='white', edgecolor='black', hatch='...')
 
     ax.set_ylim(ylim)
     ax2.set_ylim(ylim2)
