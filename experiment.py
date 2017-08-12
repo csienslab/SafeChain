@@ -59,11 +59,11 @@ def buildRandomSetting(database, available_rules, number_of_rules):
         device_variables = tuple(controller.device_variables)
 
     # random build linear temporal logic policy
-    device_name, variable_name = random.choice(device_variables)
-    device = controller.getDevice(device_name)
-    variable = device.getVariable(variable_name)
-    value = random.choice(tuple(variable.getPossibleValues()))
-    policy = MySimpleLTLPolicy.LTLPolicy('{0}.{1} != {2} | {0}.{1} = {2}'.format(device_name, variable_name, value))
+    # device_name, variable_name = random.choice(device_variables)
+    # device = controller.getDevice(device_name)
+    # variable = device.getVariable(variable_name)
+    # value = random.choice(tuple(variable.getPossibleValues()))
+    # policy = MySimpleLTLPolicy.LTLPolicy('{0}.{1} != {2} | {0}.{1} = {2}'.format(device_name, variable_name, value))
 
     # random build computational tree logic
     # device_name, variable_name = random.choice(device_variables)
@@ -73,8 +73,8 @@ def buildRandomSetting(database, available_rules, number_of_rules):
     # policy = MySimpleCTLPolicy.CTLPolicy('{0}.{1} != {2} | {0}.{1} = {2}'.format(device_name, variable_name, value))
 
     # random build privacy policy
-    # device_name, variable_name = random.choice(device_variables)
-    # policy = MyPrivacyPolicy.PrivacyPolicy(set([(device_name, variable_name)]))
+    device_name, variable_name = random.choice(device_variables)
+    policy = MyPrivacyPolicy.PrivacyPolicy(set([(device_name, variable_name)]))
 
     return controller, policy
 
@@ -131,7 +131,7 @@ if __name__ == '__main__':
                 for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules+1, args.step_size)
                 for i in range(args.number_of_trials)]
 
-    with concurrent.futures.ProcessPoolExecutor(max_workers=6) as executor:
+    with concurrent.futures.ProcessPoolExecutor(max_workers=8) as executor:
         for number_of_rules, original_filename, original_result, original_time, optimized_filename, optimized_result, optimized_time in executor.map(checkModel, reversed(settings)):
             original_times[number_of_rules].append(tuple([original_filename, *original_time]))
             optimized_times[number_of_rules].append(tuple([optimized_filename, *optimized_time]))

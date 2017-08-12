@@ -40,7 +40,7 @@ def buildRandomSetting(database, available_rules, number_of_involved_variables):
         controller.addDevice(device)
 
     # add rules
-    current_rules = random.sample(available_rules, 800)
+    current_rules = random.sample(available_rules, 500)
     for count, rule in enumerate(current_rules, start=1):
         trigger_channel_name, trigger_name, action_channel_name, action_name = rule
 
@@ -50,7 +50,7 @@ def buildRandomSetting(database, available_rules, number_of_involved_variables):
         controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
 
     # random choose vulnerables
-    vulnerable_device_variables = random.sample(controller.device_variables, number_of_involved_variables)
+    vulnerable_device_variables = random.sample(controller.device_variables, 1)
     for vulnerable_device_variable in vulnerable_device_variables:
         controller.addVulnerableDeviceVariable(*vulnerable_device_variable)
 
@@ -108,6 +108,8 @@ if __name__ == '__main__':
     parser.add_argument('--timeout', type=int, required=True, help='the number of timeout')
     args = parser.parse_args()
 
+    print('Current Time: {0}'.format(datetime.datetime.now()))
+
     # load database
     with open('database.dat', 'rb') as f:
         database = pickle.load(f)
@@ -130,7 +132,7 @@ if __name__ == '__main__':
     settings = [{'database': database, 'available_rules': available_rules, 'number_of_involved_variables': number_of_involved_variables, 'timeout': args.timeout}
                 for number_of_involved_variables in range(args.min_number_of_involved_variables, args.max_number_of_involved_variables+1)
                 for i in range(args.number_of_trials)]
-    with concurrent.futures.ProcessPoolExecutor(max_workers=4) as executor:
+    with concurrent.futures.ProcessPoolExecutor(max_workers=16) as executor:
         for number_of_involved_variables, optimized_filename, optimized_result, optimized_time in executor.map(checkModel, reversed(settings)):
             times[number_of_involved_variables] += sum(optimized_time)
 
@@ -155,10 +157,16 @@ if __name__ == '__main__':
 
     plt.savefig('{}_bar.pdf'.format(args.prefix))
 
+    print('End Time: {0}'.format(datetime.datetime.now()))
+
     # combine
     # privacy_low = [0.11833471423509763, 0.11843225607735804, 0.12616776111652142, 0.14268427303963108, 0.16009803567489145, 0.15813483838166575, 0.13681290697859366, 0.16884992225910536]
     # privacy_high = [0.11561460791475837, 0.13454492800723528, 0.12540717617288466, 0.12909040200640448, 0.18905261415813585, 0.14219999366439878, 0.13586823322693817, 0.14380368034937419]
     # privacy = [0.09762248884740984, 0.144058376137109, 0.14108355188858696, 0.2330695218584151, 0.23630439946806292, 0.24219636201887623, 0.36678862595173994, 0.4648272933487897]
+
+    # privacy_low = [0.25096660371113105, 0.33137132282566745, 0.3686613266840577, 0.35160185593611093, 0.3351248218662804, 0.39247665092884565, 0.5234499153528596, 0.466502586865448]
+    # privacy_high = [0.28042805001465604, 0.27640242033218965, 0.33214549170271496, 0.2906605389547767, 0.4282733426771592, 0.41732891176780684, 0.4501022307664389, 0.4395960046324180]
+    # privacy = [0.22616610003518872, 0.30766856458608527, 0.33368308620061726, 0.5370068732524523, 0.804538099961821, 1.9853007950345054, 2.484106618011021, 4.558633163855528]
 
     # # bar plot
     # plt.figure()
