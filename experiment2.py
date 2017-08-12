@@ -40,7 +40,7 @@ def buildRandomSetting(database, available_rules, number_of_involved_variables):
         controller.addDevice(device)
 
     # add rules
-    current_rules = random.sample(available_rules, 300)
+    current_rules = random.sample(available_rules, 800)
     for count, rule in enumerate(current_rules, start=1):
         trigger_channel_name, trigger_name, action_channel_name, action_name = rule
 
@@ -50,7 +50,7 @@ def buildRandomSetting(database, available_rules, number_of_involved_variables):
         controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
 
     # random choose vulnerables
-    vulnerable_device_variables = random.sample(controller.device_variables, 1)
+    vulnerable_device_variables = random.sample(controller.device_variables, number_of_involved_variables)
     for vulnerable_device_variable in vulnerable_device_variables:
         controller.addVulnerableDeviceVariable(*vulnerable_device_variable)
 
@@ -100,62 +100,60 @@ def checkModel(setting):
     return number_of_involved_variables, optimized_filename, optimized_result, optimized_time
 
 if __name__ == '__main__':
-    # parser = argparse.ArgumentParser()
-    # parser.add_argument('--prefix', type=str, required=True, help='the prefix name of result files')
-    # parser.add_argument('--number_of_trials', type=int, required=True, help='the number of trials')
-    # parser.add_argument('--min_number_of_involved_variables', type=int, required=True, help='the number of minimum involved variables')
-    # parser.add_argument('--max_number_of_involved_variables', type=int, required=True, help='the number of maximum involved variables')
-    # parser.add_argument('--timeout', type=int, required=True, help='the number of timeout')
-    # args = parser.parse_args()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--prefix', type=str, required=True, help='the prefix name of result files')
+    parser.add_argument('--number_of_trials', type=int, required=True, help='the number of trials')
+    parser.add_argument('--min_number_of_involved_variables', type=int, required=True, help='the number of minimum involved variables')
+    parser.add_argument('--max_number_of_involved_variables', type=int, required=True, help='the number of maximum involved variables')
+    parser.add_argument('--timeout', type=int, required=True, help='the number of timeout')
+    args = parser.parse_args()
 
-    # # load database
-    # with open('database.dat', 'rb') as f:
-    #     database = pickle.load(f)
+    # load database
+    with open('database.dat', 'rb') as f:
+        database = pickle.load(f)
 
-    # # get available rules
-    # controller = MyController.Controller(database)
-    # available_rules = list()
-    # with open('dataset/coreresultsMay16.tsv', 'r') as f:
-    #     all_channels = controller.database.keys()
-    #     itemgetter = operator.itemgetter(5, 6, 8, 9)
-    #     for line in f:
-    #         line = line.strip()
-    #         columns = line.split('\t')
-    #         trigger_channel_name, trigger_name, action_channel_name, action_name = itemgetter(columns)
-    #         if trigger_channel_name in all_channels and action_channel_name in all_channels:
-    #             available_rules.append((trigger_channel_name, trigger_name, action_channel_name, action_name))
+    # get available rules
+    controller = MyController.Controller(database)
+    available_rules = list()
+    with open('dataset/coreresultsMay16.tsv', 'r') as f:
+        all_channels = controller.database.keys()
+        itemgetter = operator.itemgetter(5, 6, 8, 9)
+        for line in f:
+            line = line.strip()
+            columns = line.split('\t')
+            trigger_channel_name, trigger_name, action_channel_name, action_name = itemgetter(columns)
+            if trigger_channel_name in all_channels and action_channel_name in all_channels:
+                available_rules.append((trigger_channel_name, trigger_name, action_channel_name, action_name))
 
-    # times = [0] * (args.max_number_of_involved_variables + 1)
-    # for number_of_involved_variables in reversed(range(args.min_number_of_involved_variables, args.max_number_of_involved_variables+1)):
-    #     for i in range(args.number_of_trials):
-    #         settings = {'database': database,
-    #                     'available_rules': available_rules,
-    #                     'number_of_involved_variables': number_of_involved_variables,
-    #                     'timeout': args.timeout}
+    times = [0] * (args.max_number_of_involved_variables + 1)
 
-    #         number_of_involved_variables, optimized_filename, optimized_result, optimized_time = checkModel(settings)
+    settings = [{'database': database, 'available_rules': available_rules, 'number_of_involved_variables': number_of_involved_variables, 'timeout': args.timeout}
+                for number_of_involved_variables in range(args.min_number_of_involved_variables, args.max_number_of_involved_variables+1)
+                for i in range(args.number_of_trials)]
+    with concurrent.futures.ProcessPoolExecutor(max_workers=4) as executor:
+        for number_of_involved_variables, optimized_filename, optimized_result, optimized_time in executor.map(checkModel, reversed(settings)):
+            times[number_of_involved_variables] += sum(optimized_time)
 
-    #         times[number_of_involved_variables] += sum(optimized_time)
+    for i in range(args.min_number_of_involved_variables, args.max_number_of_involved_variables+1):
+        print(i, times[i]/args.number_of_trials)
 
-    #     print(number_of_involved_variables, times[number_of_involved_variables]/args.number_of_trials)
+    # bar plot
+    plt.figure()
+    fig, ax = plt.subplots()
 
-    # # bar plot
-    # plt.figure()
-    # fig, ax = plt.subplots()
+    width = 0.35
+    N = len(range(args.min_number_of_involved_variables, args.max_number_of_involved_variables + 1))
+    ind = numpy.arange(N)
+    means = tuple(times[i] / args.number_of_trials for i in range(args.min_number_of_involved_variables, args.max_number_of_involved_variables + 1))
+    rects2 = ax.bar(ind, means, width, color='white', edgecolor='black')
 
-    # width = 0.35
-    # N = len(range(args.min_number_of_involved_variables, args.max_number_of_involved_variables + 1))
-    # ind = numpy.arange(N)
-    # means = tuple(times[i] / args.number_of_trials for i in range(args.min_number_of_involved_variables, args.max_number_of_involved_variables + 1))
-    # rects2 = ax.bar(ind, means, width, color='green')
+    ax.set_ylabel('Time (s)')
+    ax.set_xlabel('Number of involved attributes')
+    ax.set_xticks(ind)
+    ax.set_xticklabels(tuple(number_of_involved_variables for number_of_involved_variables in range(args.min_number_of_involved_variables, args.max_number_of_involved_variables + 1)))
+    ax.set_ylim([0.0, 0.47])
 
-    # ax.set_ylabel('Time (s)')
-    # ax.set_xlabel('Number of HIGH attributes')
-    # ax.set_xticks(ind)
-    # ax.set_xticklabels(tuple(number_of_involved_variables for number_of_involved_variables in range(args.min_number_of_involved_variables, args.max_number_of_involved_variables + 1)))
-    # ax.set_ylim([0.0, 0.47])
-
-    # plt.savefig('{}_bar.pdf'.format(args.prefix))
+    plt.savefig('{}_bar.pdf'.format(args.prefix))
 
     # combine
     # privacy_low = [0.11833471423509763, 0.11843225607735804, 0.12616776111652142, 0.14268427303963108, 0.16009803567489145, 0.15813483838166575, 0.13681290697859366, 0.16884992225910536]
