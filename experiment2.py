@@ -50,7 +50,7 @@ def buildRandomSetting(database, available_rules, number_of_involved_variables):
         controller.addRule(rule_name, trigger_channel_name, trigger_name, trigger_inputs, action_channel_name, action_name, action_inputs)
 
     # random choose vulnerables
-    vulnerable_device_variables = random.sample(controller.device_variables, 1)
+    vulnerable_device_variables = random.sample(controller.device_variables, number_of_involved_variables)
     for vulnerable_device_variable in vulnerable_device_variables:
         controller.addVulnerableDeviceVariable(*vulnerable_device_variable)
 
@@ -59,16 +59,16 @@ def buildRandomSetting(database, available_rules, number_of_involved_variables):
         device_variables = tuple(controller.device_variables)
 
     # random build linear temporal logic policy
-    # selected_variables = random.sample(set(device_variables), number_of_involved_variables)
-    # policy_strings = []
-    # for device_name, variable_name in selected_variables:
-    #     device = controller.getDevice(device_name)
-    #     variable = device.getVariable(variable_name)
-    #     value = random.choice(tuple(variable.getPossibleValues()))
-    #     policy_strings.append('( {0}.{1} != {2} | {0}.{1} = {2} )'.format(device_name, variable_name, value))
+    selected_variables = random.sample(set(device_variables), 1)
+    policy_strings = []
+    for device_name, variable_name in selected_variables:
+        device = controller.getDevice(device_name)
+        variable = device.getVariable(variable_name)
+        value = random.choice(tuple(variable.getPossibleValues()))
+        policy_strings.append('( {0}.{1} != {2} | {0}.{1} = {2} )'.format(device_name, variable_name, value))
 
-    # policy_strings = ' & '.join(policy_strings)
-    # policy = MySimpleLTLPolicy.LTLPolicy(policy_strings)
+    policy_strings = ' & '.join(policy_strings)
+    policy = MySimpleLTLPolicy.LTLPolicy(policy_strings)
 
     # random build computational tree logic
     # selected_variables = random.sample(set(device_variables), number_of_involved_variables)
@@ -83,8 +83,8 @@ def buildRandomSetting(database, available_rules, number_of_involved_variables):
     # policy = MySimpleCTLPolicy.CTLPolicy(policy_strings)
 
     # random build privacy policy
-    selected_variables = random.sample(set(device_variables), number_of_involved_variables)
-    policy = MyPrivacyPolicy.PrivacyPolicy(set(selected_variables))
+    # selected_variables = random.sample(set(device_variables), number_of_involved_variables)
+    # policy = MyPrivacyPolicy.PrivacyPolicy(set(selected_variables))
 
     return controller, policy
 
@@ -163,6 +163,10 @@ if __name__ == '__main__':
     # privacy_low = [0.11833471423509763, 0.11843225607735804, 0.12616776111652142, 0.14268427303963108, 0.16009803567489145, 0.15813483838166575, 0.13681290697859366, 0.16884992225910536]
     # privacy_high = [0.11561460791475837, 0.13454492800723528, 0.12540717617288466, 0.12909040200640448, 0.18905261415813585, 0.14219999366439878, 0.13586823322693817, 0.14380368034937419]
     # privacy = [0.09762248884740984, 0.144058376137109, 0.14108355188858696, 0.2330695218584151, 0.23630439946806292, 0.24219636201887623, 0.36678862595173994, 0.4648272933487897]
+
+    # ltl_involved = [0.25365368663950355, 0.26063656428456305, 0.267161798490677, 0.27565117092919533, 0.2791417625482427, 0.28872311575745696, 0.29284934558637904, 0.3054807201845105]
+    # ltl_vul = [0.24499574801605195, 0.24331209252669941, 0.2453710427331971, 0.24166468772583174, 0.24492531419021543, 0.24472656678385102, 0.2475413429053733, 0.2446847415717784]
+    # ltl = [0.2531554289571941, 0.2597162900469266, 0.2665056884372607, 0.2711737535946304, 0.2788549713541288, 0.28552776352642106, 0.28749038162932267, 0.290235062427935]
 
     # privacy_low = [0.25096660371113105, 0.33137132282566745, 0.3686613266840577, 0.35160185593611093, 0.3351248218662804, 0.39247665092884565, 0.5234499153528596, 0.466502586865448]
     # privacy_high = [0.28042805001465604, 0.27640242033218965, 0.33214549170271496, 0.2906605389547767, 0.4282733426771592, 0.41732891176780684, 0.4501022307664389, 0.4395960046324180]
