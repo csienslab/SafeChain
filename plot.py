@@ -72,9 +72,10 @@ if __name__ == '__main__':
     ax.set_xlabel('Number of rules')
     ax.set_xticks(ind + width / 2)
     ax.set_xticklabels(tuple(number_of_rules for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size)))
-    ax.legend((rects1[0], rects2[0]), ('Without optimization', 'With optimization'), bbox_to_anchor=(0, 1.02, 1, 0.2), loc='lower left', mode='expand', ncol=2, frameon=False)
+    ax.legend((rects1[0], rects2[0]), ('Without optimization', 'With optimization'), loc='upper left', ncol=1, frameon=False)
+    ax.set_ylim([0.05, 5000])
 
-    plt.savefig('{}_bar.pdf'.format(args.prefix))
+    plt.savefig('{}_bar.pdf'.format(args.prefix), bbox_inches='tight', pad_inches=0.0)
 
     # optimized bar chart
     plt.figure()
@@ -146,8 +147,8 @@ if __name__ == '__main__':
 
     bottom = tuple(map(sum, zip(grouping_means)))
     pruning_means = tuple(statistics.mean(timegetter(optimized_times[number_of_rules][i])[1] for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
-    rects2 = ax.bar(ind, pruning_means, width, bottom=bottom, color='white', edgecolor='black', hatch='+++')
-    ax2.bar(ind, pruning_means, width, bottom=bottom, color='white', edgecolor='black', hatch='+++')
+    rects2 = ax.bar(ind, pruning_means, width, bottom=bottom, color='white', edgecolor='black', hatch='xxx')
+    ax2.bar(ind, pruning_means, width, bottom=bottom, color='white', edgecolor='black', hatch='xxx')
 
     bottom = tuple(map(sum, zip(grouping_means, pruning_means)))
     parsing_means = tuple(statistics.mean(timegetter(optimized_times[number_of_rules][i])[2] for i in range(args.number_of_trials)) for number_of_rules in range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size))
@@ -171,7 +172,7 @@ if __name__ == '__main__':
 
     ax.set_ylabel('Time (s)')
     ax.yaxis.set_label_coords(0.05, 0.5, transform=fig.transFigure)
-    ax.legend((rects1[0], rects2[0], rects3[0], rects4[0]), ('Grouping', 'Pruning', 'Parsing', 'Checking'), bbox_to_anchor=(0, 1.02, 1, 0.2), loc='lower left', mode='expand', ncol=4, frameon=False)
+    ax.legend((rects1[0], rects2[0], rects3[0], rects4[0]), ('Grouping', 'Pruning', 'Parsing', 'Checking'), loc='upper left', ncol=2, frameon=False)
     ax2.set_xlabel('Number of rules')
     ax2.set_xticks(ind, minor=False)
     ax2.set_xticklabels(range(args.min_number_of_rules, args.max_number_of_rules + 1, args.step_size), minor=False, fontdict=None)
@@ -188,4 +189,4 @@ if __name__ == '__main__':
     ax.set_xlim(xlim)
     ax2.set_xlim(xlim)
 
-    plt.savefig('{}_optimize_stack_skip.pdf'.format(args.prefix))
+    plt.savefig('{}_optimize_stack_skip.pdf'.format(args.prefix), bbox_inches='tight', pad_inches=0.0)
