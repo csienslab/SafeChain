@@ -1,0 +1,53 @@
+{
+  "triggers": {
+    "Battery drops below 15%": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Android Battery"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.battery_level < 15"
+      }
+    },
+    "Device is plugged in": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Android Battery"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.status = PLUGGED"
+      }
+    },
+    "Device is unplugged": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Android Battery"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.status = UNPLUGGED"
+      }
+    }
+  },
+  "variables": {
+    "battery_level": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 100,
+      "window": 5
+    },
+    "status": {
+      "type": "set",
+      "setValue": [
+        "PLUGGED",
+        "UNPLUGGED",
+        "NONE"
+      ]
+    }
+  }
+}

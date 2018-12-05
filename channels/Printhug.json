@@ -1,0 +1,24 @@
+{
+  "actions": {
+    "Order a photo print": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Printhug"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.status ← ORDER"
+        }
+      ]
+    }
+  },
+  "variables": {
+    "status": {
+      "type": "set",
+      "setValue": ["ORDER", "NONE"],
+      "resetValue": "NONE"
+    }
+  }
+}

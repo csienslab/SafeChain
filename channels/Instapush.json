@@ -1,0 +1,34 @@
+{
+  "actions": {
+    "Send a notification": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Instapush"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "notification_text"
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.notification ← ON,{0}.notification_text ← {1}"
+        }
+      ]
+    }
+  },
+  "variables": {
+    "notification": {
+      "type": "set",
+      "setValue": ["ON", "OFF"],
+      "resetValue": "OFF"
+    },
+    "notification_text": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 1023
+    }
+  }
+}

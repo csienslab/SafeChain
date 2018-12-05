@@ -1,0 +1,255 @@
+{
+  "actions": {
+    "Toggle on/off": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["WeMo Insight Switch"]
+        }
+      ],
+      "definition": [
+        {
+          "boolean": "{0}.status = ON",
+          "assignment": "{0}.status ← OFF"
+        },
+        {
+          "boolean": "{0}.status = OFF",
+          "assignment": "{0}.status ← ON"
+        }
+      ]
+    },
+    "Turn off": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["WeMo Insight Switch"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.status ← OFF"
+        }
+      ]
+    },
+    "Turn off then on": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["WeMo Insight Switch"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.status ← OFF,{0}.timer_on ← 1"
+        }
+      ]
+    },
+    "Turn on": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["WeMo Insight Switch"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.status ← ON"
+        }
+      ]
+    },
+    "Turn on then off": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["WeMo Insight Switch"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.status ← ON,{0}.timer_off ← 1"
+        }
+      ]
+    }
+  },
+  "triggers": {
+    "Daily cost rises above": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["WeMo Insight Switch"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "daily_cost"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.daily_cost >= {1}"
+      }
+    },
+    "Daily minutes on is longer than": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["WeMo Insight Switch"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "daily_minutes_on"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.daily_minutes_on >= {1}"
+      }
+    },
+    "Monthly estimated cost rises above": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["WeMo Insight Switch"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "monthly_estimated_cost"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.monthly_estimated_cost >= {1}"
+      }
+    },
+    "Standby mode entered": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["WeMo Insight Switch"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.mode = STANDBY"
+      }
+    },
+    "Switched off": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["WeMo Insight Switch"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.status != {0}.status_previous & {0}.status = OFF"
+      }
+    },
+    "Switched on": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["WeMo Insight Switch"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.status != {0}.status_previous & {0}.status = ON"
+      }
+    }
+  },
+  "variables": {
+    "daily_cost": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 100,
+      "window": 5
+    },
+    "daily_minutes_on": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 1440,
+      "window": 30
+    },
+    "monthly_estimated_cost": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 3000,
+      "window": 150
+    },
+    "mode": {
+      "type": "set",
+      "setValue": [
+        "STANDBY",
+        "NORMAL"
+      ]
+    },
+    "status": {
+      "type": "set",
+      "setValue": [
+        "ON",
+        "OFF"
+      ]
+    },
+    "status_previous": {
+      "type": "set",
+      "setValue": [
+        "ON",
+        "OFF"
+      ]
+    },
+    "timer_on": {
+      "type": "range",
+      "minValue": -1,
+      "maxValue": 1
+    },
+    "timer_off": {
+      "type": "range",
+      "minValue": -1,
+      "maxValue": 1
+    }
+  },
+  "customs": [
+    {
+      "name": "CUSTOM_WEMOINSIGHTSWITCH_TIMER_ON",
+      "trigger": "{0}.timer_on = 0",
+      "action": [
+        {
+          "assignment": "{0}.status ← ON"
+        }
+      ]
+    },
+    {
+      "name": "CUSTOM_WEMOINSIGHTSWITCH_TIMER_OFF",
+      "trigger": "{0}.timer_off = 0",
+      "action": [
+        {
+          "assignment": "{0}.status ← OFF"
+        }
+      ]
+    },
+    {
+      "name": "CUSTOM_WEMOINSIGHTSWITCH_TIMERON",
+      "trigger": "{0}.timer_on >= 0",
+      "action": [
+        {
+          "assignment": "{0}.timer_on ← {0}.timer_on - 1"
+        }
+      ]
+    },
+    {
+      "name": "CUSTOM_WEMOINSIGHTSWITCH_TIMEROFF",
+      "trigger": "{0}.timer_off >= 0",
+      "action": [
+        {
+          "assignment": "{0}.timer_off ← {0}.timer_off - 1"
+        }
+      ]
+    },
+    {
+      "name": "CUSTOM_WEMOINSIGHTSWITCH_STATUSPREVIOUS",
+      "trigger": "TRUE",
+      "action": [
+        {
+          "assignment": "{0}.status_previous ← {0}.status"
+        }
+      ]
+    }
+  ]
+}

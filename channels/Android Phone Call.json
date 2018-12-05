@@ -1,0 +1,96 @@
+{
+  "triggers": {
+    "Any phone call answered": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Android Phone Call"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.status = ANSWERED"
+      }
+    },
+    "Any phone call missed": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Android Phone Call"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.status = MISSED"
+      }
+    },
+    "Any phone call placed": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Android Phone Call"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.status = PLACED"
+      }
+    },
+    "Phone call answered from a specific number": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Android Phone Call"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "number"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.status = ANSWERED & {0}.number = {1}"
+      }
+    },
+    "Phone call missed from a specific number": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Android Phone Call"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "number"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.status = MISSED & {0}.number = {1}"
+      }
+    },
+    "Phone call placed to a specific number": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Android Phone Call"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "number"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.status = PLACED & {0}.number = {1}"
+      }
+    }
+  },
+  "variables": {
+    "status": {
+      "type": "set",
+      "setValue": ["ANSWERED", "MISSED", "PLACED", "NONE"]
+    },
+    "number": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 127
+    }
+  }
+}

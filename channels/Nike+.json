@@ -1,0 +1,154 @@
+{
+  "triggers": {
+    "Average daily pace reached": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Nike+"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "average_daily_pace"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.average_daily_pace > {1}"
+      }
+    },
+    "Daily NikeFuel goal not reached": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Nike+"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "daily_nikefuel"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.daily_nikefuel < {1}"
+      }
+    },
+    "Daily NikeFuel goal reached": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Nike+"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "daily_nikefuel"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.daily_nikefuel > {1}"
+      }
+    },
+    "Daily distance goal reached": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Nike+"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "daily_distance"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.daily_distance > {1}"
+      }
+    },
+    "Weekly NikeFuel goal reached": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Nike+"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "weekly_nikefuel"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.weekly_nikefuel > {1}"
+      }
+    },
+    "Weekly distance goal reached": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Nike+"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "weekly_distance"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.weekly_distance > {1}"
+      }
+    },
+    "Weekly runs goal reached": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Nike+"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "weekly_runs"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.weekly_runs > {1}"
+      }
+    }
+  },
+  "variables": {
+    "average_daily_pace": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 16383,
+      "window": 500
+    },
+    "daily_nikefuel": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 1023,
+      "window": 50
+    },
+    "daily_distance": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 1023,
+      "window": 50
+    },
+    "weekly_nikefuel": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 8195,
+      "window": 200
+    },
+    "weekly_distance": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 8195,
+      "window": 200
+    },
+    "weekly_runs": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 7,
+      "window": 1
+    }
+  }
+}

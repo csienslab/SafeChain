@@ -1,0 +1,71 @@
+{
+  "triggers": {
+    "You enter an area": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Android Location"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "location"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.location != {0}.location_previous & {0}.location = {1}"
+      }
+    },
+    "You enter or exit an area": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Android Location"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.location != {0}.location_previous"
+      }
+    },
+    "You exit an area": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Android Location"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "location"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.location_previous != {0}.location & {0}.location_previous = {1}"
+      }
+    }
+  },
+  "variables": {
+    "location": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 1023,
+      "window": 50
+    },
+    "location_previous": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 1023
+    }
+  },
+  "customs": [
+    {
+      "name": "CUSTOM_ANDROIDLOCATION_LOCATIONPREVIOUS",
+      "trigger": "TRUE",
+      "action": [
+        {
+          "assignment": "{0}.location_previous ← {0}.location"
+        }
+      ]
+    }
+  ]
+}

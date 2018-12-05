@@ -1,0 +1,239 @@
+{
+  "triggers": {
+    "Ask for a sports team's next game": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Amazon Alexa"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.trigger_phrase = ASK_FOR_A_SPORTS_TEAMS_NEXT_GAME"
+      }
+    },
+    "Ask for a sports team's score": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Amazon Alexa"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.trigger_phrase = ASK_FOR_A_SPORTS_TEAMS_SCORE"
+      }
+    },
+    "Ask what's on your Shopping List": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Amazon Alexa"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.trigger_phrase = ASK_WHATS_ON_YOUR_SHOPPING_LIST"
+      }
+    },
+    "Ask what's on your To Do List": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Amazon Alexa"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.trigger_phrase = ASK_WHATS_ON_YOUR_TODO_LIST"
+      }
+    },
+    "Item added to your Shopping List": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Amazon Alexa"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.shopping_list = ITEM_ADDED"
+      }
+    },
+    "Item added to your To Do List": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Amazon Alexa"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.todo_list = ITEM_ADDED"
+      }
+    },
+    "Item completed on your Shopping List": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Amazon Alexa"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.shopping_list = ITEM_COMPLETED"
+      }
+    },
+    "Item completed on your To Do List": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Amazon Alexa"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.todo_list = ITEM_COMPLETED"
+      }
+    },
+    "Item deleted on your Shopping List": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Amazon Alexa"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.shopping_list = ITEM_DELETED"
+      }
+    },
+    "Item deleted on your To Do List": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Amazon Alexa"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.todo_list = ITEM_DELETED"
+      }
+    },
+    "Item edited on your Shopping List": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Amazon Alexa"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.shopping_list = ITEM_EDITED"
+      }
+    },
+    "Item edited on your To Do List": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Amazon Alexa"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.todo_list = ITEM_EDITED"
+      }
+    },
+    "New song played": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Amazon Alexa"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.new_song_played = TRUE"
+      }
+    },
+    "Say a specific phrase": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Amazon Alexa"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "trigger_phrase"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.trigger_phrase = {1}"
+      }
+    },
+    "Your Alarm goes off": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Amazon Alexa"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.alarm = OFF"
+      }
+    },
+    "Your Timer goes off": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Amazon Alexa"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.timer = OFF"
+      }
+    }
+  },
+  "variables": {
+    "trigger_phrase": {
+      "type": "set",
+      "setValue": [
+        "ASK_FOR_A_SPORTS_TEAMS_NEXT_GAME",
+        "ASK_FOR_A_SPORTS_TEAMS_SCORE",
+        "ASK_WHATS_ON_YOUR_SHOPPING_LIST",
+        "ASK_WHATS_ON_YOUR_TODO_LIST",
+        "USER_CUSTOM",
+        "NONE"
+      ]
+    },
+    "shopping_list": {
+      "type": "set",
+      "setValue": [
+        "ITEM_ADDED",
+        "ITEM_COMPLETED",
+        "ITEM_DELETED",
+        "ITEM_EDITED",
+        "NONE"
+      ]
+    },
+    "todo_list": {
+      "type": "set",
+      "setValue": [
+        "ITEM_ADDED",
+        "ITEM_COMPLETED",
+        "ITEM_DELETED",
+        "ITEM_EDITED",
+        "NONE"
+      ]
+    },
+    "new_song_played": {
+      "type": "boolean"
+    },
+    "alarm": {
+      "type": "set",
+      "setValue": [
+        "SUSPENDED",
+        "COUNTING",
+        "OFF",
+        "NONE"
+      ]
+    },
+    "timer": {
+      "type": "set",
+      "setValue": [
+        "SUSPENDED",
+        "COUNTING",
+        "OFF",
+        "NONE"
+      ]
+    }
+  }
+}

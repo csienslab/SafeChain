@@ -1,0 +1,62 @@
+{
+  "actions": {
+    "Send a notification": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Boxcar 2"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "notification_title"
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.notification ← ON,{0}.notification_title ← {1}"
+        }
+      ]
+    },
+    "Send a notification with an image": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Boxcar 2"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "notification_title"
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "notification_image"
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.notification ← ON,{0}.notification_title ← {1},{0}.notification_image ← {2}"
+        }
+      ]
+    }
+  },
+  "variables": {
+    "notification": {
+      "type": "set",
+      "setValue": ["ON", "OFF"],
+      "resetValue": "OFF"
+    },
+    "notification_title": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 1023
+    },
+    "notification_image": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 1023
+    }
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "triggers": {
+    "Battery is low": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Nest Protect"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "battery"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.battery < {1}"
+      }
+    },
+    "Carbon monoxide emergency": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Nest Protect"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.carbon_monoxide = EMERGENCY"
+      }
+    },
+    "Carbon monoxide warning": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Nest Protect"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.carbon_monoxide = WARNING"
+      }
+    },
+    "Smoke alarm emergency": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Nest Protect"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.smoke = EMERGENCY"
+      }
+    },
+    "Smoke alarm warning": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Nest Protect"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.smoke = WARNING"
+      }
+    }
+  },
+  "variables": {
+    "battery": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 100,
+      "window": 5
+    },
+    "smoke": {
+      "type": "set",
+      "setValue": ["NORMAL", "WARNING", "EMERGENCY"]
+    },
+    "carbon_monoxide": {
+      "type": "set",
+      "setValue": ["NORMAL", "WARNING", "EMERGENCY"]
+    }
+  }
+}

@@ -1,0 +1,208 @@
+{
+  "actions": {
+    "Mute audio": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Manything"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.audio ← MUTE"
+        }
+      ]
+    },
+    "Set multiple camera settings": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Manything"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "recording"
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "audio"
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "mode"
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.recording ← {1},{0}.audio ← {2},{0}.mode ← {3}"
+        }
+      ]
+    },
+    "Start recording": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Manything"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.recording ← ON"
+        }
+      ]
+    },
+    "Stop recording": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Manything"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.recording ← OFF"
+        }
+      ]
+    },
+    "Turn camera flashlight off": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Manything"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.flashlight ← OFF"
+        }
+      ]
+    },
+    "Turn camera flashlight on": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Manything"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.flashlight ← ON"
+        }
+      ]
+    },
+    "Unmute audio": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Manything"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.audio ← UNMUTE"
+        }
+      ]
+    },
+    "Use front facing camera": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Manything"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.camera ← FRONT"
+        }
+      ]
+    }
+  },
+  "triggers": {
+    "Battery Low": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Manything"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.battery < 20"
+      }
+    },
+    "Motion detected": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Manything"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.recording = ON & {0}.motion_detected = TRUE"
+      }
+    },
+    "Power disconnected": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Manything"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.power != {0}.power_previous & {0}.power = CONNECTED"
+      }
+    }
+  },
+  "variables": {
+    "audio": {
+      "type": "set",
+      "setValue": ["MUTE", "UNMUTE"]
+    },
+    "recording": {
+      "type": "set",
+      "setValue": ["ON", "OFF"]
+    },
+    "flashlight": {
+      "type": "set",
+      "setValue": ["ON", "OFF"]
+    },
+    "camera": {
+      "type": "set",
+      "setValue": ["FRONT", "REAR"]
+    },
+    "battery": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 100,
+      "window": 5
+    },
+    "motion_detected": {
+      "type": "boolean"
+    },
+    "power": {
+      "type": "set",
+      "setValue": ["CONNECTED", "DISCONNECTED"]
+    },
+    "power_previous": {
+      "type": "set",
+      "setValue": ["CONNECTED", "DISCONNECTED"]
+    },
+    "mode": {
+      "type": "set",
+      "setValue": ["STILLS", "VIDEO"]
+    }
+  },
+  "customs": [
+    {
+      "name": "CUSTOM_MANYTHING_POWERPREVIOUS",
+      "trigger": "TRUE",
+      "action": [
+        {
+          "assignment": "{0}.power_previous ← {0}.power"
+        }
+      ]
+    }
+  ]
+}

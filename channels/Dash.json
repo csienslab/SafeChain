@@ -1,0 +1,201 @@
+{
+  "triggers": {
+    "Check engine light turned on": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Dash"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.check_engine_light = ON"
+      }
+    },
+    "Driving through an area": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Dash"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "location"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.location = {1}"
+      }
+    },
+    "Hard acceleration alert": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Dash"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.hard_acceleration_alert = TRUE"
+      }
+    },
+    "Hard brake alert": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Dash"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.hard_brake_alert = TRUE"
+      }
+    },
+    "Ignition turned off": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Dash"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.ignition = OFF"
+      }
+    },
+    "Ignition turned off in area": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Dash"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "location"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.ignition = OFF & {0}.location = {1}"
+      }
+    },
+    "Ignition turned on": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Dash"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.ignition = ON"
+      }
+    },
+    "Ignition turned on in area": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Dash"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "location"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.ignition = ON & {0}.location = {1}"
+      }
+    },
+    "Low fuel level": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Dash"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "fuel_level"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.fuel_level < {1}"
+      }
+    },
+    "Mileage driven": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Dash"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "mileage"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.mileage > {1}"
+      }
+    },
+    "New bumper sticker earned": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Dash"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.new_bumper_sticker_earned = TRUE"
+      }
+    },
+    "New trip completed": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Dash"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.new_trip_completed = TRUE"
+      }
+    }
+  },
+  "variables": {
+    "new_trip_completed": {
+      "type": "boolean"
+    },
+    "new_bumper_sticker_earned": {
+      "type": "boolean"
+    },
+    "hard_brake_alert": {
+      "type": "boolean"
+    },
+    "hard_acceleration_alert": {
+      "type": "boolean"
+    },
+    "location": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 1023,
+      "window": 50
+    },
+    "ignition": {
+      "type": "set",
+      "setValue": ["ON", "OFF", "NOCHANGE"]
+    },
+    "check_engine_light": {
+      "type": "set",
+      "setValue": ["ON", "OFF", "NOCHANGE"]
+    },
+    "fuel_level": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 100,
+      "window": 5
+    },
+    "mileage": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 100000,
+      "window": 500
+    }
+  }
+}

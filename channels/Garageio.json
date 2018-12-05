@@ -1,0 +1,70 @@
+{
+  "actions": {
+    "Close garage door": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Garageio"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.status ← CLOSED"
+        }
+      ]
+    },
+    "Open garage door": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Garageio"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.status ← OPEN"
+        }
+      ]
+    }
+  },
+  "triggers": {
+    "Door opened or closed": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Garageio"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.status != {0}.status_previous"
+      }
+    }
+  },
+  "variables": {
+    "status": {
+      "type": "set",
+      "setValue": [
+        "OPEN",
+        "CLOSED"
+      ]
+    },
+    "status_previous": {
+      "type": "set",
+      "setValue": [
+        "OPEN",
+        "CLOSED"
+      ]
+    }
+  },
+  "customs": [
+    {
+      "name": "CUSTOM_GARAGEIO_STATUSPREVIOUS",
+      "trigger": "TRUE",
+      "action": [
+        {
+          "assignment": "{0}.status_previous ← {0}.status"
+        }
+      ]
+    }
+  ]
+}

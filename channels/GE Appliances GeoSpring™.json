@@ -1,0 +1,143 @@
+{
+  "actions": {
+    "Set operating mode": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["GE Appliances GeoSpring™"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "mode"
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.mode ← {1}"
+        }
+      ]
+    },
+    "Set temperature": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["GE Appliances GeoSpring™"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "temperature"
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.temperature ← {1}"
+        }
+      ]
+    },
+    "Set vacation mode": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["GE Appliances GeoSpring™"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.mode ← VACATION"
+        }
+      ]
+    }
+  },
+  "triggers": {
+    "Air filter dirty": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["GE Appliances GeoSpring™"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.air_filter_dirty_level >= 80"
+      }
+    },
+    "Boost mode selected": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["GE Appliances GeoSpring™"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.mode = BOOST"
+      }
+    },
+    "Heat pump mode selected": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["GE Appliances GeoSpring™"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.mode = HEAT_PUMP"
+      }
+    },
+    "Hybrid mode selected": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["GE Appliances GeoSpring™"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.mode = HYBRID"
+      }
+    },
+    "Standard mode selected": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["GE Appliances GeoSpring™"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.mode = STANDARD"
+      }
+    },
+    "Vacation mode selected": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["GE Appliances GeoSpring™"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.mode = VACATION"
+      }
+    }
+  },
+  "variables": {
+    "mode": {
+      "type": "set",
+      "setValue": ["BOOST", "HEAT_PUMP", "HYBRID", "STANDARD", "VACATION", "NOCHANGE"],
+      "resetValue": "NOCHANGE"
+    },
+    "status": {
+      "type": "set",
+      "setValue": ["ON", "OFF"]
+    },
+    "temperature": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 100
+    },
+    "air_filter_dirty_level": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 100,
+      "window": 5
+    }
+  }
+}

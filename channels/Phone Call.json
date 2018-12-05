@@ -1,0 +1,40 @@
+{
+  "actions": {
+    "Call my phone": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Phone Call"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.status ← PHONECALL"
+        }
+      ]
+    }
+  },
+  "triggers": {
+    "Leave IFTTT any voicemail": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Phone Call"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.leave_ifttt_any_voicemail = TRUE"
+      }
+    }
+  },
+  "variables": {
+    "status": {
+      "type": "set",
+      "setValue": ["PHONECALL", "NONE"],
+      "resetValue": "NONE"
+    },
+    "leave_ifttt_any_voicemail": {
+      "type": "boolean"
+    }
+  }
+}

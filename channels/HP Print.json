@@ -1,0 +1,63 @@
+{
+  "actions": {
+    "Print PDF": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["HP Print"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.print ← PDF"
+        }
+      ]
+    },
+    "Print email or message": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["HP Print"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.print ← MESSAGE"
+        }
+      ]
+    },
+    "Print photo": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["HP Print"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.print ← PHOTO"
+        }
+      ]
+    },
+    "Print web article": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["HP Print"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.print ← ARTICLE"
+        }
+      ]
+    }
+  },
+  "variables": {
+    "print": {
+      "type": "set",
+      "setValue": ["PDF", "MESSAGE", "PHOTO", "ARTICLE", "NONE"],
+      "resetValue": "NONE"
+    }
+  }
+}

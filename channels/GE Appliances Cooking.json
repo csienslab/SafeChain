@@ -1,0 +1,119 @@
+{
+  "actions": {
+    "Set oven to sabbath mode": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["GE Appliances Cooking"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.mode ← SABBATH"
+        }
+      ]
+    },
+    "Turn off oven": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["GE Appliances Cooking"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.status ← OFF"
+        }
+      ]
+    }
+  },
+  "triggers": {
+    "Cooking timer done": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["GE Appliances Cooking"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.cooking_timer = OFF"
+      }
+    },
+    "Oven timer done": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["GE Appliances Cooking"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.oven_timer = OFF"
+      }
+    },
+    "Oven turned off": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["GE Appliances Cooking"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.status = OFF"
+      }
+    },
+    "Oven turned on": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["GE Appliances Cooking"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.status = ON"
+      }
+    },
+    "Preheat temperature achieved": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["GE Appliances Cooking"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.preheat_temperature_achieved = TRUE"
+      }
+    }
+  },
+  "variables": {
+    "status": {
+      "type": "set",
+      "setValue": ["ON", "OFF", "NOCHANGE"],
+      "resetValue": "NOCHANGE"
+    },
+    "mode": {
+      "type": "set",
+      "setValue": ["NORMAL", "SABBATH"]
+    },
+    "cooking_timer": {
+      "type": "set",
+      "setValue": [
+        "SUSPENDED",
+        "COUNTING",
+        "OFF",
+        "NONE"
+      ]
+    },
+    "oven_timer": {
+      "type": "set",
+      "setValue": [
+        "SUSPENDED",
+        "COUNTING",
+        "OFF",
+        "NONE"
+      ]
+    },
+    "preheat_temperature_achieved": {
+      "type": "boolean"
+    }
+  }
+}

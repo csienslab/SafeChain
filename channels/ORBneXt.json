@@ -1,0 +1,51 @@
+{
+  "actions": {
+    "Change color": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["ORBneXt"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "color"
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.color ← {1}"
+        }
+      ]
+    },
+    "Flash alert": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["ORBneXt"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "color"
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.color ← {1},{0}.flash ← ON"
+        }
+      ]
+    }
+  },
+  "variables": {
+    "color": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 255
+    },
+    "flash": {
+      "type": "set",
+      "setValue": ["ON", "OFF"]
+    }
+  }
+}

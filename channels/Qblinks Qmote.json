@@ -1,0 +1,40 @@
+{
+  "actions": {
+    "Connect to an internet service": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Qblinks Qmote"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.connect_to_an_internet_service ← TRUE"
+        }
+      ]
+    }
+  },
+  "triggers": {
+    "Press button": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Qblinks Qmote"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.button = CLICKED"
+      }
+    }
+  },
+  "variables": {
+    "button": {
+      "type": "set",
+      "setValue": ["CLICKED", "NONCLICKED"]
+    },
+    "connect_to_an_internet_service": {
+      "type": "boolean",
+      "resetValue": "FALSE"
+    }
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "actions": {
+    "Start recording": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Camio"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.recording ← ON"
+        }
+      ]
+    },
+    "Stop recording": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Camio"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.recording ← OFF"
+        }
+      ]
+    },
+    "Turn off motion notifications": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Camio"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.motion_notification ← OFF"
+        }
+      ]
+    },
+    "Turn on motion notifications": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Camio"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.motion_notification ← ON"
+        }
+      ]
+    }
+  },
+  "triggers": {
+    "Advanced motion detected": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Camio"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "motion_color"
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "motion_direction"
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "motion_object"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.motion_detected = TRUE & {0}.motion_color = {1} & {0}.motion_direction = {2} & {0}.motion_object = {3}"
+      }
+    },
+    "Motion detected": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Camio"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.motion_detected = TRUE"
+      }
+    },
+    "Power disconnected": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Camio"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.power = DISCONNECTED"
+      }
+    }
+  },
+  "variables": {
+    "motion_detected": {
+      "type": "boolean"
+    },
+    "motion_color": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 255
+    },
+    "motion_direction": {
+      "type": "set",
+      "setValue": ["APPROACHING", "DEPARTING", "NA"]
+    },
+    "motion_object": {
+      "type": "set",
+      "setValue": ["PEOPLE", "CARS"]
+    },
+    "power": {
+      "type": "set",
+      "setValue": ["CONNECTED", "DISCONNECTED", "NOCHANGE"]
+    },
+    "recording": {
+      "type": "set",
+      "setValue": ["ON", "OFF"]
+    },
+    "motion_notification": {
+      "type": "set",
+      "setValue": ["ON", "OFF"]
+    }
+  }
+}

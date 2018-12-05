@@ -1,0 +1,64 @@
+{
+  "actions": {
+    "Send data to Adafruit IO": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Adafruit"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "data"
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.data ← {1}"
+        }
+      ]
+    }
+  },
+  "triggers": {
+    "Any new data": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Adafruit"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.data != 0"
+      }
+    },
+    "Monitor a feed on Adafruit IO": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Adafruit"]
+        },
+        {
+          "type": "set",
+          "setValue": ["<", "<=", ">=", ">"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "data",
+          "except": [0]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.data != 0 & {0}.data {1} {2}"
+      }
+    }
+  },
+  "variables": {
+    "data": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 127,
+      "resetValue": 0
+    }
+  }
+}

@@ -1,0 +1,389 @@
+{
+  "actions": {
+    "Launch Google Maps Navigation": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Android Device"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "google_maps_navigation_type"
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "google_maps_navigation_destination"
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.google_maps_navigation ← ON,{0}.google_maps_navigation_type ← {1},{0}.google_maps_navigation_destination ← {2}"
+        }
+      ]
+    },
+    "Mute ringtone": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Android Device"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.ringtone_volume ← 0"
+        }
+      ]
+    },
+    "Play a specific song": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Android Device"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "song_played"
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.song_played ← {1}"
+        }
+      ]
+    },
+    "Play music": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Android Device"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "song_played"
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.song_played ← {1}"
+        }
+      ]
+    },
+    "Set ringtone volume": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Android Device"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "ringtone_volume"
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.ringtone_volume ← {1}"
+        }
+      ]
+    },
+    "Turn off Bluetooth": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Android Device"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.bluetooth_switch ← OFF"
+        }
+      ]
+    },
+    "Turn off WiFi": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Android Device"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.wifi_switch ← OFF"
+        }
+      ]
+    },
+    "Turn on Bluetooth": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Android Device"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.bluetooth_switch ← ON,{0}.bluetooth_status ← NONCONNECTED"
+        }
+      ]
+    },
+    "Turn on WiFi": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Android Device"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.wifi_switch ← ON,{0}.wifi_status ← NONCONNECTED"
+        }
+      ]
+    },
+    "Update device wallpaper": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Android Device"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "wallpaper"
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.wallpaper ← {1}"
+        }
+      ]
+    }
+  },
+  "triggers": {
+    "Connects or disconnects from a specific WiFi network": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Android Device"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "wifi_connected_network"
+        }
+      ],
+      "definition": {
+        "boolean": "( {0}.wifi_switch = ON & {0}.wifi_status = DISCONNECTED & {0}.wifi_connected_network = {1} ) | ( {0}.wifi_status = CONNECTED & {0}.wifi_connected_network = {1} )"
+      }
+    },
+    "Connects or disconnects from any WiFi network": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Android Device"]
+        }
+      ],
+      "definition": {
+        "boolean": "( {0}.wifi_switch = ON & {0}.wifi_status = DISCONNECTED ) | {0}.wifi_status = CONNECTED"
+      }
+    },
+    "Connects to a Bluetooth device": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Android Device"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.bluetooth_switch = ON & {0}.bluetooth_status = CONNECTED"
+      }
+    },
+    "Connects to a specific WiFi network": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Android Device"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "wifi_connected_network"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.wifi_switch = ON & {0}.wifi_status = CONNECTED & {0}.wifi_connected_network = {1}"
+      }
+    },
+    "Connects to any WiFi network": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Android Device"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.wifi_switch = ON & {0}.wifi_status = CONNECTED"
+      }
+    },
+    "Disconnects from a Bluetooth device": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Android Device"]
+        }
+      ],
+      "definition": {
+        "boolean": "( {0}.bluetooth_switch = ON & {0}.bluetooth_status = DISCONNECTED ) | ( {0}.bluetooth_switch = OFF & {0}.bluetooth_status = CONNECTED )"
+      }
+    },
+    "Disconnects from a specific WiFi network": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Android Device"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "wifi_connected_network"
+        }
+      ],
+      "definition": {
+        "boolean": "( {0}.wifi_switch = ON & {0}.wifi_status = DISCONNECTED & {0}.wifi_connected_network = {1} ) | ( {0}.wifi_switch = OFF & {0}.wifi_status = CONNECTED & {0}.wifi_connected_network = {1} )"
+      }
+    },
+    "Disconnects from any WiFi network": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Android Device"]
+        }
+      ],
+      "definition": {
+        "boolean": "( {0}.wifi_switch = ON & {0}.wifi_status = DISCONNECTED ) | ( {0}.wifi_switch = OFF & {0}.wifi_status = CONNECTED )"
+      }
+    }
+  },
+  "variables": {
+    "google_maps_navigation": {
+      "type": "set",
+      "setValue": [
+        "ON",
+        "OFF"
+      ]
+    },
+    "google_maps_navigation_type": {
+      "type": "set",
+      "setValue": [
+        "DRIVING",
+        "BICYCLING",
+        "WALKING"
+      ]
+    },
+    "google_maps_navigation_destination": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 127
+    },
+    "ringtone_volume": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 100
+    },
+    "song_played": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 63
+    },
+    "wallpaper": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 63
+    },
+    "bluetooth_switch": {
+      "type": "set",
+      "setValue": [
+        "ON",
+        "OFF"
+      ]
+    },
+    "bluetooth_status": {
+      "type": "set",
+      "setValue": [
+        "NONCONNECTED",
+        "CONNECTED",
+        "DISCONNECTED"
+      ]
+    },
+    "wifi_switch": {
+      "type": "set",
+      "setValue": [
+        "ON",
+        "OFF"
+      ]
+    },
+    "wifi_status": {
+      "type": "set",
+      "setValue": [
+        "NONCONNECTED",
+        "CONNECTED",
+        "DISCONNECTED"
+      ]
+    },
+    "wifi_connected_network": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 63
+    },
+    "event": {
+      "type": "set",
+      "setValue": [
+        "NONE",
+        "WIFI_CONNECT",
+        "WIFI_DISCONNECT",
+        "BLUETOOTH_CONNECT",
+        "BLUETOOTH_DISCONNECT"
+      ]
+    }
+  },
+  "customs": [
+    {
+      "name": "CUSTOM_ANDROIDDEVICE_WIFICONNECT",
+      "trigger": "{0}.wifi_switch = ON & {0}.event = WIFI_CONNECT & {0}.wifi_status != CONNECTED",
+      "action": [
+        {
+          "assignment": "{0}.wifi_status ← CONNECTED,{0}.wifi_connected_network ← 1..63"
+        }
+      ]
+    },
+    {
+      "name": "CUSTOM_ANDROIDDEVICE_WIFIDISCONNECT",
+      "trigger": "{0}.wifi_switch = ON & {0}.event = WIFI_DISCONNECT & {0}.wifi_status = CONNECTED",
+      "action": [
+        {
+          "assignment": "{0}.wifi_status ← DISCONNECTED"
+        }
+      ]
+    },
+    {
+      "name": "CUSTOM_ANDROIDDEVICE_BLUETOOTHCONNECT",
+      "trigger": "{0}.bluetooth_switch = ON & {0}.event = BLUETOOTH_CONNECT & {0}.bluetooth_status != CONNECTED",
+      "action": [
+        {
+          "assignment": "{0}.bluetooth_status ← CONNECTED"
+        }
+      ]
+    },
+    {
+      "name": "CUSTOM_ANDROIDDEVICE_BLUETOOTHDISCONNECT",
+      "trigger": "{0}.bluetooth_switch = ON & {0}.event = BLUETOOTH_DISCONNECT & {0}.bluetooth_status = CONNECTED",
+      "action": [
+        {
+          "assignment": "{0}.bluetooth_status ← DISCONNECTED"
+        }
+      ]
+    }
+  ]
+}

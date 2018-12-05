@@ -1,0 +1,162 @@
+{
+  "actions": {
+    "Lighting off": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["GreenIQ"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.lighting ← OFF"
+        }
+      ]
+    },
+    "Lighting on": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["GreenIQ"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.lighting ← ON"
+        }
+      ]
+    },
+    "Start irrigation": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["GreenIQ"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.irrigation ← ON"
+        }
+      ]
+    },
+    "Stop irrigation": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["GreenIQ"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.irrigation ← OFF"
+        }
+      ]
+    }
+  },
+  "triggers": {
+    "Irrigation started": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["GreenIQ"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.irrigation != {0}.irrigation_previous & {0}.irrigation = ON"
+      }
+    },
+    "Irrigation stopped": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["GreenIQ"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.irrigation != {0}.irrigation_previous & {0}.irrigation = OFF"
+      }
+    },
+    "Lighting turned off": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["GreenIQ"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.lighting != {0}.lighting_previous & {0}.lighting = OFF"
+      }
+    },
+    "Lighting turned on": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["GreenIQ"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.lighting != {0}.lighting_previous & {0}.lighting = ON"
+      }
+    },
+    "Weekly water savings threshold reached": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["GreenIQ"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "weekly_water_savings"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.weekly_water_savings >= {1}"
+      }
+    }
+  },
+  "variables": {
+    "irrigation": {
+      "type": "set",
+      "setValue": ["ON", "OFF"]
+    },
+    "irrigation_previous": {
+      "type": "set",
+      "setValue": ["ON", "OFF"]
+    },
+    "lighting": {
+      "type": "set",
+      "setValue": ["ON", "OFF"]
+    },
+    "lighting_previous": {
+      "type": "set",
+      "setValue": ["ON", "OFF"]
+    },
+    "weekly_water_savings": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 100,
+      "window": 5
+    }
+  },
+  "customs": [
+    {
+      "name": "CUSTOM_GREENIQ_IRRIGATIONPREVIOUS",
+      "trigger": "TRUE",
+      "action": [
+        {
+          "assignment": "{0}.irrigation_previous ← {0}.irrigation"
+        }
+      ]
+    },
+    {
+      "name": "CUSTOM_GREENIQ_LIGHTINGPREVIOUS",
+      "trigger": "TRUE",
+      "action": [
+        {
+          "assignment": "{0}.lighting_previous ← {0}.lighting"
+        }
+      ]
+    }
+  ]
+}

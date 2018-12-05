@@ -1,0 +1,50 @@
+{
+  "triggers": {
+    "Daily smartphone screen unlocks": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["QualityTime"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "unlock"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.unlock >= {1}"
+      }
+    },
+    "Daily smartphone usage time": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["QualityTime"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "usage_time"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.usage_time >= {1}"
+      }
+    }
+  },
+  "variables": {
+    "unlock": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 1023,
+      "window": 50
+    },
+    "usage_time": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 1440,
+      "window": 50
+    }
+  }
+}

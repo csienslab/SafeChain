@@ -1,0 +1,51 @@
+{
+  "triggers": {
+    "Any shipping status change": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Boxoh Package Tracking"]
+        },
+        {
+          "type": "variable",
+          "device": "{0}"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.{1} = TRUE"
+      }
+    }
+  },
+  "variables": {
+    "shipping_status_1_changed": {
+      "type": "boolean"
+    },
+    "shipping_status_2_changed": {
+      "type": "boolean"
+    },
+    "shipping_status_3_changed": {
+      "type": "boolean"
+    },
+    "shipping_status_4_changed": {
+      "type": "boolean"
+    },
+    "shipping_status_5_changed": {
+      "type": "boolean"
+    },
+    "shipping_status_6_changed": {
+      "type": "boolean"
+    },
+    "shipping_status_7_changed": {
+      "type": "boolean"
+    },
+    "shipping_status_8_changed": {
+      "type": "boolean"
+    },
+    "shipping_status_9_changed": {
+      "type": "boolean"
+    },
+    "shipping_status_10_changed": {
+      "type": "boolean"
+    }
+  }
+}

@@ -1,0 +1,178 @@
+{
+  "actions": {
+    "Set temperature": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Nest Thermostat"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "desired_temperature"
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.desired_temperature ← {1},{0}.desired_temperature2 ← {1}"
+        }
+      ]
+    },
+    "Set temperature range": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Nest Thermostat"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "desired_temperature"
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "desired_temperature2"
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.desired_temperature ← {1},{0}.desired_temperature2 ← {2}"
+        }
+      ]
+    },
+    "Turn on fan for 15 minutes": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Nest Thermostat"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.fan ← ON,{0}.timer_fan_off ← 15"
+        }
+      ]
+    }
+  },
+  "triggers": {
+    "Nest set to Away": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Nest Thermostat"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.mode != {0}.mode_previous & {0}.mode = AWAY"
+      }
+    },
+    "Nest set to Home": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Nest Thermostat"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.mode != {0}.mode_previous & {0}.mode = HOME"
+      }
+    },
+    "Temperature drops below": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Nest Thermostat"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "temperature"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.temperature < {1}"
+      }
+    },
+    "Temperature rises above": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Nest Thermostat"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "temperature"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.temperature > {1}"
+      }
+    }
+  },
+  "variables": {
+    "temperature": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 100,
+      "window": 5
+    },
+    "desired_temperature": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 100
+    },
+    "desired_temperature2": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 100
+    },
+    "fan": {
+      "type": "set",
+      "setValue": ["ON", "OFF"]
+    },
+    "mode": {
+      "type": "set",
+      "setValue": ["HOME", "AWAY"]
+    },
+    "mode_previous": {
+      "type": "set",
+      "setValue": ["HOME", "AWAY"]
+    },
+    "timer_fan_off": {
+      "type": "range",
+      "minValue": -1,
+      "maxValue": 15
+    }
+  },
+  "customs": [
+    {
+      "name": "CUSTOM_NESTTHERMOSTAT_MODEPREVIOUS",
+      "trigger": "TRUE",
+      "action": [
+        {
+          "assignment": "{0}.mode_previous ← {0}.mode"
+        }
+      ]
+    },
+    {
+      "name": "CUSTOM_NESTTHERMOSTAT_TIMERFANOFF",
+      "trigger": "{0}.timer_fan_off >= 0",
+      "action": [
+        {
+          "assignment": "{0}.timer_fan_off ← {0}.timer_fan_off - 1"
+        }
+      ]
+    },
+    {
+      "name": "CUSTOM_NESTTHERMOSTAT_TIMER_FANOFF",
+      "trigger": "{0}.timer_fan_off = 0",
+      "action": [
+        {
+          "assignment": "{0}.fan ← OFF"
+        }
+      ]
+    }
+  ]
+}

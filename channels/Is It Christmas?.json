@@ -1,0 +1,20 @@
+{
+  "triggers": {
+    "Is It Christmas?": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Is It Christmas?"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.is_it_christmas = TRUE"
+      }
+    }
+  },
+  "variables": {
+    "is_it_christmas": {
+      "type": "boolean"
+    }
+  }
+}

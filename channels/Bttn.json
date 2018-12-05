@@ -1,0 +1,21 @@
+{
+  "triggers": {
+    "Press bttn": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Bttn"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.status = PRESSED"
+      }
+    }
+  },
+  "variables": {
+    "status": {
+      "type": "set",
+      "setValue": ["PRESSED", "NONE"]
+    }
+  }
+}

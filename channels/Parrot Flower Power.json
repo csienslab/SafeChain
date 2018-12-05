@@ -1,0 +1,76 @@
+{
+  "triggers": {
+    "Fertilizer level alert": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Parrot Flower Power"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.fertilizer_level_alert = TRUE"
+      }
+    },
+    "Light level alert": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Parrot Flower Power"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.light_level_alert = TRUE"
+      }
+    },
+    "Soil moisture alert": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Parrot Flower Power"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.soil_moisture_alert = TRUE"
+      }
+    },
+    "Temperature alert": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Parrot Flower Power"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.temperature_alert = TRUE"
+      }
+    },
+    "Time to water the plant": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Parrot Flower Power"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.time_to_water_the_plant = TRUE"
+      }
+    }
+  },
+  "variables": {
+    "fertilizer_level_alert": {
+      "type": "boolean"
+    },
+    "light_level_alert": {
+      "type": "boolean"
+    },
+    "soil_moisture_alert": {
+      "type": "boolean"
+    },
+    "temperature_alert": {
+      "type": "boolean"
+    },
+    "time_to_water_the_plant": {
+      "type": "boolean"
+    }
+  }
+}

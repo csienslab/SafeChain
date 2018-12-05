@@ -1,0 +1,191 @@
+{
+  "actions": {
+    "Blink lights": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Philips Hue"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.status ← OFF,{0}.timer_on ← 1"
+        }
+      ]
+    },
+    "Change color": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Philips Hue"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "color"
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.color ← {1}"
+        }
+      ]
+    },
+    "Change color from image": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Philips Hue"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "color"
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.color ← {1}"
+        }
+      ]
+    },
+    "Change to random color": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Philips Hue"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "color"
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.color ← {1}"
+        }
+      ]
+    },
+    "Dim lights": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Philips Hue"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "brightness"
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.brightness ← {1}"
+        }
+      ]
+    },
+    "Toggle lights on/off": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Philips Hue"]
+        }
+      ],
+      "definition": [
+        {
+          "boolean": "{0}.status = ON",
+          "assignment": "{0}.status ← OFF"
+        },
+        {
+          "boolean": "{0}.status = OFF",
+          "assignment": "{0}.status ← ON"
+        }
+      ]
+    },
+    "Turn off lights": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Philips Hue"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.status ← OFF"
+        }
+      ]
+    },
+    "Turn on color loop": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Philips Hue"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.loop ← TRUE"
+        }
+      ]
+    },
+    "Turn on lights": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Philips Hue"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.status ← ON"
+        }
+      ]
+    }
+  },
+  "variables": {
+    "status": {
+      "type": "set",
+      "setValue": ["ON", "OFF"]
+    },
+    "color": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 255
+    },
+    "brightness": {
+      "type": "range",
+      "minValue": 1,
+      "maxValue": 100
+    },
+    "loop": {
+      "type": "boolean",
+      "resetValue": "FALSE"
+    },
+    "timer_on": {
+      "type": "range",
+      "minValue": -1,
+      "maxValue": 1
+    }
+  },
+  "customs": [
+    {
+      "name": "CUSTOM_PHILIPSHUE_TIMER_ON",
+      "trigger": "{0}.timer_on = 0",
+      "action": [
+        {
+          "assignment": "{0}.status ← ON"
+        }
+      ]
+    },
+    {
+      "name": "CUSTOM_PHILIPSHUE_TIMERON",
+      "trigger": "{0}.timer_on >= 0",
+      "action": [
+        {
+          "assignment": "{0}.timer_on ← {0}.timer_on - 1"
+        }
+      ]
+    }
+  ]
+}

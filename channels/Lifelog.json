@@ -1,0 +1,143 @@
+{
+  "triggers": {
+    "Activity summary": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Lifelog"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.activity_summary = TRUE"
+      }
+    },
+    "Any application used": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Lifelog"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.any_application_used = TRUE"
+      }
+    },
+    "Any physical activity": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Lifelog"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.any_physical_activity = TRUE"
+      }
+    },
+    "Daily calorie goal reached": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Lifelog"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "daily_calorie"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.daily_calorie >= {1}"
+      }
+    },
+    "Daily steps above": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Lifelog"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "daily_steps"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.daily_steps >= {1}"
+      }
+    },
+    "Recorded sleep": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Lifelog"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.recorded_sleep = TRUE"
+      }
+    },
+    "Specific application used": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Lifelog"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "which_application_used"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.any_application_used = TRUE & {0}.which_application_used = {1}"
+      }
+    },
+    "Step goal not reached": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Lifelog"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "daily_steps"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.daily_steps < {1}"
+      }
+    }
+  },
+  "variables": {
+    "activity_summary": {
+      "type": "boolean"
+    },
+    "any_application_used": {
+      "type": "boolean"
+    },
+    "which_application_used": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 127
+    },
+    "any_physical_activity": {
+      "type": "boolean"
+    },
+    "daily_calorie": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 4095,
+      "window": 50
+    },
+    "daily_steps": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 16383,
+      "window": 500
+    },
+    "recorded_sleep": {
+      "type": "boolean"
+    }
+  }
+}

@@ -1,0 +1,172 @@
+{
+  "actions": {
+    "Activate scene": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["LIFX"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "status"
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "color"
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "blink"
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "breath"
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.status ← {1},{0}.color ← {2},{0}.blink ← {3},{0}.breath ← {4}"
+        }
+      ]
+    },
+    "Blink lights": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["LIFX"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "status"
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "blink"
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.status ← {1},{0}.blink ← {2}"
+        }
+      ]
+    },
+    "Breathe lights": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["LIFX"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "status"
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "breath"
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.status ← {1},{0}.breath ← {2}"
+        }
+      ]
+    },
+    "Change color of lights": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["LIFX"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "status"
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "color"
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.status ← {1},{0}.color ← {2}"
+        }
+      ]
+    },
+    "Toggle lights on/off": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["LIFX"]
+        }
+      ],
+      "definition": [
+        {
+          "boolean": "{0}.status = OFF",
+          "assignment": "{0}.status ← ON"
+        },
+        {
+          "boolean": "{0}.status = ON",
+          "assignment": "{0}.status ← OFF"
+        }
+      ]
+    },
+    "Turn lights off": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["LIFX"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.status ← ON"
+        }
+      ]
+    },
+    "Turn lights on": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["LIFX"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.status ← OFF"
+        }
+      ]
+    }
+  },
+  "variables": {
+    "status": {
+      "type": "set",
+      "setValue": ["ON", "OFF"]
+    },
+    "color": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 255
+    },
+    "brightness": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 100
+    },
+    "blink": {
+      "type": "boolean"
+    },
+    "breath": {
+      "type": "boolean"
+    }
+  }
+}

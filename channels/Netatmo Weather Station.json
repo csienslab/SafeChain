@@ -1,0 +1,323 @@
+{
+  "triggers": {
+    "Air pressure drops below": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Netatmo Weather Station"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "air_pressure"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.air_pressure < {1}"
+      }
+    },
+    "Air pressure rises above": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Netatmo Weather Station"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "air_pressure"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.air_pressure > {1}"
+      }
+    },
+    "Carbon dioxide drops below": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Netatmo Weather Station"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "carbon_dioxide"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.carbon_dioxide < {1}"
+      }
+    },
+    "Carbon dioxide rises above": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Netatmo Weather Station"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "carbon_dioxide"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.carbon_dioxide > {1}"
+      }
+    },
+    "Gust speed rises above": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Netatmo Weather Station"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "gust_speed"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.gust_speed > {1}"
+      }
+    },
+    "Humidity drops below": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Netatmo Weather Station"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "humidity"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.humidity < {1}"
+      }
+    },
+    "Humidity rises above": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Netatmo Weather Station"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "humidity"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.humidity > {1}"
+      }
+    },
+    "Noise level drops below": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Netatmo Weather Station"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "noise_level"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.noise_level < {1}"
+      }
+    },
+    "Noise level rises above": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Netatmo Weather Station"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "noise_level"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.noise_level > {1}"
+      }
+    },
+    "Rain detected": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Netatmo Weather Station"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.raining != {0}.raining_previous & {0}.raining = TRUE"
+      }
+    },
+    "Rain no longer detected": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Netatmo Weather Station"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.raining != {0}.raining_previous & {0}.raining = FALSE"
+      }
+    },
+    "Temperature drops below": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Netatmo Weather Station"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "temperature"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.temperature < {1}"
+      }
+    },
+    "Temperature rises above": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Netatmo Weather Station"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "temperature"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.temperature > {1}"
+      }
+    },
+    "Today's rainfall measurement": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Netatmo Weather Station"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.todays_rainfall_measurement = TRUE"
+      }
+    },
+    "Wind speed drops below": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Netatmo Weather Station"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "wind_speed"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.wind_speed < {1}"
+      }
+    },
+    "Wind speed rises above": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Netatmo Weather Station"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "wind_speed"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.wind_speed > {1}"
+      }
+    },
+    "Yesterday's rainfall measurement": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Netatmo Weather Station"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.yesterdays_rainfall_measurement = TRUE"
+      }
+    }
+  },
+  "variables": {
+    "air_pressure": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 100,
+      "window": 5
+    },
+    "carbon_dioxide": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 100,
+      "window": 5
+    },
+    "gust_speed": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 100,
+      "window": 5
+    },
+    "humidity": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 100,
+      "window": 5
+    },
+    "noise_level": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 100,
+      "window": 5
+    },
+    "raining": {
+      "type": "boolean"
+    },
+    "raining_previous": {
+      "type": "boolean"
+    },
+    "temperature": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 100,
+      "window": 5
+    },
+    "wind_speed": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 100,
+      "window": 5
+    },
+    "todays_rainfall_measurement": {
+      "type": "boolean"
+    },
+    "yesterdays_rainfall_measurement": {
+      "type": "boolean"
+    }
+  },
+  "customs": [
+    {
+      "name": "CUSTOM_NETATMOWEATHERSTATION_RAININGPREVIOUS",
+      "trigger": "TRUE",
+      "action": [
+        {
+          "assignment": "{0}.raining_previous ← {0}.raining"
+        }
+      ]
+    }
+  ]
+}

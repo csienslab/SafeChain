@@ -1,0 +1,90 @@
+{
+  "triggers": {
+    "Top App gone free in Google Play": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["AppZapp"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.top_app_gone_free_in_google_play = TRUE"
+      }
+    },
+    "Top App gone free in the Apple App Store": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["AppZapp"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.top_app_gone_free_in_the_apple_app_store = TRUE"
+      }
+    },
+    "Top App on sale in Google Play": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["AppZapp"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.top_app_on_sale_in_google_play = TRUE"
+      }
+    },
+    "Top App on sale in the Apple App Store": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["AppZapp"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.top_app_on_sale_in_the_apple_app_store = TRUE"
+      }
+    },
+    "Top new App in Google Play": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["AppZapp"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.top_new_app_in_google_play = TRUE"
+      }
+    },
+    "Top new App in the Apple App Store": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["AppZapp"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.top_new_app_in_the_apple_app_store = TRUE"
+      }
+    }
+  },
+  "variables": {
+    "top_app_gone_free_in_google_play": {
+      "type": "boolean"
+    },
+    "top_app_gone_free_in_the_apple_app_store": {
+      "type": "boolean"
+    },
+    "top_app_on_sale_in_google_play": {
+      "type": "boolean"
+    },
+    "top_app_on_sale_in_the_apple_app_store": {
+      "type": "boolean"
+    },
+    "top_new_app_in_google_play": {
+      "type": "boolean"
+    },
+    "top_new_app_in_the_apple_app_store": {
+      "type": "boolean"
+    }
+  }
+}

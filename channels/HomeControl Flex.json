@@ -1,0 +1,89 @@
+{
+  "actions": {
+    "Arm the security panel": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["HomeControl Flex"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.status ← ARMED"
+        }
+      ]
+    },
+    "Disarm the security panel": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["HomeControl Flex"]
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.status ← DISARMED"
+        }
+      ]
+    }
+  },
+  "triggers": {
+    "The security panel has been armed": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["HomeControl Flex"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.status != {0}.status_previous & {0}.status = ARMED"
+      }
+    },
+    "The security panel has been disarmed": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["HomeControl Flex"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.status != {0}.status_previous & {0}.status = DISARMED"
+      }
+    },
+    "The security panel triggers an alert": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["HomeControl Flex"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.status = ARMED & {0}.alert = TRUE"
+      }
+    }
+  },
+  "variables": {
+    "status": {
+      "type": "set",
+      "setValue": ["ARMED", "DISARMED"]
+    },
+    "status_previous": {
+      "type": "set",
+      "setValue": ["ARMED", "DISARMED"]
+    },
+    "alert": {
+      "type": "boolean"
+    }
+  },
+  "customs": [
+    {
+      "name": "CUSTOM_HOMECONTROLFLEX_STATUSPREVIOUS",
+      "trigger": "TRUE",
+      "action": [
+        {
+          "assignment": "{0}.status_previous ← {0}.status"
+        }
+      ]
+    }
+  ]
+}

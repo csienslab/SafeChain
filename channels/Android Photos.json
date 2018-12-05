@@ -1,0 +1,55 @@
+{
+  "triggers": {
+    "Any new photo": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Android Photos"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.new_photo = TRUE"
+      }
+    },
+    "New photo taken in area": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Android Photos"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "new_photo_location"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.new_photo = TRUE & {0}.new_photo_location = {1}"
+      }
+    },
+    "New screenshot": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Android Photos"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.new_screenshot = TRUE"
+      }
+    }
+  },
+  "variables": {
+    "new_photo": {
+      "type": "boolean"
+    },
+    "new_photo_location": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 1023
+    },
+    "new_screenshot": {
+      "type": "boolean"
+    }
+  }
+}

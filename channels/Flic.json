@@ -1,0 +1,52 @@
+{
+  "triggers": {
+    "A Flic with a tag is clicked": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Flic"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "tag"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.status = CLICKED & {0}.tag = {1}"
+      }
+    },
+    "Flic is clicked": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Flic"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "click_type"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.status = CLICKED & {0}.click_type = {1}"
+      }
+    }
+  },
+  "variables": {
+    "status": {
+      "type": "set",
+      "setValue": ["CLICKED", "NONE"]
+    },
+    "click_type": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 7
+    },
+    "tag": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 511
+    }
+  }
+}

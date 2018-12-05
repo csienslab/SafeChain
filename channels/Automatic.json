@@ -1,0 +1,125 @@
+{
+  "triggers": {
+    "Button pressed": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Automatic"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.button = PRESSED"
+      }
+    },
+    "Check engine light turned off": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Automatic"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.check_engine_light = OFF"
+      }
+    },
+    "Check engine light turned on": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Automatic"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.check_engine_light = ON"
+      }
+    },
+    "Ignition turned off": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Automatic"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.ignition = OFF"
+      }
+    },
+    "Ignition turned off in area": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Automatic"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "location"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.ignition = OFF & {0}.location = {1}"
+      }
+    },
+    "Ignition turned on": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Automatic"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.ignition = ON"
+      }
+    },
+    "Ignition turned on in area": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Automatic"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "location"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.ignition = ON & {0}.location = {1}"
+      }
+    },
+    "New trip completed": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Automatic"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.new_trip_completed = TRUE"
+      }
+    }
+  },
+  "variables": {
+    "button": {
+      "type": "set",
+      "setValue": ["PRESSED", "NONE"]
+    },
+    "check_engine_light": {
+      "type": "set",
+      "setValue": ["ON", "OFF", "NOCHANGE"]
+    },
+    "ignition": {
+      "type": "set",
+      "setValue": ["ON", "OFF", "NOCHANGE"]
+    },
+    "location": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 1023,
+      "window": 50
+    },
+    "new_trip_completed": {
+      "type": "boolean"
+    }
+  }
+}

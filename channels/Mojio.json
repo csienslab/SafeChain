@@ -1,0 +1,148 @@
+{
+  "triggers": {
+    "Diagnostic trouble code": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Mojio"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.diagnostic_trouble_code = TRUE"
+      }
+    },
+    "Engine started": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Mojio"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.engine != {0}.engine_previous & {0}.engine = ON"
+      }
+    },
+    "Engine stopped": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Mojio"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.engine != {0}.engine_previous & {0}.engine = OFF"
+      }
+    },
+    "Low battery": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Mojio"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.battery < 20"
+      }
+    },
+    "Low fuel": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Mojio"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.fuel < 20"
+      }
+    },
+    "Mojio plugged in": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Mojio"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.status != {0}.status_previous & {0}.status = PLUGGED"
+      }
+    },
+    "Mojio unplugged": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Mojio"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.status != {0}.status_previous & {0}.status = UNPLUGGED"
+      }
+    },
+    "Trip finished": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Mojio"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.trip_finished = TRUE"
+      }
+    }
+  },
+  "variables": {
+    "diagnostic_trouble_code": {
+      "type": "boolean"
+    },
+    "engine": {
+      "type": "set",
+      "setValue": ["ON", "OFF"]
+    },
+    "engine_previous": {
+      "type": "set",
+      "setValue": ["ON", "OFF"]
+    },
+    "battery": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 100,
+      "window": 5
+    },
+    "fuel": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 100,
+      "window": 5
+    },
+    "status": {
+      "type": "set",
+      "setValue": ["PLUGGED", "UNPLUGGED"]
+    },
+    "status_previous": {
+      "type": "set",
+      "setValue": ["PLUGGED", "UNPLUGGED"]
+    },
+    "trip_finished": {
+      "type": "boolean"
+    }
+  },
+  "customs": [
+    {
+      "name": "CUSTOM_MOJIO_ENGINEPREVIOUS",
+      "trigger": "TRUE",
+      "action": [
+        {
+          "assignment": "{0}.engine_previous ← {0}.engine"
+        }
+      ]
+    },
+    {
+      "name": "CUSTOM_MOJIO_STATUSPREVIOUS",
+      "trigger": "TRUE",
+      "action": [
+        {
+          "assignment": "{0}.status_previous ← {0}.status"
+        }
+      ]
+    }
+  ]
+}

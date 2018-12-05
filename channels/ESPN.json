@@ -1,0 +1,107 @@
+{
+  "triggers": {
+    "Breaking news for sport": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["ESPN"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "sport"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.breaking_news = TRUE & {0}.sport = {1}"
+      }
+    },
+    "Breaking news for team": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["ESPN"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "team"
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.breaking_news = TRUE & {0}.team = {1}"
+      }
+    },
+    "Breaking top news": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["ESPN"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.breaking_top_news = TRUE"
+      }
+    },
+    "New final score": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["ESPN"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.new_final_score = TRUE"
+      }
+    },
+    "New game start": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["ESPN"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.new_game_start = TRUE"
+      }
+    },
+    "New in-game update": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["ESPN"]
+        }
+      ],
+      "definition": {
+        "boolean": "{0}.new_ingame_update = TRUE"
+      }
+    }
+  },
+  "variables": {
+    "team": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 63
+    },
+    "sport": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 7
+    },
+    "breaking_news": {
+      "type": "boolean"
+    },
+    "breaking_top_news": {
+      "type": "boolean"
+    },
+    "new_final_score": {
+      "type": "boolean"
+    },
+    "new_game_start": {
+      "type": "boolean"
+    },
+    "new_ingame_update": {
+      "type": "boolean"
+    }
+  }
+}

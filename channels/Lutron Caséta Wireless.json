@@ -1,0 +1,75 @@
+{
+  "actions": {
+    "Activate scene": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Lutron Caséta Wireless"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "light"
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "shade"
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.light ← {1},{0}.shade ← {2}"
+        }
+      ]
+    },
+    "Set light level": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Lutron Caséta Wireless"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "light"
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.light ← {1}"
+        }
+      ]
+    },
+    "Set shade position": {
+      "input": [
+        {
+          "type": "device",
+          "device": ["Lutron Caséta Wireless"]
+        },
+        {
+          "type": "value",
+          "device": "{0}",
+          "variable": "shade"
+        }
+      ],
+      "definition": [
+        {
+          "assignment": "{0}.shade ← {1}"
+        }
+      ]
+    }
+  },
+  "variables": {
+    "light": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 100
+    },
+    "shade": {
+      "type": "range",
+      "minValue": 0,
+      "maxValue": 100
+    }
+  }
+}
