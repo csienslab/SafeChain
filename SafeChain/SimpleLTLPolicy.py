@@ -6,10 +6,11 @@ import subprocess
 import pprint
 import time
 import os
+import tempfile
 
-import Boolean as MyBoolean
+import SafeChain.Boolean as MyBoolean
 
-class CTLPolicy:
+class LTLPolicy:
     def __init__(self, string):
         self.boolean = MyBoolean.Boolean(string)
 
@@ -27,24 +28,24 @@ class CTLPolicy:
     def dumpNumvModel(self, controller):
         string_list = [controller.dumpNumvModel()]
         string_list.append('')
-        string_list.append('  SPEC AG ({});'.format(self.boolean.getString()))
+        string_list.append('  LTLSPEC G ({});'.format(self.boolean.getString()))
         return '\n'.join(string_list)
 
     def findWhichRules(self, previous_state, current_state, transitions, controller):
         rules = set()
 
-        for device_variable in current_state:
-            current_value = current_state[device_variable]
-            previous_value = previous_state[device_variable]
+        for channel_variable in current_state:
+            current_value = current_state[channel_variable]
+            previous_value = previous_state[channel_variable]
 
             if current_value == previous_value:
                 continue
 
-            if device_variable not in transitions:
+            if channel_variable not in transitions:
                 rules.add('ENV')
                 continue
 
-            for boolean, value, rule_name in transitions[device_variable]:
+            for boolean, value, rule_name in transitions[channel_variable]:
                 if boolean == 'next(attack)' and current_state['attack'] == 'TRUE':
                     rules.add('ATTACK')
                     break
@@ -56,7 +57,10 @@ class CTLPolicy:
         return rules
 
     def parseOutput(self, output, controller):
-        index = output.index('-- specification')
+        try:
+            index = output.index('-- specification')
+        except ValueError:
+            return {'result': 'UNKNOWN'}
         output = output[index:]
 
         lines = output.splitlines()
@@ -84,8 +88,8 @@ class CTLPolicy:
             if line.startswith('-- Loop starts here'):
                 continue
 
-            device_variable, value = line.split(' = ')
-            current_state[device_variable] = value
+            channel_variable, value = line.split(' = ')
+            current_state[channel_variable] = value
         states.append(current_state)
 
         while index + 1 < len(lines):
@@ -102,8 +106,8 @@ class CTLPolicy:
                 if line.startswith('-- Loop starts here'):
                     continue
 
-                device_variable, value = line.split(' = ')
-                current_state[device_variable] = value
+                channel_variable, value = line.split(' = ')
+                current_state[channel_variable] = value
 
             rule = self.findWhichRules(previous_state, current_state, transitions, controller)
             states.append(current_state)
@@ -111,15 +115,16 @@ class CTLPolicy:
 
         return {'result': 'FAILED', 'states': states, 'rules': rules}
 
-    def check(self, controller, timeout):
+    def check(self, controller, timeout, bmc):
         model = self.dumpNumvModel(controller)
-        filename = '/tmp/r04922156/model {0} {2} {1}.smv'.format(os.getppid(), os.getpid(), datetime.datetime.now())
+        _, filename = tempfile.mkstemp(suffix='.smv')
         with open(filename, 'w') as f:
             f.write(model)
 
         checking_start = time.perf_counter()
         try:
-            p = subprocess.run(['NuSMV', '-keep_single_value_vars', filename], stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=timeout)
+            cmds = ['NuSMV', '-keep_single_value_vars', '-df'] + (['-bmc'] if bmc else []) + [filename]
+            p = subprocess.run(cmds, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=timeout)
         except subprocess.TimeoutExpired:
             return filename, None, timeout
         checking_time = time.perf_counter() - checking_start

@@ -12,26 +12,26 @@ class Condition:
     def getConstraints(self):
         if len(self.tupple) != 3:
             # computation or true
-            for device_name, variable_name in self.getVariables():
-                yield (device_name, variable_name, None, None)
-            raise StopIteration
+            for channel_name, variable_name in self.getVariables():
+                yield (channel_name, variable_name, None, None)
+            return
 
         subject, operator, value = self.tupple
-        device_name, variable_name = subject.split('.')
+        channel_name, variable_name = subject.split('.')
 
         if self.variable_pattern.fullmatch(value):
             # assign variable to variable or comparison between variables
-            yield (device_name, variable_name, '≡', value)
+            yield (channel_name, variable_name, '≡', value)
         else:
-            yield (device_name, variable_name, operator, value)
+            yield (channel_name, variable_name, operator, value)
 
     def getVariables(self):
         for token in self.tupple:
             if self.variable_pattern.fullmatch(token) == None:
                 continue
 
-            device_name, variable_name = token.split('.')
-            yield (device_name, variable_name)
+            channel_name, variable_name = token.split('.')
+            yield (channel_name, variable_name)
 
     def toEquivalentCondition(self, controller):
         if len(self.tupple) != 3:
@@ -42,9 +42,9 @@ class Condition:
             # assign variable to variable or comparison between variables
             return
 
-        device_name, variable_name = subject.split('.')
-        device = controller.getDevice(device_name)
-        variable = device.getVariable(variable_name)
+        channel_name, variable_name = subject.split('.')
+        channel = controller.getDevice(channel_name)
+        variable = channel.getVariable(variable_name)
         if operator != '←':
             operator, value = variable.getEquivalentTriggerCondition(operator, value)
         else:

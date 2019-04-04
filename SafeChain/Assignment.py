@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import Condition as MyCondition
+import SafeChain.Condition as MyCondition
 
 class Assignment:
     def __init__(self, string):
@@ -33,12 +33,12 @@ class Assignment:
 
     def getDependencies(self):
         for condition in self.conditions:
-            device_variables = list(condition.getVariables())
-            if len(device_variables) <= 1:
+            channel_variables = list(condition.getVariables())
+            if len(channel_variables) <= 1:
                 continue
 
-            target_device_variable = device_variables.pop(0)
-            for device_variable in device_variables:
-                yield (device_variable, target_device_variable)
+            target_channel_variable = channel_variables.pop(0)
+            for channel_variable in channel_variables:
+                yield (channel_variable, target_channel_variable)
 
 

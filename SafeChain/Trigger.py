@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import Boolean as MyBoolean
+import SafeChain.Boolean as MyBoolean
 
 class Trigger:
     def __init__(self, rule_name, channel_name, definition, name, parameters):

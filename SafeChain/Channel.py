@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-import Variable as MyVariable
+import SafeChain.Variable as MyVariable
 
-class Device:
+class Channel:
     def __init__(self, channel_name, definition, name):
         self.channel_name = channel_name
         self.definition = definition
@@ -49,8 +49,8 @@ class Device:
         if 'customs' not in self.definition:
             return
 
-        device_names = set(device_name for device_name, variable_name in controller.device_variables)
-        if self.name not in device_names:
+        channel_names = set(channel_name for channel_name, variable_name in controller.channel_variables)
+        if self.name not in channel_names:
             return
 
         for custom_rule in self.definition['customs']:
@@ -59,7 +59,7 @@ class Device:
             trigger_channel_name = self.channel_name
             trigger_name = '{}_trigger'.format(rule_name)
             trigger_definition = {
-                'input': [{'type': 'device', 'device':[self.channel_name]}],
+                'input': [{'type': 'channel', 'channel':[self.channel_name]}],
                 'definition': {'boolean': custom_rule['trigger']}
             }
             trigger_inputs = [self.name]
@@ -67,7 +67,7 @@ class Device:
             action_channel_name = self.channel_name
             action_name = '{}_action'.format(rule_name)
             action_definition = {
-                'input': [{'type': 'device', 'device': [self.channel_name]}],
+                'input': [{'type': 'channel', 'channel': [self.channel_name]}],
                 'definition': custom_rule['action']
             }
             action_inputs = [self.name]

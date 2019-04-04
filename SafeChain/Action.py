@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-import Boolean as MyBoolean
-import Assignment as MyAssignment
+import SafeChain.Boolean as MyBoolean
+import SafeChain.Assignment as MyAssignment
 
 class Action:
     def __init__(self, rule_name, channel_name, definition, name, parameters):

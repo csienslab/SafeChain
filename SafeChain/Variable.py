@@ -7,7 +7,7 @@ import re
 
 class Variable(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def __init__(self, device_name, definition, name):
+    def __init__(self, channel_name, definition, name):
         pass
 
     @abc.abstractmethod
@@ -51,8 +51,8 @@ class Variable(metaclass=abc.ABCMeta):
         pass
 
 class BooleanVariable(Variable):
-    def __init__(self, device_name, definition, name):
-        self.device_name = device_name
+    def __init__(self, channel_name, definition, name):
+        self.channel_name = channel_name
         self.definition = definition
         self.name = name
         self.value = None
@@ -134,8 +134,8 @@ class BooleanVariable(Variable):
         self.pruned = status
 
 class SetVariable(Variable):
-    def __init__(self, device_name, definition, name):
-        self.device_name = device_name
+    def __init__(self, channel_name, definition, name):
+        self.channel_name = channel_name
         self.definition = definition
         self.name = name
         self.value = None
@@ -218,8 +218,8 @@ class SetVariable(Variable):
         self.pruned = status
 
 class RangeVariable(Variable):
-    def __init__(self, device_name, definition, name):
-        self.device_name = device_name
+    def __init__(self, channel_name, definition, name):
+        self.channel_name = channel_name
         self.definition = definition
         self.name = name
         self.value = None

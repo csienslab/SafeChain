@@ -8,9 +8,10 @@ import pprint
 import time
 import os
 import networkx
+import tempfile
 
-import Boolean as MyBoolean
-import InvariantPolicy as MyInvariantPolicy
+import SafeChain.Boolean as MyBoolean
+import SafeChain.InvariantPolicy as MyInvariantPolicy
 
 class PrivacyPolicy:
     def __init__(self, variables):
@@ -25,21 +26,21 @@ class PrivacyPolicy:
     def getConstraints(self, controller):
         for rule in controller.rules:
             for condition in rule.getConditions():
-                for device_name, variable_name, operator, value in condition.getConstraints():
+                for channel_name, variable_name, operator, value in condition.getConstraints():
                     if operator != '←':
                         continue
 
-                    if (device_name, variable_name) not in controller.vulnerables:
+                    if (channel_name, variable_name) not in controller.vulnerables:
                         continue
 
-                    yield (device_name, variable_name, operator, value)
+                    yield (channel_name, variable_name, operator, value)
 
     def getRelatedVariables(self, controller, graph):
         affected = set()
-        for device_variable in self.variables:
-            if device_variable in graph:
-                affected.add(device_variable)
-                affected.update(networkx.descendants(graph, device_variable))
+        for channel_variable in self.variables:
+            if channel_variable in graph:
+                affected.add(channel_variable)
+                affected.update(networkx.descendants(graph, channel_variable))
 
         yield from controller.vulnerables & affected
 
@@ -50,7 +51,7 @@ class PrivacyPolicy:
                   for token in tokens]
         return ' '.join(tokens)
 
-    def getRandomTransitionConstraint(self, previous, device_variable):
+    def getRandomTransitionConstraint(self, previous, channel_variable):
         """
         boolean1 == FALSE and boolean2 == FALSE and boolean3 == TRUE => next()
         boolean1 != FALSE or  boolean2 != FALSE or  boolean3 != TRUE or next()
@@ -74,26 +75,26 @@ class PrivacyPolicy:
             b = self.getBooleanPrepend(previous[-1], 'b.')
         result.append('!({0}) | !({1})'.format(a, b))
 
-        result.append('next(a.{0}) = next(b.{0})'.format(device_variable))
+        result.append('next(a.{0}) = next(b.{0})'.format(channel_variable))
         return ' | '.join(result)
 
     def getRandomTransitions(self, controller):
         transitions = controller.getTransitions()
-        high_variables = set('{}.{}'.format(device_name, variable_name) for device_name, variable_name in self.variables)
+        high_variables = set('{}.{}'.format(channel_name, variable_name) for channel_name, variable_name in self.variables)
 
-        for device_variable in transitions:
-            if device_variable in high_variables:
+        for channel_variable in transitions:
+            if channel_variable in high_variables:
                 # H value variables
                 continue
 
             previous = list()
-            for boolean, value, rule_name in transitions[device_variable]:
+            for boolean, value, rule_name in transitions[channel_variable]:
                 previous.append(boolean)
 
                 if not self.random_pattern.fullmatch(value):
                     continue
 
-                yield self.getRandomTransitionConstraint(previous, device_variable)
+                yield self.getRandomTransitionConstraint(previous, channel_variable)
 
     def dumpNumvModel(self, controller):
         string_list = [controller.dumpNumvModel(name='home', init=False)]
@@ -105,39 +106,40 @@ class PrivacyPolicy:
         string_list.append('')
 
         string_list.append('  ASSIGN')
-        for device_name in sorted(controller.devices):
-            device = controller.devices[device_name]
-            for variable_name in sorted(device.variables):
-                if (device_name, variable_name) not in controller.device_variables:
+        for channel_name in sorted(controller.channels):
+            channel = controller.channels[channel_name]
+            for variable_name in sorted(channel.variables):
+                if (channel_name, variable_name) not in controller.channel_variables:
                     continue
 
-                variable = device.variables[variable_name]
+                variable = channel.variables[variable_name]
                 if variable.pruned:
                     continue
 
                 value = variable.getEquivalentActionCondition(variable.value)
-                string_list.append('    init(a.{0}.{1}):= {2};'.format(device_name, variable_name, value))
+                string_list.append('    init(a.{0}.{1}):= {2};'.format(channel_name, variable_name, value))
         string_list.append('    -- {}'.format(self.variables))
         string_list.append('')
 
-        middle_and_lows = ['a.{0}.{1} = b.{0}.{1}'.format(device_name, variable_name)
-                           for device_name, device in controller.devices.items()
-                           for variable_name in device.getVariableNames()
-                           if (device_name, variable_name) not in self.variables
-                           and (device_name, variable_name) in controller.device_variables
-                           and not device.getVariable(variable_name).pruned]
+        middle_and_lows = ['a.{0}.{1} = b.{0}.{1}'.format(channel_name, variable_name)
+                           for channel_name, channel in controller.channels.items()
+                           for variable_name in channel.getVariableNames()
+                           if (channel_name, variable_name) not in self.variables
+                           and (channel_name, variable_name) in controller.channel_variables
+                           and not channel.getVariable(variable_name).pruned]
         if len(middle_and_lows) != 0:
             string_list.append('  INIT {};'.format(' & '.join(middle_and_lows)))
 
         string_list.append('  INVAR a.attack = b.attack;')
 
         transitions = controller.getTransitions()
-        sensors = ['{0}.{1}'.format(device_name, variable_name)
-                   for device_name, device in controller.devices.items()
-                   for variable_name in device.getVariableNames()
-                   if '{0}.{1}'.format(device_name, variable_name) not in transitions
-                   and (device_name, variable_name) in controller.device_variables
-                   and not device.getVariable(variable_name).pruned]
+        sensors = ['{0}.{1}'.format(channel_name, variable_name)
+                   for channel_name, channel in controller.channels.items()
+                   for variable_name in channel.getVariableNames()
+                   if '{0}.{1}'.format(channel_name, variable_name) not in transitions
+                   and (channel_name, variable_name) not in self.variables
+                   and (channel_name, variable_name) in controller.channel_variables
+                   and not channel.getVariable(variable_name).pruned]
         sensors = ['a.{0} = b.{0}'.format(sensor) for sensor in sensors]
         if len(sensors) != 0:
             string_list.append('  INVAR {0};'.format(' & '.join(sensors)))
@@ -146,10 +148,10 @@ class PrivacyPolicy:
             string_list.append('  TRANS {0};'.format(constraint))
         string_list.append('')
 
-        vulnerables = ['a.{0}.{1} = b.{0}.{1}'.format(device_name, variable_name)
-                       for device_name, variable_name in controller.vulnerables
-                       if not controller.getDevice(device_name).getVariable(variable_name).pruned
-                       and (device_name, variable_name) in controller.device_variables]
+        vulnerables = ['a.{0}.{1} = b.{0}.{1}'.format(channel_name, variable_name)
+                       for channel_name, variable_name in controller.vulnerables
+                       if not controller.getChannel(channel_name).getVariable(variable_name).pruned
+                       and (channel_name, variable_name) in controller.channel_variables]
         if len(vulnerables) != 0:
             string_list.append('  INVARSPEC {};'.format(' & '.join(vulnerables)))
         else:
@@ -163,18 +165,18 @@ class PrivacyPolicy:
         for previous_state, current_state in zip(states, states[1:]):
             rules = set()
 
-            for device_variable in current_state:
-                current_value = current_state[device_variable]
-                previous_value = previous_state[device_variable]
+            for channel_variable in current_state:
+                current_value = current_state[channel_variable]
+                previous_value = previous_state[channel_variable]
 
                 if current_value == previous_value:
                     continue
 
-                if device_variable not in transitions:
+                if channel_variable not in transitions:
                     rules.add('ENV')
                     continue
 
-                for boolean, value, rule_name in transitions[device_variable]:
+                for boolean, value, rule_name in transitions[channel_variable]:
                     if boolean == 'next(attack)' and current_state['attack'] == 'TRUE':
                         rules.add('ATTACK')
                         break
@@ -187,8 +189,12 @@ class PrivacyPolicy:
 
         return rule_list
 
-    def parseOutput(self, output, controller):
-        index = output.index('-- invariant')
+    def parseOutput(self, output, controller, filename):
+        try:
+            index = output.index('-- ')
+        except ValueError:
+            print('Unexpected output:', filename)
+            return {'result': 'UNKNOWN'}
         output = output[index:]
 
         lines = output.splitlines()
@@ -213,11 +219,11 @@ class PrivacyPolicy:
             if line.startswith('-> State: 1.2 <-'):
                 break
 
-            device_variable, value = line.split(' = ')
-            if device_variable.startswith('a.'):
-                current_state_A[device_variable[2:]] = value
+            channel_variable, value = line.split(' = ')
+            if channel_variable.startswith('a.'):
+                current_state_A[channel_variable[2:]] = value
             else:
-                current_state_B[device_variable[2:]] = value
+                current_state_B[channel_variable[2:]] = value
         states_A.append(current_state_A)
         states_B.append(current_state_B)
 
@@ -234,11 +240,11 @@ class PrivacyPolicy:
                 if line.startswith('-> State: '):
                     break
 
-                device_variable, value = line.split(' = ')
-                if device_variable.startswith('a.'):
-                    current_state_A[device_variable[2:]] = value
+                channel_variable, value = line.split(' = ')
+                if channel_variable.startswith('a.'):
+                    current_state_A[channel_variable[2:]] = value
                 else:
-                    current_state_B[device_variable[2:]] = value
+                    current_state_B[channel_variable[2:]] = value
 
             states_A.append(current_state_A)
             states_B.append(current_state_B)
@@ -246,24 +252,25 @@ class PrivacyPolicy:
         return {'result': 'FAILED', 'states_A': states_A, 'states_B': states_B}
 
     def checkReachable(self, controller, state):
-        boolean = ' & '.join('{0} = {1}'.format(device_variable, state[device_variable]) for device_variable in sorted(state) if device_variable != 'attack')
+        boolean = ' & '.join('{0} = {1}'.format(channel_variable, state[channel_variable]) for channel_variable in sorted(state) if channel_variable != 'attack')
         boolean = '! ( {0} )'.format(boolean)
         policy = MyInvariantPolicy.InvariantPolicy(boolean)
         return controller.check(policy, custom=False, pruning=None, grouping=None)
 
-    def check(self, controller, timeout):
+    def check(self, controller, timeout, bmc):
         total_checking_time = 0
         transitions = controller.getTransitions()
         model = self.dumpNumvModel(controller) + '\n'
 
         while True:
-            filename = '/tmp/r04922156/model {0} {2} {1}.smv'.format(os.getppid(), os.getpid(), datetime.datetime.now())
+            _, filename = tempfile.mkstemp(suffix='.smv')
             with open(filename, 'w') as f:
                 f.write(model)
 
             checking_start = time.perf_counter()
             try:
-                p = subprocess.run(['NuSMV', '-keep_single_value_vars', filename], stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=timeout)
+                cmds = ['NuSMV', '-keep_single_value_vars'] + (['-bmc'] if bmc else []) + [filename]
+                p = subprocess.run(cmds, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=timeout)
             except subprocess.TimeoutExpired:
                 return filename, None, timeout
             total_checking_time += time.perf_counter() - checking_start
@@ -272,38 +279,8 @@ class PrivacyPolicy:
                 return filename, None, timeout
 
             output = p.stdout.decode('UTF-8')
-            result = self.parseOutput(output, controller)
+            result = self.parseOutput(output, controller, filename)
             if result['result'] != 'SUCCESS':
                 result['rules_A'] = self.findWhichRules(result['states_A'], transitions, controller)
                 result['rules_B'] = self.findWhichRules(result['states_B'], transitions, controller)
             return filename, result, total_checking_time
-            # if result['result'] == 'SUCCESS':
-            #     return result, total_checking_time
-
-            # # check this two states can be reachable
-            # state_A = result['states_A'][0]
-            # state_B = result['states_B'][0]
-
-            # path, grouping_time, pruning_time, parsing_time, checking_time = self.checkReachable(controller, state_A)
-            # total_checking_time += checking_time
-            # if path['result'] == 'FAILED':
-            #     result['states'] = path['states']
-            #     result['rules'] = path['rules']
-            #     result['rules_A'] = self.findWhichRules(result['states_A'], transitions, controller)
-            #     result['rules_B'] = self.findWhichRules(result['states_B'], transitions, controller)
-            #     return result, total_checking_time
-
-            # path, grouping_time, pruning_time, parsing_time, checking_time = self.checkReachable(controller, state_B)
-            # total_checking_time += checking_time
-            # if path['result'] == 'FAILED':
-            #     result['states'] = path['states']
-            #     result['rules'] = path['rules']
-            #     result['rules_A'] = self.findWhichRules(result['states_A'], transitions, controller)
-            #     result['rules_B'] = self.findWhichRules(result['states_B'], transitions, controller)
-            #     return result, total_checking_time
-
-            # # add constraints to find new states
-            # boolean = ' & '.join('a.{0} = {1} & b.{0} = {2}'.format(device_variable, state_A[device_variable], state_B[device_variable]) for device_variable in sorted(state_A) if device_variable != 'attack')
-            # boolean2 = ' & '.join('a.{0} = {1} & b.{0} = {2}'.format(device_variable, state_B[device_variable], state_A[device_variable]) for device_variable in sorted(state_B) if device_variable != 'attack')
-            # model += '  INIT ! ( {0} ) & ! ( {1} )\n'.format(boolean, boolean2)
-

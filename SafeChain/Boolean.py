@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import Condition as MyCondition
+import SafeChain.Condition as MyCondition
 
 class Boolean:
     def __init__(self, string):
