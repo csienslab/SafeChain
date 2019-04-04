@@ -3,8 +3,8 @@
     "Lighting off": {
       "input": [
         {
-          "type": "device",
-          "device": ["GreenIQ"]
+          "type": "channel",
+          "channel": ["GreenIQ"]
         }
       ],
       "definition": [
@@ -16,8 +16,8 @@
     "Lighting on": {
       "input": [
         {
-          "type": "device",
-          "device": ["GreenIQ"]
+          "type": "channel",
+          "channel": ["GreenIQ"]
         }
       ],
       "definition": [
@@ -29,8 +29,8 @@
     "Start irrigation": {
       "input": [
         {
-          "type": "device",
-          "device": ["GreenIQ"]
+          "type": "channel",
+          "channel": ["GreenIQ"]
         }
       ],
       "definition": [
@@ -42,8 +42,8 @@
     "Stop irrigation": {
       "input": [
         {
-          "type": "device",
-          "device": ["GreenIQ"]
+          "type": "channel",
+          "channel": ["GreenIQ"]
         }
       ],
       "definition": [
@@ -57,8 +57,8 @@
     "Irrigation started": {
       "input": [
         {
-          "type": "device",
-          "device": ["GreenIQ"]
+          "type": "channel",
+          "channel": ["GreenIQ"]
         }
       ],
       "definition": {
@@ -68,8 +68,8 @@
     "Irrigation stopped": {
       "input": [
         {
-          "type": "device",
-          "device": ["GreenIQ"]
+          "type": "channel",
+          "channel": ["GreenIQ"]
         }
       ],
       "definition": {
@@ -79,8 +79,8 @@
     "Lighting turned off": {
       "input": [
         {
-          "type": "device",
-          "device": ["GreenIQ"]
+          "type": "channel",
+          "channel": ["GreenIQ"]
         }
       ],
       "definition": {
@@ -90,8 +90,8 @@
     "Lighting turned on": {
       "input": [
         {
-          "type": "device",
-          "device": ["GreenIQ"]
+          "type": "channel",
+          "channel": ["GreenIQ"]
         }
       ],
       "definition": {
@@ -101,12 +101,12 @@
     "Weekly water savings threshold reached": {
       "input": [
         {
-          "type": "device",
-          "device": ["GreenIQ"]
+          "type": "channel",
+          "channel": ["GreenIQ"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "weekly_water_savings"
         }
       ],

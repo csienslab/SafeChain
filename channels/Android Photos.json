@@ -3,8 +3,8 @@
     "Any new photo": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Photos"]
+          "type": "channel",
+          "channel": ["Android Photos"]
         }
       ],
       "definition": {
@@ -14,12 +14,12 @@
     "New photo taken in area": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Photos"]
+          "type": "channel",
+          "channel": ["Android Photos"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "new_photo_location"
         }
       ],
@@ -30,8 +30,8 @@
     "New screenshot": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Photos"]
+          "type": "channel",
+          "channel": ["Android Photos"]
         }
       ],
       "definition": {

@@ -3,17 +3,17 @@
     "Activate scene": {
       "input": [
         {
-          "type": "device",
-          "device": ["Lutron Caséta Wireless"]
+          "type": "channel",
+          "channel": ["Lutron Caséta Wireless"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "light"
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "shade"
         }
       ],
@@ -26,12 +26,12 @@
     "Set light level": {
       "input": [
         {
-          "type": "device",
-          "device": ["Lutron Caséta Wireless"]
+          "type": "channel",
+          "channel": ["Lutron Caséta Wireless"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "light"
         }
       ],
@@ -44,12 +44,12 @@
     "Set shade position": {
       "input": [
         {
-          "type": "device",
-          "device": ["Lutron Caséta Wireless"]
+          "type": "channel",
+          "channel": ["Lutron Caséta Wireless"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "shade"
         }
       ],

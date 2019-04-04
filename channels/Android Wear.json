@@ -3,12 +3,12 @@
     "Send a notification": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Wear"]
+          "type": "channel",
+          "channel": ["Android Wear"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "notification_text"
         }
       ],
@@ -23,8 +23,8 @@
     "Tap button": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Wear"]
+          "type": "channel",
+          "channel": ["Android Wear"]
         }
       ],
       "definition": {

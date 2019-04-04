@@ -3,12 +3,12 @@
     "Set temperature": {
       "input": [
         {
-          "type": "device",
-          "device": ["Nest Thermostat"]
+          "type": "channel",
+          "channel": ["Nest Thermostat"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "desired_temperature"
         }
       ],
@@ -21,17 +21,17 @@
     "Set temperature range": {
       "input": [
         {
-          "type": "device",
-          "device": ["Nest Thermostat"]
+          "type": "channel",
+          "channel": ["Nest Thermostat"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "desired_temperature"
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "desired_temperature2"
         }
       ],
@@ -44,8 +44,8 @@
     "Turn on fan for 15 minutes": {
       "input": [
         {
-          "type": "device",
-          "device": ["Nest Thermostat"]
+          "type": "channel",
+          "channel": ["Nest Thermostat"]
         }
       ],
       "definition": [
@@ -59,8 +59,8 @@
     "Nest set to Away": {
       "input": [
         {
-          "type": "device",
-          "device": ["Nest Thermostat"]
+          "type": "channel",
+          "channel": ["Nest Thermostat"]
         }
       ],
       "definition": {
@@ -70,8 +70,8 @@
     "Nest set to Home": {
       "input": [
         {
-          "type": "device",
-          "device": ["Nest Thermostat"]
+          "type": "channel",
+          "channel": ["Nest Thermostat"]
         }
       ],
       "definition": {
@@ -81,12 +81,12 @@
     "Temperature drops below": {
       "input": [
         {
-          "type": "device",
-          "device": ["Nest Thermostat"]
+          "type": "channel",
+          "channel": ["Nest Thermostat"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "temperature"
         }
       ],
@@ -97,12 +97,12 @@
     "Temperature rises above": {
       "input": [
         {
-          "type": "device",
-          "device": ["Nest Thermostat"]
+          "type": "channel",
+          "channel": ["Nest Thermostat"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "temperature"
         }
       ],

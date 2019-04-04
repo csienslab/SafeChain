@@ -3,12 +3,12 @@
     "A Flic with a tag is clicked": {
       "input": [
         {
-          "type": "device",
-          "device": ["Flic"]
+          "type": "channel",
+          "channel": ["Flic"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "tag"
         }
       ],
@@ -19,12 +19,12 @@
     "Flic is clicked": {
       "input": [
         {
-          "type": "device",
-          "device": ["Flic"]
+          "type": "channel",
+          "channel": ["Flic"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "click_type"
         }
       ],

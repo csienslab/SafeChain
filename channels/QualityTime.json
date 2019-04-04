@@ -3,12 +3,12 @@
     "Daily smartphone screen unlocks": {
       "input": [
         {
-          "type": "device",
-          "device": ["QualityTime"]
+          "type": "channel",
+          "channel": ["QualityTime"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "unlock"
         }
       ],
@@ -19,12 +19,12 @@
     "Daily smartphone usage time": {
       "input": [
         {
-          "type": "device",
-          "device": ["QualityTime"]
+          "type": "channel",
+          "channel": ["QualityTime"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "usage_time"
         }
       ],

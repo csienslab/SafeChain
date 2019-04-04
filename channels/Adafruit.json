@@ -3,12 +3,12 @@
     "Send data to Adafruit IO": {
       "input": [
         {
-          "type": "device",
-          "device": ["Adafruit"]
+          "type": "channel",
+          "channel": ["Adafruit"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "data"
         }
       ],
@@ -23,8 +23,8 @@
     "Any new data": {
       "input": [
         {
-          "type": "device",
-          "device": ["Adafruit"]
+          "type": "channel",
+          "channel": ["Adafruit"]
         }
       ],
       "definition": {
@@ -34,8 +34,8 @@
     "Monitor a feed on Adafruit IO": {
       "input": [
         {
-          "type": "device",
-          "device": ["Adafruit"]
+          "type": "channel",
+          "channel": ["Adafruit"]
         },
         {
           "type": "set",
@@ -43,7 +43,7 @@
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "data",
           "except": [0]
         }

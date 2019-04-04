@@ -3,8 +3,8 @@
     "Blink lights": {
       "input": [
         {
-          "type": "device",
-          "device": ["Philips Hue"]
+          "type": "channel",
+          "channel": ["Philips Hue"]
         }
       ],
       "definition": [
@@ -16,12 +16,12 @@
     "Change color": {
       "input": [
         {
-          "type": "device",
-          "device": ["Philips Hue"]
+          "type": "channel",
+          "channel": ["Philips Hue"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "color"
         }
       ],
@@ -34,12 +34,12 @@
     "Change color from image": {
       "input": [
         {
-          "type": "device",
-          "device": ["Philips Hue"]
+          "type": "channel",
+          "channel": ["Philips Hue"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "color"
         }
       ],
@@ -52,12 +52,12 @@
     "Change to random color": {
       "input": [
         {
-          "type": "device",
-          "device": ["Philips Hue"]
+          "type": "channel",
+          "channel": ["Philips Hue"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "color"
         }
       ],
@@ -70,12 +70,12 @@
     "Dim lights": {
       "input": [
         {
-          "type": "device",
-          "device": ["Philips Hue"]
+          "type": "channel",
+          "channel": ["Philips Hue"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "brightness"
         }
       ],
@@ -88,8 +88,8 @@
     "Toggle lights on/off": {
       "input": [
         {
-          "type": "device",
-          "device": ["Philips Hue"]
+          "type": "channel",
+          "channel": ["Philips Hue"]
         }
       ],
       "definition": [
@@ -106,8 +106,8 @@
     "Turn off lights": {
       "input": [
         {
-          "type": "device",
-          "device": ["Philips Hue"]
+          "type": "channel",
+          "channel": ["Philips Hue"]
         }
       ],
       "definition": [
@@ -119,8 +119,8 @@
     "Turn on color loop": {
       "input": [
         {
-          "type": "device",
-          "device": ["Philips Hue"]
+          "type": "channel",
+          "channel": ["Philips Hue"]
         }
       ],
       "definition": [
@@ -132,8 +132,8 @@
     "Turn on lights": {
       "input": [
         {
-          "type": "device",
-          "device": ["Philips Hue"]
+          "type": "channel",
+          "channel": ["Philips Hue"]
         }
       ],
       "definition": [

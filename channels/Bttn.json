@@ -3,8 +3,8 @@
     "Press bttn": {
       "input": [
         {
-          "type": "device",
-          "device": ["Bttn"]
+          "type": "channel",
+          "channel": ["Bttn"]
         }
       ],
       "definition": {

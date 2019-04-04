@@ -3,12 +3,12 @@
     "Any shipping status change": {
       "input": [
         {
-          "type": "device",
-          "device": ["Boxoh Package Tracking"]
+          "type": "channel",
+          "channel": ["Boxoh Package Tracking"]
         },
         {
           "type": "variable",
-          "device": "{0}"
+          "channel": "{0}"
         }
       ],
       "definition": {

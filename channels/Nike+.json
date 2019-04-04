@@ -3,12 +3,12 @@
     "Average daily pace reached": {
       "input": [
         {
-          "type": "device",
-          "device": ["Nike+"]
+          "type": "channel",
+          "channel": ["Nike+"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "average_daily_pace"
         }
       ],
@@ -19,12 +19,12 @@
     "Daily NikeFuel goal not reached": {
       "input": [
         {
-          "type": "device",
-          "device": ["Nike+"]
+          "type": "channel",
+          "channel": ["Nike+"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "daily_nikefuel"
         }
       ],
@@ -35,12 +35,12 @@
     "Daily NikeFuel goal reached": {
       "input": [
         {
-          "type": "device",
-          "device": ["Nike+"]
+          "type": "channel",
+          "channel": ["Nike+"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "daily_nikefuel"
         }
       ],
@@ -51,12 +51,12 @@
     "Daily distance goal reached": {
       "input": [
         {
-          "type": "device",
-          "device": ["Nike+"]
+          "type": "channel",
+          "channel": ["Nike+"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "daily_distance"
         }
       ],
@@ -67,12 +67,12 @@
     "Weekly NikeFuel goal reached": {
       "input": [
         {
-          "type": "device",
-          "device": ["Nike+"]
+          "type": "channel",
+          "channel": ["Nike+"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "weekly_nikefuel"
         }
       ],
@@ -83,12 +83,12 @@
     "Weekly distance goal reached": {
       "input": [
         {
-          "type": "device",
-          "device": ["Nike+"]
+          "type": "channel",
+          "channel": ["Nike+"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "weekly_distance"
         }
       ],
@@ -99,12 +99,12 @@
     "Weekly runs goal reached": {
       "input": [
         {
-          "type": "device",
-          "device": ["Nike+"]
+          "type": "channel",
+          "channel": ["Nike+"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "weekly_runs"
         }
       ],

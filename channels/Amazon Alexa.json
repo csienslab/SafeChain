@@ -3,8 +3,8 @@
     "Ask for a sports team's next game": {
       "input": [
         {
-          "type": "device",
-          "device": ["Amazon Alexa"]
+          "type": "channel",
+          "channel": ["Amazon Alexa"]
         }
       ],
       "definition": {
@@ -14,8 +14,8 @@
     "Ask for a sports team's score": {
       "input": [
         {
-          "type": "device",
-          "device": ["Amazon Alexa"]
+          "type": "channel",
+          "channel": ["Amazon Alexa"]
         }
       ],
       "definition": {
@@ -25,8 +25,8 @@
     "Ask what's on your Shopping List": {
       "input": [
         {
-          "type": "device",
-          "device": ["Amazon Alexa"]
+          "type": "channel",
+          "channel": ["Amazon Alexa"]
         }
       ],
       "definition": {
@@ -36,8 +36,8 @@
     "Ask what's on your To Do List": {
       "input": [
         {
-          "type": "device",
-          "device": ["Amazon Alexa"]
+          "type": "channel",
+          "channel": ["Amazon Alexa"]
         }
       ],
       "definition": {
@@ -47,8 +47,8 @@
     "Item added to your Shopping List": {
       "input": [
         {
-          "type": "device",
-          "device": ["Amazon Alexa"]
+          "type": "channel",
+          "channel": ["Amazon Alexa"]
         }
       ],
       "definition": {
@@ -58,8 +58,8 @@
     "Item added to your To Do List": {
       "input": [
         {
-          "type": "device",
-          "device": ["Amazon Alexa"]
+          "type": "channel",
+          "channel": ["Amazon Alexa"]
         }
       ],
       "definition": {
@@ -69,8 +69,8 @@
     "Item completed on your Shopping List": {
       "input": [
         {
-          "type": "device",
-          "device": ["Amazon Alexa"]
+          "type": "channel",
+          "channel": ["Amazon Alexa"]
         }
       ],
       "definition": {
@@ -80,8 +80,8 @@
     "Item completed on your To Do List": {
       "input": [
         {
-          "type": "device",
-          "device": ["Amazon Alexa"]
+          "type": "channel",
+          "channel": ["Amazon Alexa"]
         }
       ],
       "definition": {
@@ -91,8 +91,8 @@
     "Item deleted on your Shopping List": {
       "input": [
         {
-          "type": "device",
-          "device": ["Amazon Alexa"]
+          "type": "channel",
+          "channel": ["Amazon Alexa"]
         }
       ],
       "definition": {
@@ -102,8 +102,8 @@
     "Item deleted on your To Do List": {
       "input": [
         {
-          "type": "device",
-          "device": ["Amazon Alexa"]
+          "type": "channel",
+          "channel": ["Amazon Alexa"]
         }
       ],
       "definition": {
@@ -113,8 +113,8 @@
     "Item edited on your Shopping List": {
       "input": [
         {
-          "type": "device",
-          "device": ["Amazon Alexa"]
+          "type": "channel",
+          "channel": ["Amazon Alexa"]
         }
       ],
       "definition": {
@@ -124,8 +124,8 @@
     "Item edited on your To Do List": {
       "input": [
         {
-          "type": "device",
-          "device": ["Amazon Alexa"]
+          "type": "channel",
+          "channel": ["Amazon Alexa"]
         }
       ],
       "definition": {
@@ -135,8 +135,8 @@
     "New song played": {
       "input": [
         {
-          "type": "device",
-          "device": ["Amazon Alexa"]
+          "type": "channel",
+          "channel": ["Amazon Alexa"]
         }
       ],
       "definition": {
@@ -146,12 +146,12 @@
     "Say a specific phrase": {
       "input": [
         {
-          "type": "device",
-          "device": ["Amazon Alexa"]
+          "type": "channel",
+          "channel": ["Amazon Alexa"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "trigger_phrase"
         }
       ],
@@ -162,8 +162,8 @@
     "Your Alarm goes off": {
       "input": [
         {
-          "type": "device",
-          "device": ["Amazon Alexa"]
+          "type": "channel",
+          "channel": ["Amazon Alexa"]
         }
       ],
       "definition": {
@@ -173,8 +173,8 @@
     "Your Timer goes off": {
       "input": [
         {
-          "type": "device",
-          "device": ["Amazon Alexa"]
+          "type": "channel",
+          "channel": ["Amazon Alexa"]
         }
       ],
       "definition": {

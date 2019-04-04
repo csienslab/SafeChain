@@ -3,12 +3,12 @@
     "Battery is low": {
       "input": [
         {
-          "type": "device",
-          "device": ["Nest Protect"]
+          "type": "channel",
+          "channel": ["Nest Protect"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "battery"
         }
       ],
@@ -19,8 +19,8 @@
     "Carbon monoxide emergency": {
       "input": [
         {
-          "type": "device",
-          "device": ["Nest Protect"]
+          "type": "channel",
+          "channel": ["Nest Protect"]
         }
       ],
       "definition": {
@@ -30,8 +30,8 @@
     "Carbon monoxide warning": {
       "input": [
         {
-          "type": "device",
-          "device": ["Nest Protect"]
+          "type": "channel",
+          "channel": ["Nest Protect"]
         }
       ],
       "definition": {
@@ -41,8 +41,8 @@
     "Smoke alarm emergency": {
       "input": [
         {
-          "type": "device",
-          "device": ["Nest Protect"]
+          "type": "channel",
+          "channel": ["Nest Protect"]
         }
       ],
       "definition": {
@@ -52,8 +52,8 @@
     "Smoke alarm warning": {
       "input": [
         {
-          "type": "device",
-          "device": ["Nest Protect"]
+          "type": "channel",
+          "channel": ["Nest Protect"]
         }
       ],
       "definition": {

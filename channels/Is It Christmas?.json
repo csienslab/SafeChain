@@ -3,8 +3,8 @@
     "Is It Christmas?": {
       "input": [
         {
-          "type": "device",
-          "device": ["Is It Christmas?"]
+          "type": "channel",
+          "channel": ["Is It Christmas?"]
         }
       ],
       "definition": {

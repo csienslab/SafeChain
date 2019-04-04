@@ -3,8 +3,8 @@
     "Start recording": {
       "input": [
         {
-          "type": "device",
-          "device": ["Camio"]
+          "type": "channel",
+          "channel": ["Camio"]
         }
       ],
       "definition": [
@@ -16,8 +16,8 @@
     "Stop recording": {
       "input": [
         {
-          "type": "device",
-          "device": ["Camio"]
+          "type": "channel",
+          "channel": ["Camio"]
         }
       ],
       "definition": [
@@ -29,8 +29,8 @@
     "Turn off motion notifications": {
       "input": [
         {
-          "type": "device",
-          "device": ["Camio"]
+          "type": "channel",
+          "channel": ["Camio"]
         }
       ],
       "definition": [
@@ -42,8 +42,8 @@
     "Turn on motion notifications": {
       "input": [
         {
-          "type": "device",
-          "device": ["Camio"]
+          "type": "channel",
+          "channel": ["Camio"]
         }
       ],
       "definition": [
@@ -57,22 +57,22 @@
     "Advanced motion detected": {
       "input": [
         {
-          "type": "device",
-          "device": ["Camio"]
+          "type": "channel",
+          "channel": ["Camio"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "motion_color"
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "motion_direction"
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "motion_object"
         }
       ],
@@ -83,8 +83,8 @@
     "Motion detected": {
       "input": [
         {
-          "type": "device",
-          "device": ["Camio"]
+          "type": "channel",
+          "channel": ["Camio"]
         }
       ],
       "definition": {
@@ -94,8 +94,8 @@
     "Power disconnected": {
       "input": [
         {
-          "type": "device",
-          "device": ["Camio"]
+          "type": "channel",
+          "channel": ["Camio"]
         }
       ],
       "definition": {

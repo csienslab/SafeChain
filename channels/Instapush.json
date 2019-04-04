@@ -3,12 +3,12 @@
     "Send a notification": {
       "input": [
         {
-          "type": "device",
-          "device": ["Instapush"]
+          "type": "channel",
+          "channel": ["Instapush"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "notification_text"
         }
       ],

@@ -3,8 +3,8 @@
     "Fertilizer level alert": {
       "input": [
         {
-          "type": "device",
-          "device": ["Parrot Flower Power"]
+          "type": "channel",
+          "channel": ["Parrot Flower Power"]
         }
       ],
       "definition": {
@@ -14,8 +14,8 @@
     "Light level alert": {
       "input": [
         {
-          "type": "device",
-          "device": ["Parrot Flower Power"]
+          "type": "channel",
+          "channel": ["Parrot Flower Power"]
         }
       ],
       "definition": {
@@ -25,8 +25,8 @@
     "Soil moisture alert": {
       "input": [
         {
-          "type": "device",
-          "device": ["Parrot Flower Power"]
+          "type": "channel",
+          "channel": ["Parrot Flower Power"]
         }
       ],
       "definition": {
@@ -36,8 +36,8 @@
     "Temperature alert": {
       "input": [
         {
-          "type": "device",
-          "device": ["Parrot Flower Power"]
+          "type": "channel",
+          "channel": ["Parrot Flower Power"]
         }
       ],
       "definition": {
@@ -47,8 +47,8 @@
     "Time to water the plant": {
       "input": [
         {
-          "type": "device",
-          "device": ["Parrot Flower Power"]
+          "type": "channel",
+          "channel": ["Parrot Flower Power"]
         }
       ],
       "definition": {

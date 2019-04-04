@@ -3,12 +3,12 @@
     "Breaking news for sport": {
       "input": [
         {
-          "type": "device",
-          "device": ["ESPN"]
+          "type": "channel",
+          "channel": ["ESPN"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "sport"
         }
       ],
@@ -19,12 +19,12 @@
     "Breaking news for team": {
       "input": [
         {
-          "type": "device",
-          "device": ["ESPN"]
+          "type": "channel",
+          "channel": ["ESPN"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "team"
         }
       ],
@@ -35,8 +35,8 @@
     "Breaking top news": {
       "input": [
         {
-          "type": "device",
-          "device": ["ESPN"]
+          "type": "channel",
+          "channel": ["ESPN"]
         }
       ],
       "definition": {
@@ -46,8 +46,8 @@
     "New final score": {
       "input": [
         {
-          "type": "device",
-          "device": ["ESPN"]
+          "type": "channel",
+          "channel": ["ESPN"]
         }
       ],
       "definition": {
@@ -57,8 +57,8 @@
     "New game start": {
       "input": [
         {
-          "type": "device",
-          "device": ["ESPN"]
+          "type": "channel",
+          "channel": ["ESPN"]
         }
       ],
       "definition": {
@@ -68,8 +68,8 @@
     "New in-game update": {
       "input": [
         {
-          "type": "device",
-          "device": ["ESPN"]
+          "type": "channel",
+          "channel": ["ESPN"]
         }
       ],
       "definition": {

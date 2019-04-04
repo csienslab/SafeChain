@@ -3,12 +3,12 @@
     "You enter an area": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Location"]
+          "type": "channel",
+          "channel": ["Android Location"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "location"
         }
       ],
@@ -19,8 +19,8 @@
     "You enter or exit an area": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Location"]
+          "type": "channel",
+          "channel": ["Android Location"]
         }
       ],
       "definition": {
@@ -30,12 +30,12 @@
     "You exit an area": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Location"]
+          "type": "channel",
+          "channel": ["Android Location"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "location"
         }
       ],

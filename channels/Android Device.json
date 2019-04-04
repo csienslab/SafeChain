@@ -3,17 +3,17 @@
     "Launch Google Maps Navigation": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Device"]
+          "type": "channel",
+          "channel": ["Android Device"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "google_maps_navigation_type"
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "google_maps_navigation_destination"
         }
       ],
@@ -26,8 +26,8 @@
     "Mute ringtone": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Device"]
+          "type": "channel",
+          "channel": ["Android Device"]
         }
       ],
       "definition": [
@@ -39,12 +39,12 @@
     "Play a specific song": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Device"]
+          "type": "channel",
+          "channel": ["Android Device"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "song_played"
         }
       ],
@@ -57,12 +57,12 @@
     "Play music": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Device"]
+          "type": "channel",
+          "channel": ["Android Device"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "song_played"
         }
       ],
@@ -75,12 +75,12 @@
     "Set ringtone volume": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Device"]
+          "type": "channel",
+          "channel": ["Android Device"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "ringtone_volume"
         }
       ],
@@ -93,8 +93,8 @@
     "Turn off Bluetooth": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Device"]
+          "type": "channel",
+          "channel": ["Android Device"]
         }
       ],
       "definition": [
@@ -106,8 +106,8 @@
     "Turn off WiFi": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Device"]
+          "type": "channel",
+          "channel": ["Android Device"]
         }
       ],
       "definition": [
@@ -119,8 +119,8 @@
     "Turn on Bluetooth": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Device"]
+          "type": "channel",
+          "channel": ["Android Device"]
         }
       ],
       "definition": [
@@ -132,8 +132,8 @@
     "Turn on WiFi": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Device"]
+          "type": "channel",
+          "channel": ["Android Device"]
         }
       ],
       "definition": [
@@ -142,15 +142,15 @@
         }
       ]
     },
-    "Update device wallpaper": {
+    "Update channel wallpaper": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Device"]
+          "type": "channel",
+          "channel": ["Android Device"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "wallpaper"
         }
       ],
@@ -165,12 +165,12 @@
     "Connects or disconnects from a specific WiFi network": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Device"]
+          "type": "channel",
+          "channel": ["Android Device"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "wifi_connected_network"
         }
       ],
@@ -181,19 +181,19 @@
     "Connects or disconnects from any WiFi network": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Device"]
+          "type": "channel",
+          "channel": ["Android Device"]
         }
       ],
       "definition": {
         "boolean": "( {0}.wifi_switch = ON & {0}.wifi_status = DISCONNECTED ) | {0}.wifi_status = CONNECTED"
       }
     },
-    "Connects to a Bluetooth device": {
+    "Connects to a Bluetooth channel": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Device"]
+          "type": "channel",
+          "channel": ["Android Device"]
         }
       ],
       "definition": {
@@ -203,12 +203,12 @@
     "Connects to a specific WiFi network": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Device"]
+          "type": "channel",
+          "channel": ["Android Device"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "wifi_connected_network"
         }
       ],
@@ -219,19 +219,19 @@
     "Connects to any WiFi network": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Device"]
+          "type": "channel",
+          "channel": ["Android Device"]
         }
       ],
       "definition": {
         "boolean": "{0}.wifi_switch = ON & {0}.wifi_status = CONNECTED"
       }
     },
-    "Disconnects from a Bluetooth device": {
+    "Disconnects from a Bluetooth channel": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Device"]
+          "type": "channel",
+          "channel": ["Android Device"]
         }
       ],
       "definition": {
@@ -241,12 +241,12 @@
     "Disconnects from a specific WiFi network": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Device"]
+          "type": "channel",
+          "channel": ["Android Device"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "wifi_connected_network"
         }
       ],
@@ -257,8 +257,8 @@
     "Disconnects from any WiFi network": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Device"]
+          "type": "channel",
+          "channel": ["Android Device"]
         }
       ],
       "definition": {

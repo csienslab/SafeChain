@@ -3,8 +3,8 @@
     "Connect to an internet service": {
       "input": [
         {
-          "type": "device",
-          "device": ["Qblinks Qmote"]
+          "type": "channel",
+          "channel": ["Qblinks Qmote"]
         }
       ],
       "definition": [
@@ -18,8 +18,8 @@
     "Press button": {
       "input": [
         {
-          "type": "device",
-          "device": ["Qblinks Qmote"]
+          "type": "channel",
+          "channel": ["Qblinks Qmote"]
         }
       ],
       "definition": {

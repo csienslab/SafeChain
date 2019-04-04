@@ -3,8 +3,8 @@
     "Order a photo print": {
       "input": [
         {
-          "type": "device",
-          "device": ["Printhug"]
+          "type": "channel",
+          "channel": ["Printhug"]
         }
       ],
       "definition": [

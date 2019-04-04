@@ -3,12 +3,12 @@
     "Set operating mode": {
       "input": [
         {
-          "type": "device",
-          "device": ["GE Appliances GeoSpring™"]
+          "type": "channel",
+          "channel": ["GE Appliances GeoSpring™"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "mode"
         }
       ],
@@ -21,12 +21,12 @@
     "Set temperature": {
       "input": [
         {
-          "type": "device",
-          "device": ["GE Appliances GeoSpring™"]
+          "type": "channel",
+          "channel": ["GE Appliances GeoSpring™"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "temperature"
         }
       ],
@@ -39,8 +39,8 @@
     "Set vacation mode": {
       "input": [
         {
-          "type": "device",
-          "device": ["GE Appliances GeoSpring™"]
+          "type": "channel",
+          "channel": ["GE Appliances GeoSpring™"]
         }
       ],
       "definition": [
@@ -54,8 +54,8 @@
     "Air filter dirty": {
       "input": [
         {
-          "type": "device",
-          "device": ["GE Appliances GeoSpring™"]
+          "type": "channel",
+          "channel": ["GE Appliances GeoSpring™"]
         }
       ],
       "definition": {
@@ -65,8 +65,8 @@
     "Boost mode selected": {
       "input": [
         {
-          "type": "device",
-          "device": ["GE Appliances GeoSpring™"]
+          "type": "channel",
+          "channel": ["GE Appliances GeoSpring™"]
         }
       ],
       "definition": {
@@ -76,8 +76,8 @@
     "Heat pump mode selected": {
       "input": [
         {
-          "type": "device",
-          "device": ["GE Appliances GeoSpring™"]
+          "type": "channel",
+          "channel": ["GE Appliances GeoSpring™"]
         }
       ],
       "definition": {
@@ -87,8 +87,8 @@
     "Hybrid mode selected": {
       "input": [
         {
-          "type": "device",
-          "device": ["GE Appliances GeoSpring™"]
+          "type": "channel",
+          "channel": ["GE Appliances GeoSpring™"]
         }
       ],
       "definition": {
@@ -98,8 +98,8 @@
     "Standard mode selected": {
       "input": [
         {
-          "type": "device",
-          "device": ["GE Appliances GeoSpring™"]
+          "type": "channel",
+          "channel": ["GE Appliances GeoSpring™"]
         }
       ],
       "definition": {
@@ -109,8 +109,8 @@
     "Vacation mode selected": {
       "input": [
         {
-          "type": "device",
-          "device": ["GE Appliances GeoSpring™"]
+          "type": "channel",
+          "channel": ["GE Appliances GeoSpring™"]
         }
       ],
       "definition": {

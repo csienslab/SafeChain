@@ -3,8 +3,8 @@
     "Mute audio": {
       "input": [
         {
-          "type": "device",
-          "device": ["Manything"]
+          "type": "channel",
+          "channel": ["Manything"]
         }
       ],
       "definition": [
@@ -16,22 +16,22 @@
     "Set multiple camera settings": {
       "input": [
         {
-          "type": "device",
-          "device": ["Manything"]
+          "type": "channel",
+          "channel": ["Manything"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "recording"
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "audio"
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "mode"
         }
       ],
@@ -44,8 +44,8 @@
     "Start recording": {
       "input": [
         {
-          "type": "device",
-          "device": ["Manything"]
+          "type": "channel",
+          "channel": ["Manything"]
         }
       ],
       "definition": [
@@ -57,8 +57,8 @@
     "Stop recording": {
       "input": [
         {
-          "type": "device",
-          "device": ["Manything"]
+          "type": "channel",
+          "channel": ["Manything"]
         }
       ],
       "definition": [
@@ -70,8 +70,8 @@
     "Turn camera flashlight off": {
       "input": [
         {
-          "type": "device",
-          "device": ["Manything"]
+          "type": "channel",
+          "channel": ["Manything"]
         }
       ],
       "definition": [
@@ -83,8 +83,8 @@
     "Turn camera flashlight on": {
       "input": [
         {
-          "type": "device",
-          "device": ["Manything"]
+          "type": "channel",
+          "channel": ["Manything"]
         }
       ],
       "definition": [
@@ -96,8 +96,8 @@
     "Unmute audio": {
       "input": [
         {
-          "type": "device",
-          "device": ["Manything"]
+          "type": "channel",
+          "channel": ["Manything"]
         }
       ],
       "definition": [
@@ -109,8 +109,8 @@
     "Use front facing camera": {
       "input": [
         {
-          "type": "device",
-          "device": ["Manything"]
+          "type": "channel",
+          "channel": ["Manything"]
         }
       ],
       "definition": [
@@ -124,8 +124,8 @@
     "Battery Low": {
       "input": [
         {
-          "type": "device",
-          "device": ["Manything"]
+          "type": "channel",
+          "channel": ["Manything"]
         }
       ],
       "definition": {
@@ -135,8 +135,8 @@
     "Motion detected": {
       "input": [
         {
-          "type": "device",
-          "device": ["Manything"]
+          "type": "channel",
+          "channel": ["Manything"]
         }
       ],
       "definition": {
@@ -146,8 +146,8 @@
     "Power disconnected": {
       "input": [
         {
-          "type": "device",
-          "device": ["Manything"]
+          "type": "channel",
+          "channel": ["Manything"]
         }
       ],
       "definition": {

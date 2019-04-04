@@ -3,8 +3,8 @@
     "Diagnostic trouble code": {
       "input": [
         {
-          "type": "device",
-          "device": ["Mojio"]
+          "type": "channel",
+          "channel": ["Mojio"]
         }
       ],
       "definition": {
@@ -14,8 +14,8 @@
     "Engine started": {
       "input": [
         {
-          "type": "device",
-          "device": ["Mojio"]
+          "type": "channel",
+          "channel": ["Mojio"]
         }
       ],
       "definition": {
@@ -25,8 +25,8 @@
     "Engine stopped": {
       "input": [
         {
-          "type": "device",
-          "device": ["Mojio"]
+          "type": "channel",
+          "channel": ["Mojio"]
         }
       ],
       "definition": {
@@ -36,8 +36,8 @@
     "Low battery": {
       "input": [
         {
-          "type": "device",
-          "device": ["Mojio"]
+          "type": "channel",
+          "channel": ["Mojio"]
         }
       ],
       "definition": {
@@ -47,8 +47,8 @@
     "Low fuel": {
       "input": [
         {
-          "type": "device",
-          "device": ["Mojio"]
+          "type": "channel",
+          "channel": ["Mojio"]
         }
       ],
       "definition": {
@@ -58,8 +58,8 @@
     "Mojio plugged in": {
       "input": [
         {
-          "type": "device",
-          "device": ["Mojio"]
+          "type": "channel",
+          "channel": ["Mojio"]
         }
       ],
       "definition": {
@@ -69,8 +69,8 @@
     "Mojio unplugged": {
       "input": [
         {
-          "type": "device",
-          "device": ["Mojio"]
+          "type": "channel",
+          "channel": ["Mojio"]
         }
       ],
       "definition": {
@@ -80,8 +80,8 @@
     "Trip finished": {
       "input": [
         {
-          "type": "device",
-          "device": ["Mojio"]
+          "type": "channel",
+          "channel": ["Mojio"]
         }
       ],
       "definition": {

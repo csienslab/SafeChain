@@ -3,12 +3,12 @@
     "Send a notification": {
       "input": [
         {
-          "type": "device",
-          "device": ["Boxcar 2"]
+          "type": "channel",
+          "channel": ["Boxcar 2"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "notification_title"
         }
       ],
@@ -21,17 +21,17 @@
     "Send a notification with an image": {
       "input": [
         {
-          "type": "device",
-          "device": ["Boxcar 2"]
+          "type": "channel",
+          "channel": ["Boxcar 2"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "notification_title"
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "notification_image"
         }
       ],

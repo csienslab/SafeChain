@@ -3,8 +3,8 @@
     "Top App gone free in Google Play": {
       "input": [
         {
-          "type": "device",
-          "device": ["AppZapp"]
+          "type": "channel",
+          "channel": ["AppZapp"]
         }
       ],
       "definition": {
@@ -14,8 +14,8 @@
     "Top App gone free in the Apple App Store": {
       "input": [
         {
-          "type": "device",
-          "device": ["AppZapp"]
+          "type": "channel",
+          "channel": ["AppZapp"]
         }
       ],
       "definition": {
@@ -25,8 +25,8 @@
     "Top App on sale in Google Play": {
       "input": [
         {
-          "type": "device",
-          "device": ["AppZapp"]
+          "type": "channel",
+          "channel": ["AppZapp"]
         }
       ],
       "definition": {
@@ -36,8 +36,8 @@
     "Top App on sale in the Apple App Store": {
       "input": [
         {
-          "type": "device",
-          "device": ["AppZapp"]
+          "type": "channel",
+          "channel": ["AppZapp"]
         }
       ],
       "definition": {
@@ -47,8 +47,8 @@
     "Top new App in Google Play": {
       "input": [
         {
-          "type": "device",
-          "device": ["AppZapp"]
+          "type": "channel",
+          "channel": ["AppZapp"]
         }
       ],
       "definition": {
@@ -58,8 +58,8 @@
     "Top new App in the Apple App Store": {
       "input": [
         {
-          "type": "device",
-          "device": ["AppZapp"]
+          "type": "channel",
+          "channel": ["AppZapp"]
         }
       ],
       "definition": {

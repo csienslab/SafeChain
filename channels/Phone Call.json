@@ -3,8 +3,8 @@
     "Call my phone": {
       "input": [
         {
-          "type": "device",
-          "device": ["Phone Call"]
+          "type": "channel",
+          "channel": ["Phone Call"]
         }
       ],
       "definition": [
@@ -18,8 +18,8 @@
     "Leave IFTTT any voicemail": {
       "input": [
         {
-          "type": "device",
-          "device": ["Phone Call"]
+          "type": "channel",
+          "channel": ["Phone Call"]
         }
       ],
       "definition": {

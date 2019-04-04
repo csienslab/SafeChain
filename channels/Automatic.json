@@ -3,8 +3,8 @@
     "Button pressed": {
       "input": [
         {
-          "type": "device",
-          "device": ["Automatic"]
+          "type": "channel",
+          "channel": ["Automatic"]
         }
       ],
       "definition": {
@@ -14,8 +14,8 @@
     "Check engine light turned off": {
       "input": [
         {
-          "type": "device",
-          "device": ["Automatic"]
+          "type": "channel",
+          "channel": ["Automatic"]
         }
       ],
       "definition": {
@@ -25,8 +25,8 @@
     "Check engine light turned on": {
       "input": [
         {
-          "type": "device",
-          "device": ["Automatic"]
+          "type": "channel",
+          "channel": ["Automatic"]
         }
       ],
       "definition": {
@@ -36,8 +36,8 @@
     "Ignition turned off": {
       "input": [
         {
-          "type": "device",
-          "device": ["Automatic"]
+          "type": "channel",
+          "channel": ["Automatic"]
         }
       ],
       "definition": {
@@ -47,12 +47,12 @@
     "Ignition turned off in area": {
       "input": [
         {
-          "type": "device",
-          "device": ["Automatic"]
+          "type": "channel",
+          "channel": ["Automatic"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "location"
         }
       ],
@@ -63,8 +63,8 @@
     "Ignition turned on": {
       "input": [
         {
-          "type": "device",
-          "device": ["Automatic"]
+          "type": "channel",
+          "channel": ["Automatic"]
         }
       ],
       "definition": {
@@ -74,12 +74,12 @@
     "Ignition turned on in area": {
       "input": [
         {
-          "type": "device",
-          "device": ["Automatic"]
+          "type": "channel",
+          "channel": ["Automatic"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "location"
         }
       ],
@@ -90,8 +90,8 @@
     "New trip completed": {
       "input": [
         {
-          "type": "device",
-          "device": ["Automatic"]
+          "type": "channel",
+          "channel": ["Automatic"]
         }
       ],
       "definition": {

@@ -3,8 +3,8 @@
     "Toggle on/off": {
       "input": [
         {
-          "type": "device",
-          "device": ["WeMo Insight Switch"]
+          "type": "channel",
+          "channel": ["WeMo Insight Switch"]
         }
       ],
       "definition": [
@@ -21,8 +21,8 @@
     "Turn off": {
       "input": [
         {
-          "type": "device",
-          "device": ["WeMo Insight Switch"]
+          "type": "channel",
+          "channel": ["WeMo Insight Switch"]
         }
       ],
       "definition": [
@@ -34,8 +34,8 @@
     "Turn off then on": {
       "input": [
         {
-          "type": "device",
-          "device": ["WeMo Insight Switch"]
+          "type": "channel",
+          "channel": ["WeMo Insight Switch"]
         }
       ],
       "definition": [
@@ -47,8 +47,8 @@
     "Turn on": {
       "input": [
         {
-          "type": "device",
-          "device": ["WeMo Insight Switch"]
+          "type": "channel",
+          "channel": ["WeMo Insight Switch"]
         }
       ],
       "definition": [
@@ -60,8 +60,8 @@
     "Turn on then off": {
       "input": [
         {
-          "type": "device",
-          "device": ["WeMo Insight Switch"]
+          "type": "channel",
+          "channel": ["WeMo Insight Switch"]
         }
       ],
       "definition": [
@@ -75,12 +75,12 @@
     "Daily cost rises above": {
       "input": [
         {
-          "type": "device",
-          "device": ["WeMo Insight Switch"]
+          "type": "channel",
+          "channel": ["WeMo Insight Switch"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "daily_cost"
         }
       ],
@@ -91,12 +91,12 @@
     "Daily minutes on is longer than": {
       "input": [
         {
-          "type": "device",
-          "device": ["WeMo Insight Switch"]
+          "type": "channel",
+          "channel": ["WeMo Insight Switch"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "daily_minutes_on"
         }
       ],
@@ -107,12 +107,12 @@
     "Monthly estimated cost rises above": {
       "input": [
         {
-          "type": "device",
-          "device": ["WeMo Insight Switch"]
+          "type": "channel",
+          "channel": ["WeMo Insight Switch"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "monthly_estimated_cost"
         }
       ],
@@ -123,8 +123,8 @@
     "Standby mode entered": {
       "input": [
         {
-          "type": "device",
-          "device": ["WeMo Insight Switch"]
+          "type": "channel",
+          "channel": ["WeMo Insight Switch"]
         }
       ],
       "definition": {
@@ -134,8 +134,8 @@
     "Switched off": {
       "input": [
         {
-          "type": "device",
-          "device": ["WeMo Insight Switch"]
+          "type": "channel",
+          "channel": ["WeMo Insight Switch"]
         }
       ],
       "definition": {
@@ -145,8 +145,8 @@
     "Switched on": {
       "input": [
         {
-          "type": "device",
-          "device": ["WeMo Insight Switch"]
+          "type": "channel",
+          "channel": ["WeMo Insight Switch"]
         }
       ],
       "definition": {

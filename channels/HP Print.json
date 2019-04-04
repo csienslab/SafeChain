@@ -3,8 +3,8 @@
     "Print PDF": {
       "input": [
         {
-          "type": "device",
-          "device": ["HP Print"]
+          "type": "channel",
+          "channel": ["HP Print"]
         }
       ],
       "definition": [
@@ -16,8 +16,8 @@
     "Print email or message": {
       "input": [
         {
-          "type": "device",
-          "device": ["HP Print"]
+          "type": "channel",
+          "channel": ["HP Print"]
         }
       ],
       "definition": [
@@ -29,8 +29,8 @@
     "Print photo": {
       "input": [
         {
-          "type": "device",
-          "device": ["HP Print"]
+          "type": "channel",
+          "channel": ["HP Print"]
         }
       ],
       "definition": [
@@ -42,8 +42,8 @@
     "Print web article": {
       "input": [
         {
-          "type": "device",
-          "device": ["HP Print"]
+          "type": "channel",
+          "channel": ["HP Print"]
         }
       ],
       "definition": [

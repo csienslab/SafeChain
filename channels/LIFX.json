@@ -3,27 +3,27 @@
     "Activate scene": {
       "input": [
         {
-          "type": "device",
-          "device": ["LIFX"]
+          "type": "channel",
+          "channel": ["LIFX"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "status"
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "color"
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "blink"
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "breath"
         }
       ],
@@ -36,17 +36,17 @@
     "Blink lights": {
       "input": [
         {
-          "type": "device",
-          "device": ["LIFX"]
+          "type": "channel",
+          "channel": ["LIFX"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "status"
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "blink"
         }
       ],
@@ -59,17 +59,17 @@
     "Breathe lights": {
       "input": [
         {
-          "type": "device",
-          "device": ["LIFX"]
+          "type": "channel",
+          "channel": ["LIFX"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "status"
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "breath"
         }
       ],
@@ -82,17 +82,17 @@
     "Change color of lights": {
       "input": [
         {
-          "type": "device",
-          "device": ["LIFX"]
+          "type": "channel",
+          "channel": ["LIFX"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "status"
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "color"
         }
       ],
@@ -105,8 +105,8 @@
     "Toggle lights on/off": {
       "input": [
         {
-          "type": "device",
-          "device": ["LIFX"]
+          "type": "channel",
+          "channel": ["LIFX"]
         }
       ],
       "definition": [
@@ -123,8 +123,8 @@
     "Turn lights off": {
       "input": [
         {
-          "type": "device",
-          "device": ["LIFX"]
+          "type": "channel",
+          "channel": ["LIFX"]
         }
       ],
       "definition": [
@@ -136,8 +136,8 @@
     "Turn lights on": {
       "input": [
         {
-          "type": "device",
-          "device": ["LIFX"]
+          "type": "channel",
+          "channel": ["LIFX"]
         }
       ],
       "definition": [

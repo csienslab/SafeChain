@@ -3,8 +3,8 @@
     "Arm the security panel": {
       "input": [
         {
-          "type": "device",
-          "device": ["HomeControl Flex"]
+          "type": "channel",
+          "channel": ["HomeControl Flex"]
         }
       ],
       "definition": [
@@ -16,8 +16,8 @@
     "Disarm the security panel": {
       "input": [
         {
-          "type": "device",
-          "device": ["HomeControl Flex"]
+          "type": "channel",
+          "channel": ["HomeControl Flex"]
         }
       ],
       "definition": [
@@ -31,8 +31,8 @@
     "The security panel has been armed": {
       "input": [
         {
-          "type": "device",
-          "device": ["HomeControl Flex"]
+          "type": "channel",
+          "channel": ["HomeControl Flex"]
         }
       ],
       "definition": {
@@ -42,8 +42,8 @@
     "The security panel has been disarmed": {
       "input": [
         {
-          "type": "device",
-          "device": ["HomeControl Flex"]
+          "type": "channel",
+          "channel": ["HomeControl Flex"]
         }
       ],
       "definition": {
@@ -53,8 +53,8 @@
     "The security panel triggers an alert": {
       "input": [
         {
-          "type": "device",
-          "device": ["HomeControl Flex"]
+          "type": "channel",
+          "channel": ["HomeControl Flex"]
         }
       ],
       "definition": {

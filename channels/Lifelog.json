@@ -3,8 +3,8 @@
     "Activity summary": {
       "input": [
         {
-          "type": "device",
-          "device": ["Lifelog"]
+          "type": "channel",
+          "channel": ["Lifelog"]
         }
       ],
       "definition": {
@@ -14,8 +14,8 @@
     "Any application used": {
       "input": [
         {
-          "type": "device",
-          "device": ["Lifelog"]
+          "type": "channel",
+          "channel": ["Lifelog"]
         }
       ],
       "definition": {
@@ -25,8 +25,8 @@
     "Any physical activity": {
       "input": [
         {
-          "type": "device",
-          "device": ["Lifelog"]
+          "type": "channel",
+          "channel": ["Lifelog"]
         }
       ],
       "definition": {
@@ -36,12 +36,12 @@
     "Daily calorie goal reached": {
       "input": [
         {
-          "type": "device",
-          "device": ["Lifelog"]
+          "type": "channel",
+          "channel": ["Lifelog"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "daily_calorie"
         }
       ],
@@ -52,12 +52,12 @@
     "Daily steps above": {
       "input": [
         {
-          "type": "device",
-          "device": ["Lifelog"]
+          "type": "channel",
+          "channel": ["Lifelog"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "daily_steps"
         }
       ],
@@ -68,8 +68,8 @@
     "Recorded sleep": {
       "input": [
         {
-          "type": "device",
-          "device": ["Lifelog"]
+          "type": "channel",
+          "channel": ["Lifelog"]
         }
       ],
       "definition": {
@@ -79,12 +79,12 @@
     "Specific application used": {
       "input": [
         {
-          "type": "device",
-          "device": ["Lifelog"]
+          "type": "channel",
+          "channel": ["Lifelog"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "which_application_used"
         }
       ],
@@ -95,12 +95,12 @@
     "Step goal not reached": {
       "input": [
         {
-          "type": "device",
-          "device": ["Lifelog"]
+          "type": "channel",
+          "channel": ["Lifelog"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "daily_steps"
         }
       ],

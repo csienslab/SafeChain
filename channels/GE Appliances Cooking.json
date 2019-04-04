@@ -3,8 +3,8 @@
     "Set oven to sabbath mode": {
       "input": [
         {
-          "type": "device",
-          "device": ["GE Appliances Cooking"]
+          "type": "channel",
+          "channel": ["GE Appliances Cooking"]
         }
       ],
       "definition": [
@@ -16,8 +16,8 @@
     "Turn off oven": {
       "input": [
         {
-          "type": "device",
-          "device": ["GE Appliances Cooking"]
+          "type": "channel",
+          "channel": ["GE Appliances Cooking"]
         }
       ],
       "definition": [
@@ -31,8 +31,8 @@
     "Cooking timer done": {
       "input": [
         {
-          "type": "device",
-          "device": ["GE Appliances Cooking"]
+          "type": "channel",
+          "channel": ["GE Appliances Cooking"]
         }
       ],
       "definition": {
@@ -42,8 +42,8 @@
     "Oven timer done": {
       "input": [
         {
-          "type": "device",
-          "device": ["GE Appliances Cooking"]
+          "type": "channel",
+          "channel": ["GE Appliances Cooking"]
         }
       ],
       "definition": {
@@ -53,8 +53,8 @@
     "Oven turned off": {
       "input": [
         {
-          "type": "device",
-          "device": ["GE Appliances Cooking"]
+          "type": "channel",
+          "channel": ["GE Appliances Cooking"]
         }
       ],
       "definition": {
@@ -64,8 +64,8 @@
     "Oven turned on": {
       "input": [
         {
-          "type": "device",
-          "device": ["GE Appliances Cooking"]
+          "type": "channel",
+          "channel": ["GE Appliances Cooking"]
         }
       ],
       "definition": {
@@ -75,8 +75,8 @@
     "Preheat temperature achieved": {
       "input": [
         {
-          "type": "device",
-          "device": ["GE Appliances Cooking"]
+          "type": "channel",
+          "channel": ["GE Appliances Cooking"]
         }
       ],
       "definition": {

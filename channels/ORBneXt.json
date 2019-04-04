@@ -3,12 +3,12 @@
     "Change color": {
       "input": [
         {
-          "type": "device",
-          "device": ["ORBneXt"]
+          "type": "channel",
+          "channel": ["ORBneXt"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "color"
         }
       ],
@@ -21,12 +21,12 @@
     "Flash alert": {
       "input": [
         {
-          "type": "device",
-          "device": ["ORBneXt"]
+          "type": "channel",
+          "channel": ["ORBneXt"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "color"
         }
       ],

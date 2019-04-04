@@ -3,8 +3,8 @@
     "Battery drops below 15%": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Battery"]
+          "type": "channel",
+          "channel": ["Android Battery"]
         }
       ],
       "definition": {
@@ -14,8 +14,8 @@
     "Device is plugged in": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Battery"]
+          "type": "channel",
+          "channel": ["Android Battery"]
         }
       ],
       "definition": {
@@ -25,8 +25,8 @@
     "Device is unplugged": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Battery"]
+          "type": "channel",
+          "channel": ["Android Battery"]
         }
       ],
       "definition": {

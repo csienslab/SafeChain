@@ -3,8 +3,8 @@
     "Any phone call answered": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Phone Call"]
+          "type": "channel",
+          "channel": ["Android Phone Call"]
         }
       ],
       "definition": {
@@ -14,8 +14,8 @@
     "Any phone call missed": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Phone Call"]
+          "type": "channel",
+          "channel": ["Android Phone Call"]
         }
       ],
       "definition": {
@@ -25,8 +25,8 @@
     "Any phone call placed": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Phone Call"]
+          "type": "channel",
+          "channel": ["Android Phone Call"]
         }
       ],
       "definition": {
@@ -36,12 +36,12 @@
     "Phone call answered from a specific number": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Phone Call"]
+          "type": "channel",
+          "channel": ["Android Phone Call"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "number"
         }
       ],
@@ -52,12 +52,12 @@
     "Phone call missed from a specific number": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Phone Call"]
+          "type": "channel",
+          "channel": ["Android Phone Call"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "number"
         }
       ],
@@ -68,12 +68,12 @@
     "Phone call placed to a specific number": {
       "input": [
         {
-          "type": "device",
-          "device": ["Android Phone Call"]
+          "type": "channel",
+          "channel": ["Android Phone Call"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "number"
         }
       ],

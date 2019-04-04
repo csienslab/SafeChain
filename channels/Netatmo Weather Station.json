@@ -3,12 +3,12 @@
     "Air pressure drops below": {
       "input": [
         {
-          "type": "device",
-          "device": ["Netatmo Weather Station"]
+          "type": "channel",
+          "channel": ["Netatmo Weather Station"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "air_pressure"
         }
       ],
@@ -19,12 +19,12 @@
     "Air pressure rises above": {
       "input": [
         {
-          "type": "device",
-          "device": ["Netatmo Weather Station"]
+          "type": "channel",
+          "channel": ["Netatmo Weather Station"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "air_pressure"
         }
       ],
@@ -35,12 +35,12 @@
     "Carbon dioxide drops below": {
       "input": [
         {
-          "type": "device",
-          "device": ["Netatmo Weather Station"]
+          "type": "channel",
+          "channel": ["Netatmo Weather Station"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "carbon_dioxide"
         }
       ],
@@ -51,12 +51,12 @@
     "Carbon dioxide rises above": {
       "input": [
         {
-          "type": "device",
-          "device": ["Netatmo Weather Station"]
+          "type": "channel",
+          "channel": ["Netatmo Weather Station"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "carbon_dioxide"
         }
       ],
@@ -67,12 +67,12 @@
     "Gust speed rises above": {
       "input": [
         {
-          "type": "device",
-          "device": ["Netatmo Weather Station"]
+          "type": "channel",
+          "channel": ["Netatmo Weather Station"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "gust_speed"
         }
       ],
@@ -83,12 +83,12 @@
     "Humidity drops below": {
       "input": [
         {
-          "type": "device",
-          "device": ["Netatmo Weather Station"]
+          "type": "channel",
+          "channel": ["Netatmo Weather Station"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "humidity"
         }
       ],
@@ -99,12 +99,12 @@
     "Humidity rises above": {
       "input": [
         {
-          "type": "device",
-          "device": ["Netatmo Weather Station"]
+          "type": "channel",
+          "channel": ["Netatmo Weather Station"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "humidity"
         }
       ],
@@ -115,12 +115,12 @@
     "Noise level drops below": {
       "input": [
         {
-          "type": "device",
-          "device": ["Netatmo Weather Station"]
+          "type": "channel",
+          "channel": ["Netatmo Weather Station"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "noise_level"
         }
       ],
@@ -131,12 +131,12 @@
     "Noise level rises above": {
       "input": [
         {
-          "type": "device",
-          "device": ["Netatmo Weather Station"]
+          "type": "channel",
+          "channel": ["Netatmo Weather Station"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "noise_level"
         }
       ],
@@ -147,8 +147,8 @@
     "Rain detected": {
       "input": [
         {
-          "type": "device",
-          "device": ["Netatmo Weather Station"]
+          "type": "channel",
+          "channel": ["Netatmo Weather Station"]
         }
       ],
       "definition": {
@@ -158,8 +158,8 @@
     "Rain no longer detected": {
       "input": [
         {
-          "type": "device",
-          "device": ["Netatmo Weather Station"]
+          "type": "channel",
+          "channel": ["Netatmo Weather Station"]
         }
       ],
       "definition": {
@@ -169,12 +169,12 @@
     "Temperature drops below": {
       "input": [
         {
-          "type": "device",
-          "device": ["Netatmo Weather Station"]
+          "type": "channel",
+          "channel": ["Netatmo Weather Station"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "temperature"
         }
       ],
@@ -185,12 +185,12 @@
     "Temperature rises above": {
       "input": [
         {
-          "type": "device",
-          "device": ["Netatmo Weather Station"]
+          "type": "channel",
+          "channel": ["Netatmo Weather Station"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "temperature"
         }
       ],
@@ -201,8 +201,8 @@
     "Today's rainfall measurement": {
       "input": [
         {
-          "type": "device",
-          "device": ["Netatmo Weather Station"]
+          "type": "channel",
+          "channel": ["Netatmo Weather Station"]
         }
       ],
       "definition": {
@@ -212,12 +212,12 @@
     "Wind speed drops below": {
       "input": [
         {
-          "type": "device",
-          "device": ["Netatmo Weather Station"]
+          "type": "channel",
+          "channel": ["Netatmo Weather Station"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "wind_speed"
         }
       ],
@@ -228,12 +228,12 @@
     "Wind speed rises above": {
       "input": [
         {
-          "type": "device",
-          "device": ["Netatmo Weather Station"]
+          "type": "channel",
+          "channel": ["Netatmo Weather Station"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "wind_speed"
         }
       ],
@@ -244,8 +244,8 @@
     "Yesterday's rainfall measurement": {
       "input": [
         {
-          "type": "device",
-          "device": ["Netatmo Weather Station"]
+          "type": "channel",
+          "channel": ["Netatmo Weather Station"]
         }
       ],
       "definition": {

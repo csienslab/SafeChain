@@ -3,8 +3,8 @@
     "Check engine light turned on": {
       "input": [
         {
-          "type": "device",
-          "device": ["Dash"]
+          "type": "channel",
+          "channel": ["Dash"]
         }
       ],
       "definition": {
@@ -14,12 +14,12 @@
     "Driving through an area": {
       "input": [
         {
-          "type": "device",
-          "device": ["Dash"]
+          "type": "channel",
+          "channel": ["Dash"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "location"
         }
       ],
@@ -30,8 +30,8 @@
     "Hard acceleration alert": {
       "input": [
         {
-          "type": "device",
-          "device": ["Dash"]
+          "type": "channel",
+          "channel": ["Dash"]
         }
       ],
       "definition": {
@@ -41,8 +41,8 @@
     "Hard brake alert": {
       "input": [
         {
-          "type": "device",
-          "device": ["Dash"]
+          "type": "channel",
+          "channel": ["Dash"]
         }
       ],
       "definition": {
@@ -52,8 +52,8 @@
     "Ignition turned off": {
       "input": [
         {
-          "type": "device",
-          "device": ["Dash"]
+          "type": "channel",
+          "channel": ["Dash"]
         }
       ],
       "definition": {
@@ -63,12 +63,12 @@
     "Ignition turned off in area": {
       "input": [
         {
-          "type": "device",
-          "device": ["Dash"]
+          "type": "channel",
+          "channel": ["Dash"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "location"
         }
       ],
@@ -79,8 +79,8 @@
     "Ignition turned on": {
       "input": [
         {
-          "type": "device",
-          "device": ["Dash"]
+          "type": "channel",
+          "channel": ["Dash"]
         }
       ],
       "definition": {
@@ -90,12 +90,12 @@
     "Ignition turned on in area": {
       "input": [
         {
-          "type": "device",
-          "device": ["Dash"]
+          "type": "channel",
+          "channel": ["Dash"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "location"
         }
       ],
@@ -106,12 +106,12 @@
     "Low fuel level": {
       "input": [
         {
-          "type": "device",
-          "device": ["Dash"]
+          "type": "channel",
+          "channel": ["Dash"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "fuel_level"
         }
       ],
@@ -122,12 +122,12 @@
     "Mileage driven": {
       "input": [
         {
-          "type": "device",
-          "device": ["Dash"]
+          "type": "channel",
+          "channel": ["Dash"]
         },
         {
           "type": "value",
-          "device": "{0}",
+          "channel": "{0}",
           "variable": "mileage"
         }
       ],
@@ -138,8 +138,8 @@
     "New bumper sticker earned": {
       "input": [
         {
-          "type": "device",
-          "device": ["Dash"]
+          "type": "channel",
+          "channel": ["Dash"]
         }
       ],
       "definition": {
@@ -149,8 +149,8 @@
     "New trip completed": {
       "input": [
         {
-          "type": "device",
-          "device": ["Dash"]
+          "type": "channel",
+          "channel": ["Dash"]
         }
       ],
       "definition": {
